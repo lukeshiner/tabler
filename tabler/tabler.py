@@ -65,7 +65,6 @@ class Tabler(object):
         If the object already contains date it will be overwritten.
         """
 
-        assert self.is_empty(), 'Only empty Table objects can open files'
         if self.is_url(filename):
             self.open_url(filename)
         elif filename.split('.')[-1].lower() == 'ods':
@@ -119,11 +118,7 @@ class Tabler(object):
         """ Loads data from a MySQL table contained in a DatabaseTable
         object.
         """
-        assert self.is_empty(), (
-            'Only empty Table objects can load from a database')
-        # assert isinstance(database_table, stctools.DatabaseTable), (
-        # 'database_table must be instance of stctools.DatabaseTable')
-
+        self.empty()
         self.header = database_table.get_columns()
         data = database_table.get_all()
         for row in data:
@@ -182,16 +177,10 @@ class Tabler(object):
         creates one from a list object with the correct number of
         values.
         """
-        assert isinstance(row, list) or isinstance(row, TableRow), (
-            'New Row must be list or TableRow')
         if isinstance(row, list):
-            assert len(row) == len(self.header), (
-                'New Row must have correct number of entries')
             self.rows.append(TableRow(row, self.header))
             self.set_table()
         elif isinstance(row, TableRow):
-            assert row.header == self.header, (
-                'New Row must have correct header')
             self.rows.append(row)
 
     def get_column(self, column):
@@ -220,28 +209,13 @@ class Tabler(object):
         object.
         """
 
-        assert self.is_empty(), 'Only empty Table objects can open files'
-        assert isinstance(header, list), (
-            'header must be list containing column headers')
-        assert isinstance(data, list), 'data must be list'
-        for row in data:
-            assert isinstance(row, list) or isinstance(row, TableRow), (
-                'data must contain list or TableRow')
-            if isinstance(row, list):
-                assert len(row) == len(header)
-            else:
-                # assert row.header == self.header, (
-                # 'New Row must have correct header')
-                pass
-
+        self.empty()
         self.header = header
-
         for row in data:
             if isinstance(row, TableRow):
                 self.rows.append(row)
             else:
                 self.rows.append(TableRow(row, header))
-
         self.set_table()
 
     def write_csv(self, filename):
