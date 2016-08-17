@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='tabler',
@@ -11,4 +11,5 @@ setup(
     url='http://tabler.lukeshiner.com',
     keywords=['table', 'csv', 'simple'],
     install_requires=['requests'],
-    packages=['tabler'])
+    packages=find_packages(),
+    )
