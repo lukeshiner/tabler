@@ -14,9 +14,10 @@ class Tabler(object):
     """
     def __init__(
             self, filename=None, header=None, data=None,
-            encoding='utf-8'):
+            encoding='utf-8', delimiter=','):
         self.empty()
         self.encoding = encoding
+        self.delimiter = delimiter
         if isinstance(filename, str):
             self.open(filename)
         if isinstance(header, list):
@@ -57,7 +58,7 @@ class Tabler(object):
             rows.append(row)
         return rows
 
-    def open(self, filename, encoding=None):
+    def open(self, filename, encoding=None, delimiter=None):
         """ Creates Table object from a .csv file. This file must be
         comma separated and utf-8 encoded. The first row must contain
         column headers.
@@ -70,14 +71,16 @@ class Tabler(object):
         elif filename.split('.')[-1].lower() == 'ods':
             self.open_ods(filename)
         else:
-            self.open_csv(filename)
+            self.open_csv(filename, encoding=encoding, delimiter=delimiter)
 
-    def open_csv(self, filename, encoding=None):
+    def open_csv(self, filename, encoding=None, delimiter=None):
         if encoding is None:
             encoding = self.encoding
+        if delimiter is None:
+            delimiter = self.delimiter
         open_file = open(
-            filename, 'rU', encoding=self.encoding, errors='replace')
-        csv_file = csv.reader(open_file)
+            filename, 'rU', encoding=self.encoding, errors='replace',)
+        csv_file = csv.reader(open_file, delimiter=delimiter)
         rows = self.parse_csv_file(csv_file)
         self.load_file(rows)
         open_file.close()
@@ -218,22 +221,28 @@ class Tabler(object):
                 self.rows.append(TableRow(row, header))
         self.set_table()
 
-    def write_csv(self, filename):
+    def write_csv(self, filename, header=True, encoding=None, delimiter=None):
         """ Creates a .csv of the data contained within the Table with
         the specifed filename or filepath.
         This file will be comma separated and UTF-8 encoded.
         """
 
-        file = open(filename, 'w', newline='', encoding='UTF-8')
-        writer = csv.writer(file)
-        writer.writerow(self.header)
+        if encoding is None:
+            encoding = self.encoding
+        if delimiter is None:
+            delimiter = self.delimiter
+        csv_file = open(filename, 'w', newline='', encoding=encoding)
+        writer = csv.writer(csv_file, delimiter=delimiter)
+        if header is True:
+            writer.writerow(self.header)
         for row in self:
             writer.writerow(row.to_array())
-        file.close()
+        csv_file.close()
         print('Writen ' + str(len(self.rows)) + ' lines to file ' + filename)
 
-    def write(self, filename):
-        self.write_csv(filename)
+    def write(self, filename, header=True, encoding=None, delimiter=None):
+        self.write_csv(
+            filename, header=header, encoding=encoding, delimiter=delimiter)
 
     def write_ods(self, filename):
         from collections import OrderedDict
