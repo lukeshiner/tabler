@@ -297,7 +297,7 @@ class Tabler(object):
             print(row.row)
 
     def copy(self):
-        new_table = Table()
+        new_table = Tabler()
         new_table.header = self.header
         for row in self.rows:
             new_table.rows.append(row.copy())
