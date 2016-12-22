@@ -370,7 +370,7 @@ class Tabler(object):
     def split_by_row_count(self, row_count):
         split_tables = []
         for i in range(0, len(self.rows), row_count):
-            new_table = Table()
+            new_table = Tabler()
             new_table.header = self.header
             new_table.rows = self.rows[i:i + row_count]
             split_tables.append(new_table)
