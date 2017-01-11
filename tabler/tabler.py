@@ -15,7 +15,7 @@ import requests
 from . tablerow import TableRow
 
 
-class Table(object):
+class Tabler(object):
 
     """A Table table.
 
@@ -25,7 +25,7 @@ class Table(object):
 
     def __init__(
             self, filename=None, header=None, data=None,
-            encoding='utf-8'):
+            encoding='utf-8', delimiter=','):
         """Constructs a :class: `Table`.
         Returns :class: 'Table' object.
 
@@ -46,6 +46,7 @@ class Table(object):
         """
         self.empty()
         self.encoding = encoding
+        self.delimiter = delimiter
         if isinstance(filename, str):
             self.open(filename)
         if isinstance(header, list):
@@ -75,8 +76,10 @@ class Table(object):
     def __repr__(self):
         return self.__str__()
 
-    def open(self, filename, encoding=None):
-        """Load data resource `filename`.
+    def open(self, filename, encoding=None, delimiter=None):
+        """ Creates Table object from a .csv file. This file must be
+        comma separated and utf-8 encoded. The first row must contain
+        column headers.
 
         If filename is URL formatted load from URL
         If filename extension is .ods load .ods
@@ -98,7 +101,7 @@ class Table(object):
             self.open_csv(filename)
         return self
 
-    def open_csv(self, filename, encoding=None):
+    def open_csv(self, filename, encoding=None, delimiter=None):
         """Create Table object from a .csv file.
 
         This file must be in comma separated format. The first row is assumed
@@ -116,9 +119,11 @@ class Table(object):
         """
         if encoding is None:
             encoding = self.encoding
+        if delimiter is None:
+            delimiter = self.delimiter
         open_file = open(
-            filename, 'rU', encoding=self.encoding, errors='replace')
-        csv_file = csv.reader(open_file)
+            filename, 'rU', encoding=self.encoding, errors='replace',)
+        csv_file = csv.reader(open_file, delimiter=delimiter)
         rows = self.parse_csv_file(csv_file)
         self.load_file(rows)
         open_file.close()
@@ -278,7 +283,7 @@ class Table(object):
         self.set_table()
         return self
 
-    def write_csv(self, filename, encoding=None):
+    def write_csv(self, filename, header=True, encoding=None, delimiter=None):
         """Create a .csv formatted file from the data contained within the
         table at the absolute or relative path filename.
         This file will be comma separated.
@@ -288,21 +293,23 @@ class Table(object):
         :param encoding: (Optional) Encoding for file to be written.
             (Default: self.encoding)
         """
-        out_file = open(filename, 'w', newline='', encoding=encoding)
-        writer = csv.writer(out_file)
-        writer.writerow(self.header)
+
+        if encoding is None:
+            encoding = self.encoding
+        if delimiter is None:
+            delimiter = self.delimiter
+        csv_file = open(filename, 'w', newline='', encoding=encoding)
+        writer = csv.writer(csv_file, delimiter=delimiter)
+        if header is True:
+            writer.writerow(self.header)
         for row in self:
             writer.writerow(row.to_array())
-        out_file.close()
+        csv_file.close()
         print('Writen ' + str(len(self.rows)) + ' lines to file ' + filename)
 
-    def write(self, filename):
-        """Write data to .csv formatted file.
-        File will be encoded as self.encoding.
-
-        :param filename: Absolute or relative path at which to create the file.
-        """
-        self.write_csv(filename)
+    def write(self, filename, header=True, encoding=None, delimiter=None):
+        self.write_csv(
+            filename, header=header, encoding=encoding, delimiter=delimiter)
 
     def write_ods(self, filename):
         """Write data in Open Document Spreadsheet (.ods) format.
@@ -377,7 +384,7 @@ class Table(object):
         """Return duplicate Table object. This Table will can be edited
         separatly from this one.
         """
-        new_table = Table()
+        new_table = Tabler()
         new_table.header = self.header
         for row in self.rows:
             new_table.rows.append(row.copy())
@@ -442,7 +449,7 @@ class Table(object):
         """
         split_tables = []
         for i in range(0, len(self.rows), row_count):
-            new_table = Table()
+            new_table = Tabler()
             new_table.header = self.header
             new_table.rows = self.rows[i:i + row_count]
             split_tables.append(new_table)

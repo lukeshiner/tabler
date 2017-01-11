@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tabler',
-    version='1.0.02',
+    version='1.0.04',
     description='Simple interface for tabulated data and .csv files',
     author='Luke Shiner',
     author_email='luke@lukeshiner.com',
