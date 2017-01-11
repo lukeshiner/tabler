@@ -1,6 +1,13 @@
-#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-# tabulator by Luke Shiner (luke@lukeshiner.com)
+"""
+Table.Table
+~~~~~~~~~~~~~
+
+This module provides a Table object to read, write and edit tabulated
+data.
+
+"""
 
 import csv
 import requests
@@ -8,13 +15,35 @@ import requests
 from . tablerow import TableRow
 
 
-class Tabler(object):
-    """ Container for tabulated data. Can be created from a .csv by
-    passing the file path to __init__.
+class Table(object):
+
+    """A Table table.
+
+    A wrapper object for tabulated data.
+
     """
+
     def __init__(
             self, filename=None, header=None, data=None,
             encoding='utf-8'):
+        """Constructs a :class: `Table`.
+        Returns :class: 'Table' object.
+
+        :param filename: (Optional) URL, relative path or absolute path
+            to `.csv` file or absolute or relative path to `.ods` file to
+            be loaded.
+
+        :param header: (Optional) List of column headers to be used if not
+            loaded from file.
+
+        :param data: (Optional) List of rows in the form of Lists of cell data
+            to be loaded into the Table.
+
+        :param encoding: Encoding to be used when reading or writing files.
+            (Default 'utf-8')
+
+        :rtype: tabler.Table
+        """
         self.empty()
         self.encoding = encoding
         if isinstance(filename, str):
@@ -37,42 +66,54 @@ class Tabler(object):
     def __str__(self):
         columns = str(len(self.columns))
         rows = str(len(self.rows))
-        total = str(len(self.columns) * len(self.rows))
-        string = 'CsvFile Object containing ' + columns + ' colomuns and '
-        string = string + rows + ' rows. ' + total + ' total entries.'
-        return string
+        lines = [
+            'CsvFile Object containing {} colomuns and {} rows'.format(
+                columns, rows),
+            'Column Headings: {}'.format(', '.join(self.header))]
+        return "\n".join(lines)
 
-    def is_url(self, url):
-        if url[0:7].lower() == 'http://':
-            return True
-        if url[0:8].lower() == 'https://':
-            return True
-        if url[0:6].lower() == 'ftp://':
-            return True
-        return False
-
-    def parse_csv_file(self, csv_file):
-        rows = []
-        for row in csv_file:
-            rows.append(row)
-        return rows
+    def __repr__(self):
+        return self.__str__()
 
     def open(self, filename, encoding=None):
-        """ Creates Table object from a .csv file. This file must be
-        comma separated and utf-8 encoded. The first row must contain
-        column headers.
+        """Load data resource `filename`.
 
-        If the object already contains date it will be overwritten.
+        If filename is URL formatted load from URL
+        If filename extension is .ods load .ods
+        Otherwise load .csv
+
+        :param filename: :string: URL, relative or absolute path to .ods file
+            from which data will be loaded.
+
+        :param encoding: (optional) Encoding of file to be loaded. (Default:
+            self.encoding)
+
+        :rtype: tabler.Table
         """
-
         if self.is_url(filename):
             self.open_url(filename)
         elif filename.split('.')[-1].lower() == 'ods':
             self.open_ods(filename)
         else:
             self.open_csv(filename)
+        return self
 
     def open_csv(self, filename, encoding=None):
+        """Create Table object from a .csv file.
+
+        This file must be in comma separated format. The first row is assumed
+        to contain column headers.
+
+        If the object already contains data it will be overwritten.
+
+        :param filename: :string: Relative or absolute path to .ods file from
+            which data will be loaded.
+
+        :param encoding: (optional) Encoding of file to be loaded. (Default:
+            self.encoding)
+
+        :rtype: tabler.Table
+        """
         if encoding is None:
             encoding = self.encoding
         open_file = open(
@@ -81,8 +122,22 @@ class Tabler(object):
         rows = self.parse_csv_file(csv_file)
         self.load_file(rows)
         open_file.close()
+        return self
 
     def open_ods(self, filename, sheet=0):
+        """Load data from a .ods Open Document Format Spreadsheet.
+
+        As only one sheet can be loaded at a time, the sheet kwarg can be used
+        to specify which sheet will be loaded.
+
+        :param filename: :string: Relative or absolute path to .ods file from
+            which data will be loaded.
+
+        :param sheet: (optional) Index of sheet in .ods file to be loaded.
+            (Default: 0)
+
+        :rtype: tabler.Table
+        """
         import ezodf
         doc = ezodf.opendoc(filename)
         sheet = doc.sheets[sheet]
@@ -97,8 +152,15 @@ class Tabler(object):
             if len(row) > 0:
                 rows.append(new_row)
         self.load_file(rows)
+        return self
 
     def open_url(self, url):
+        """Load data from a .csv file located at the passed URL.
+
+        :param url: URL from which data will be loaded.
+
+        :rtype: tabler.Table
+        """
         request = requests.get(url)
         text = []
         for line in request.iter_lines():
@@ -107,46 +169,31 @@ class Tabler(object):
         csv_file = csv.reader(text)
         rows = self.parse_csv_file(csv_file)
         self.load_file(rows)
-
-    def load_file(self, rows):
-        self.header = rows[0]
-        for row in rows[1:]:
-            self.rows.append(TableRow(row, self.header))
-        self.set_table()
-
-    def load_from_database_table(self, database_table):
-        """ Loads data from a MySQL table contained in a DatabaseTable
-        object.
-        """
-        self.empty()
-        self.header = database_table.get_columns()
-        data = database_table.get_all()
-        for row in data:
-            self.rows.append(TableRow(row, self.header))
-
-        self.set_table()
+        return self
 
     def empty(self):
-        """ Clears all data from the Table. The same as initialising a
-        new Table with no arguments.
-        """
+        """Clear all data from Table.
 
+        :rtype: tabler.Table
+        """
         self.rows = []
         self.header = []
         self.columns = []
         self.headers = {}
+        return self
 
     def set_headers(self):
-        """ Creates a dictionary of headers for looking up the
-        apropriate index in self.columns.
+        """Create a `dictionary` of headers for looking up the apropriate index
+        in self.columns.
         """
-
         self.headers = {}
         for column in self.header:
             self.headers[column] = self.header.index(column)
 
     def set_columns(self):
-        """ Creates a 2d list pivoted from self.rows.  """
+        """Create `Table.columns` to allow data to be accessed by column rather
+        than row.
+        """
         self.columns = []
         column_number = 0
         for column in self.header:
@@ -158,13 +205,10 @@ class Tabler(object):
             self.columns.append(this_column)
             column_number += 1
 
-    def set_table(self):
-        self.set_headers()
-        self.set_columns()
-
     def is_empty(self):
-        """ Returns True if the table conatins no data, otherwise
-        returns False.
+        """Return True if the table conatins no data, otherwise return False.
+
+        :rtype: bool
         """
         if self.rows == []:
             if self.header == []:
@@ -173,9 +217,13 @@ class Tabler(object):
         return False
 
     def append(self, row):
-        """ Creates a new row in the Table from a TableRow object or
-        creates one from a list object with the correct number of
-        values.
+        """Create a new row in the Table from a list with the correct number
+        of values.
+
+        Can also take rows from another Table object.
+
+        :param row: `list` or `tabler.TableRow` object containig one row of
+            data for the table.
         """
         if isinstance(row, list):
             self.rows.append(TableRow(row, self.header))
@@ -184,14 +232,21 @@ class Tabler(object):
             self.rows.append(row)
 
     def get_column(self, column):
-        """ Returns a list containing all values from the specified
+        """Return a `list` containing all values from the specified
         column.
-        """
 
+        :param column: `string` column name or `int` index of column to
+            be returned.
+        """
         return self.columns[self.headers[column]]
 
     def remove_column(self, column):
-        """ Removes a specified column from the Table.  """
+        """
+        Remove a specified column from the Table.
+
+        :param column: `string` column name or `int` index of column to
+            be removed.
+        """
         if column in self.header:
             for row in self.rows:
                 row.remove_column(column)
@@ -201,14 +256,18 @@ class Tabler(object):
         else:
             return False
 
-    def getRows(self):
-        return self.rows
-
-    def load_from_array(self, data, header):
-        """ Loads the Table with data contained in a 2d list
-        object.
+    def load_from_list(self, data, header):
         """
+        Load the Table with data contained in a 'list' (column) of
+        `lists` (rows).
 
+        :param data: `list` of rows to be added to Table.
+
+        :param header: 'list' containing column headers for data. Order
+            is important.
+
+        :rtype: tabler.Table
+        """
         self.empty()
         self.header = header
         for row in data:
@@ -217,25 +276,39 @@ class Tabler(object):
             else:
                 self.rows.append(TableRow(row, header))
         self.set_table()
+        return self
 
-    def write_csv(self, filename):
-        """ Creates a .csv of the data contained within the Table with
-        the specifed filename or filepath.
-        This file will be comma separated and UTF-8 encoded.
+    def write_csv(self, filename, encoding=None):
+        """Create a .csv formatted file from the data contained within the
+        table at the absolute or relative path filename.
+        This file will be comma separated.
+
+        :param filename: Absolute or relative path at which to create the file.
+
+        :param encoding: (Optional) Encoding for file to be written.
+            (Default: self.encoding)
         """
-
-        file = open(filename, 'w', newline='', encoding='UTF-8')
-        writer = csv.writer(file)
+        out_file = open(filename, 'w', newline='', encoding=encoding)
+        writer = csv.writer(out_file)
         writer.writerow(self.header)
         for row in self:
             writer.writerow(row.to_array())
-        file.close()
+        out_file.close()
         print('Writen ' + str(len(self.rows)) + ' lines to file ' + filename)
 
     def write(self, filename):
+        """Write data to .csv formatted file.
+        File will be encoded as self.encoding.
+
+        :param filename: Absolute or relative path at which to create the file.
+        """
         self.write_csv(filename)
 
     def write_ods(self, filename):
+        """Write data in Open Document Spreadsheet (.ods) format.
+
+        :param filename: Absolute or relative path at which to create the file.
+        """
         from collections import OrderedDict
         from pyexcel_ods3 import save_data
         data = OrderedDict()
@@ -246,10 +319,13 @@ class Tabler(object):
         print('Writen ' + str(len(self.rows)) + ' lines to file ' + filename)
 
     def to_html(self, header=True):
-        """ Returns a string containg the data held in the Table as
-        as html table.
-        If header=True the column headings will be included in <th>
-        tags. If it is False no headings will be written.
+        """Create a string containg the data held in the Table as
+        an HTML table.
+
+        :param header: (Optional) If True HTML table will include column
+            headers. If False they will be omitted.
+
+        :rtype: str
         """
         open_table = '<table>\n'
         close_table = '</table>\n'
@@ -279,15 +355,28 @@ class Tabler(object):
         return html_table
 
     def to_html_file(self, filename, header=True):
+        """Write table as HTML to file.
+
+        :param filename: Absolute or relative path at which the file will be
+            written.
+
+        :param header: (Optional) If True HTML table will include column
+            headers. If False they will be omitted.
+        """
         html_file = open(filename, 'w', encoding='utf-8')
         html_file.write(self.to_html(header=header))
         html_file.close()
 
     def print_r(self):
+        """Print Table data in a readable format.
+        """
         for row in self.rows:
             print(row.row)
 
     def copy(self):
+        """Return duplicate Table object. This Table will can be edited
+        separatly from this one.
+        """
         new_table = Table()
         new_table.header = self.header
         for row in self.rows:
@@ -296,6 +385,15 @@ class Tabler(object):
         return new_table
 
     def sort(self, sort_key, asc=True):
+        """Sort table by column.
+
+        :param sort_key: `string` column header or `int` index of column to
+            sort by (`Table.column[sort_key]`).
+
+        :param asc: If True Table will be sorted by `Table.column[sort_key]`
+            in ascending order. If False order will be descending.
+            (Default: True)
+        """
         if type(sort_key) == str:
             if sort_key in self.header:
                 column = self.header.index(sort_key)
@@ -309,15 +407,16 @@ class Tabler(object):
             self.rows.sort(key=lambda x: x.row[column], reverse=not asc)
 
     def sorted(self, sort_key, asc=True):
+        """Return a sorted duplicate of the Table.
+        """
         temp_table = self.copy()
         temp_table.sort(sort_key, asc)
         return temp_table
 
     def multi_sort_direction(self, sort_direction):
         if type(sort_direction) == str:
-            if sort_direction.upper() not in ('A', 'ASC', 'ASCENDING',
-                                              'D', 'DESC',
-                                              'DESCENDING'):
+            if sort_direction.upper() not in (
+                    'A', 'ASC', 'ASCENDING', 'D', 'DESC', 'DESCENDING'):
                 raise Exception(
                     "sort_direction must be one of 'A', 'ASC'," +
                     " 'ASCENDING', 'D', 'DESC', 'DESCENDING'")
@@ -329,36 +428,18 @@ class Tabler(object):
             elif sort_direction in ('D', 'DESC', 'DESCENDING'):
                 return False
 
-    def multi_sort_validate(self, sort_key):
-        if type(sort_key) not in (int, str):
-            raise TypeError('sort_key Must be int')
-        if sort_key not in self.header:
-            raise KeyError('sort_key must be in header')
-        return True
-
-    def multi_sort(self, *sort_keys):
-        if type(sort_keys) in (list, tuple):
-            if type(sort_keys[0]) in (list, tuple):
-                sort_keys = reversed(sort_keys)
-        for sort_pair in sort_keys:
-            if type(sort_pair) in (str, int):
-                sort_key = sort_pair
-            elif type(sort_pair) in (list, tuple):
-                sort_key, sort_direction = sort_pair
-            else:
-                raise TypeError(
-                    'sort_keys must be int, str, list or tuple. Not ' +
-                    str(type(sort_pair)))
-            if self.multi_sort_validate(sort_key):
-                asc = self.multi_sort_direction(sort_direction)
-                self.sort(sort_key, asc)
-
     def multi_sorted(self, *sort_keys):
         temp_table = self.copy()
         temp_table.multi_sort(*sort_keys)
         return temp_table
 
     def split_by_row_count(self, row_count):
+        """Return `list` of Tables containing part of the data in self.
+        These tables will contain a maximum number of rows specified in
+        row_count.
+
+        :param row_count: Maximum number of rows in each Table.
+        """
         split_tables = []
         for i in range(0, len(self.rows), row_count):
             new_table = Table()
@@ -366,3 +447,38 @@ class Tabler(object):
             new_table.rows = self.rows[i:i + row_count]
             split_tables.append(new_table)
         return split_tables
+
+    def set_table(self):
+        self.set_headers()
+        self.set_columns()
+
+    def load_file(self, rows):
+        self.header = rows[0]
+        for row in rows[1:]:
+            self.rows.append(TableRow(row, self.header))
+        self.set_table()
+
+    def getRows(self):
+        return self.rows
+
+    def parse_csv_file(self, csv_file):
+        rows = []
+        for row in csv_file:
+            rows.append(row)
+        return rows
+
+    def multi_sort_validate(self, sort_key):
+        if type(sort_key) not in (int, str):
+            raise TypeError('sort_key Must be int')
+        if sort_key not in self.header:
+            raise KeyError('sort_key must be in header')
+        return True
+
+    def is_url(self, url):
+        if url[0:7].lower() == 'http://':
+            return True
+        if url[0:8].lower() == 'https://':
+            return True
+        if url[0:6].lower() == 'ftp://':
+            return True
+        return False
