@@ -19,31 +19,61 @@ from .tabletype import TableType
 
 class Table:
 
-    """A Table table.
+    """A wrapper object for tabulated data.
 
-    A wrapper object for tabulated data.
+    A `filename` can be provided to open an existing file. An apropriate
+    :class:`tabler.TableType` object can be provided to specify how the file
+    will be opened. If this is not specified one will be selected based on
+    the file extension in the `filename` using default parameters.
+
+    Alternatively `header` and `data` can be specified to populate the table
+    directly.
+
+    :param table_type: Table Type to use to open a file referenced
+        by `filetype`.
+    :type table_type: :class:`tabler.TableType`
+
+    :param str filepath: Path to file to be opened.
+
+    :param list header: List of column headers to be used if not loaded from
+        file.
+
+    :param data: Two dimensional list. Each list will form a row of cell
+        data.
+    :type data: list(list(str, int or float))
+
+    :raises ValueError: If filepath is None or both header and data are
+        None.
 
     """
 
     def __init__(
             self, filepath=None, table_type=None, header=None, data=None):
-        """Constructs a :class: `Table`.
-        Returns :class: 'Table' object.
+        """Constructs a :class:`Table`.
 
-        :param filename: (Optional) URL, relative path or absolute path
-            to `.csv` file or absolute or relative path to `.ods` file to
-            be loaded.
+        A `filename` can be provided to open an existing file. An apropriate
+        :class:`tabler.TableType` object can be provided to specify how the
+        file will be opened. If this is not specified one will be selected
+        based on the file extension in the `filename` using default parameters.
 
-        :param header: (Optional) List of column headers to be used if not
-            loaded from file.
+        Alternatively `header` and `data` can be specified to populate the
+        table directly.
 
-        :param data: (Optional) List of rows in the form of Lists of cell data
-            to be loaded into the Table.
+        :param table_type: Table Type to use to open a file referenced
+            by `filetype`.
+        :type table_type: :class:`tabler.TableType`
 
-        :param encoding: Encoding to be used when reading or writing files.
-            (Default 'utf-8')
+        :param str filepath: Path to file to be opened.
 
-        :rtype: tabler.Table
+        :param list header: List of column headers to be used if not loaded
+            from file.
+
+        :param data: Two dimensional list. Each list will form a row of cell
+            data.
+        :type data: list(list(str, int or float))
+
+        :raises ValueError: if filepath is None or both header and data are
+            None.
         """
         self.table_type = table_type
         if filepath is not None:
@@ -54,14 +84,14 @@ class Table:
                 try:
                     self.table_type = TableType.get_by_extension(extension)
                 except exceptions.ExtensionNotRecognised:
-                    raise Exception(
+                    raise ValueError(
                         'Table Type not specified and extension {} '
                         'not recognised.'.format(extension))
             self.load(*self.table_type.open(filepath))
         elif isinstance(header, list) and isinstance(data, list):
             self.load(header, data)
         else:
-            raise Exception(
+            raise ValueError(
                 'Either filepath or header and data must be specified')
 
     def __len__(self):
@@ -86,54 +116,21 @@ class Table:
     def __repr__(self):
         return self.__str__()
 
-    def open(self, filename, encoding=None, delimiter=None):
-        """ Creates Table object from a .csv file. This file must be
-        comma separated and utf-8 encoded. The first row must contain
-        column headers.
-
-        If filename is URL formatted load from URL
-        If filename extension is .ods load .ods
-        Otherwise load .csv
-
-        :param filename: :string: URL, relative or absolute path to .ods file
-            from which data will be loaded.
-
-        :param encoding: (optional) Encoding of file to be loaded. (Default:
-            self.encoding)
-
-        :rtype: tabler.Table
-        """
-        if self.is_url(filename):
-            self.open_url(filename)
-        elif filename.split('.')[-1].lower() == 'ods':
-            self.open_ods(filename)
-        else:
-            self.open_csv(filename)
-        return self
-
     def empty(self):
-        """Clear all data from Table.
-
-        :rtype: tabler.Table
-        """
+        """Clear all data."""
         self.rows = []
         self.header = []
         self.columns = []
         self.headers = {}
-        return self
 
     def set_headers(self):
-        """Create a `dictionary` of headers for looking up the apropriate index
-        in self.columns.
-        """
+        """Create a lookup for header indexes."""
         self.headers = {}
         for column in self.header:
             self.headers[column] = self.header.index(column)
 
     def set_columns(self):
-        """Create `Table.columns` to allow data to be accessed by column rather
-        than row.
-        """
+        """Create lookup to allow accessing table data by column."""
         self.columns = []
         column_number = 0
         for column in self.header:
@@ -157,13 +154,10 @@ class Table:
         return False
 
     def append(self, row):
-        """Create a new row in the Table from a list with the correct number
-        of values.
+        """Add new row to table.
 
-        Can also take rows from another Table object.
-
-        :param row: `list` or `tabler.TableRow` object containig one row of
-            data for the table.
+        :param row: Data for new row.
+        :type row: list or :class:`tabler.TableRow`.
         """
         if isinstance(row, list):
             self.rows.append(TableRow(row, self.header))
@@ -172,11 +166,11 @@ class Table:
             self.rows.append(row)
 
     def get_column(self, column):
-        """Return a `list` containing all values from the specified
-        column.
+        """Return all values in a column.
 
-        :param column: `string` column name or `int` index of column to
-            be returned.
+        :param column: Name or index of to be returned.
+        :type column: str or int.
+        :rtype: list
         """
         return self.columns[self.headers[column]]
 
@@ -184,26 +178,23 @@ class Table:
         """
         Remove a specified column from the Table.
 
-        :param column: `string` column name or `int` index of column to
-            be removed.
+        :param column: Name or index of to be removed.
+        :type column: str or int.
         """
-        if column in self.header:
-            for row in self.rows:
-                row.remove_column(column)
-            self.set_headers()
-            self.set_columns()
-            print('DELETED column: ' + column)
-        else:
-            return False
+        for row in self.rows:
+            row.remove_column(column)
+        self.set_headers()
+        self.set_columns()
 
     def load(self, header, data):
         """
-        Create table with header and data.
+        Populate table with header and data.
 
         :param list header: Names of column headers.
 
         :param data: Rows of data. Each row must be a list of cell
             values
+        :type data: list(list(str, int or float))
         """
         self.empty()
         self.header = header
@@ -215,6 +206,13 @@ class Table:
         self.set_table()
 
     def write(self, filepath, table_type=None):
+        """Create file from table.
+
+        :param table_type: Table Type to use to save the file.
+        :type table_type: :class:`tabler.TableType`
+
+        :param str filepath: Path at which the file will be saved.
+        """
         if not isinstance(filepath, pathlib.Path):
             filepath = pathlib.Path(filepath)
         if table_type is None:
@@ -227,30 +225,26 @@ class Table:
         table_type.write(self, filepath)
 
     def print_r(self):
-        """Print Table data in a readable format."""
+        """Print table data in a readable format."""
         for row in self.rows:
             print(row.row)
 
     def copy(self):
-        """Create duplicate Table object."""
+        """Return duplicate Table object."""
         return self.__class__(
             header=self.header, data=[row.row for row in self.rows])
 
     def sort(self, sort_key, asc=True):
         """Sort table by column.
 
-        :param sort_key: `string` column header or `int` index of column to
-            sort by (`Table.column[sort_key]`).
+        :param sort_key: Column header or index of column to sort by.
+        :type sort_key: str or int
 
-        :param asc: If True Table will be sorted by `Table.column[sort_key]`
-            in ascending order. If False order will be descending.
-            (Default: True)
+        :param bool asc: If True Table will be sorted in ascending order.
+            Otherwise order will be descending. (Default: True)
         """
-        if type(sort_key) == str:
-            if sort_key in self.header:
-                column = self.header.index(sort_key)
-            else:
-                raise KeyError('sort_key must be int or in header')
+        if isinstance(sort_key, str):
+            column = self.header.index(sort_key)
         else:
             column = sort_key
         try:
@@ -260,6 +254,14 @@ class Table:
 
     def sorted(self, sort_key, asc=True):
         """Return a sorted duplicate of the Table.
+
+        :param sort_key: Column header or index of column to sort by.
+        :type sort_key: str or int
+
+        :param bool asc: If True Table will be sorted in ascending order.
+            Otherwise order will be descending. (Default: True)
+
+        :rtype: :class:`tabler.Table`.
         """
         temp_table = self.copy()
         temp_table.sort(sort_key, asc)
@@ -286,11 +288,13 @@ class Table:
         return temp_table
 
     def split_by_row_count(self, row_count):
-        """Return `list` of Tables containing part of the data in self.
-        These tables will contain a maximum number of rows specified in
-        row_count.
+        """Split table by row count.
 
-        :param row_count: Maximum number of rows in each Table.
+        Create multiple :class:`tabler.Table` instances each with a subset of
+        this one's data.
+
+        :param int row_count: Number of rows in each Table.
+        :rtype: list(:class:`tabler.Table`).
         """
         split_tables = []
         for i in range(0, len(self.rows), row_count):
@@ -301,24 +305,13 @@ class Table:
         return split_tables
 
     def set_table(self):
+        """Set header and column lookups."""
         self.set_headers()
         self.set_columns()
 
-    def load_file(self, rows):
-        self.header = rows[0]
-        for row in rows[1:]:
-            self.rows.append(TableRow(row, self.header))
-        self.set_table()
-
-    def parse_csv_file(self, csv_file):
-        rows = []
-        for row in csv_file:
-            rows.append(row)
-        return rows
-
     def multi_sort_validate(self, sort_key):
         if type(sort_key) not in (int, str):
-            raise TypeError('Sort Key must be of type int.')
+            raise TypeError('Sort Key must be of type int or str.')
         if sort_key not in self.header:
-            raise KeyError('Sort Key must be in header.')
+            raise KeyError('String Sort Key must be in header.')
         return True
