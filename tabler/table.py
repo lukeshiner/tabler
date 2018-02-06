@@ -108,7 +108,7 @@ class Table:
         columns = str(len(self.columns))
         rows = str(len(self.rows))
         lines = [
-            'CsvFile Object containing {} colomuns and {} rows'.format(
+            'Table Object containing {} colomuns and {} rows'.format(
                 columns, rows),
             'Column Headings: {}'.format(', '.join(self.header))]
         return "\n".join(lines)
