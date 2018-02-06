@@ -1,0 +1,20 @@
+<table>
+    {% if use_header %}
+    <thead>
+        <tr>
+            {% for head in header -%}
+            <th>{{ head }}</th>
+            {% endfor -%}
+        </tr>
+    </thead>
+    {% endif -%}
+    <tbody>
+        {% for row in data -%}
+        <tr>
+            {% for cell in row -%}
+            <td>{{ cell }}</td>
+            {% endfor -%}
+        </tr>
+        {% endfor -%}
+    </tbody>
+</table>

@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
 """
-Tabler package
-~~~~~~~~~~~~~~
+Tabler package.
 
 The tabler package provides the Table class for simple and intutive accessing,
 manipulation and writing of tablulated data in .csv format.
@@ -27,9 +24,11 @@ Formats other than .csv are supported. See full documentation <LINK TO DOCS>
 """
 
 __title__ = 'tabler'
-__version__ = '1.0.02'
+__version__ = '2.0'
 __author__ = 'Luke Shiner'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2016 Luke Shiner'
+__copyright__ = 'Copyright 2018 Luke Shiner'
 
-from .tabler import Table
+from .table import Table  # NOQA
+from . tabletypes import *  # NOQA
+from . tohtml import ToHTML  # NOQA
