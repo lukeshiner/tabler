@@ -1,20 +1,35 @@
-from collections import OrderedDict
+"""This module provides a Table Type for Open Document Format (.ods) files."""
 
-from tabler.tabletype import TableType
+from collections import OrderedDict
 
 import ezodf
 from pyexcel_ods3 import save_data
 
+from .basetabletype import BaseTableType
 
-class ODS(TableType):
+
+class ODS(BaseTableType):
+    """Table Type for Open Document Format (.ods) files.
+
+    :param str extension: Extension of file to save. Default .ods.
+    """
 
     extensions = ['.ods']
 
     def __init__(self, sheet=0, extension='.ods'):
+        """Consturct :class:`tabler.tabletypes.ODS`.
+
+        :param str extension: Extension of file to save. Default .ods.
+        """
         self.sheet = sheet
         super().__init__(extension)
 
     def open(self, path):
+        """Return header and rows from file.
+
+        :param path: Path to file to be opened.
+        :type path: str, pathlib.Path or compatible.
+        """
         doc = ezodf.opendoc(path)
         sheet = doc.sheets[self.sheet]
         rows = []
@@ -30,6 +45,13 @@ class ODS(TableType):
         return rows[0], rows[1:]
 
     def write(self, table, path):
+        """Save data from :class:`tabler.Table` to file.
+
+        :param table: Table to save.
+        :type table: :class:`tabler.Table`
+        :param path: Path to file to be opened.
+        :type path: str, pathlib.Path or compatible.
+        """
         data = OrderedDict()
         sheet = [table.header]
         sheet += table.rows

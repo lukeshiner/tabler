@@ -6,8 +6,8 @@ intutive accessing, manipulation and writing of tablulated data.
 
     Basic Usage::
 
-        >>> import Table
-        >>> table = Table.Table('somefile.csv')
+        >>> from tabler import Table
+        >>> table = Table('somefile.csv')
         >>> table.open('Path/To/Input_File.csv')
         >>> table[0]['Price']
         '29.99'
@@ -25,7 +25,7 @@ __author__ = 'Luke Shiner'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2018 Luke Shiner'
 
-from .table import Table  # NOQA
+from . table import Table  # NOQA
 from . tabletypes import *  # NOQA
 from . tohtml import ToHTML  # NOQA
 

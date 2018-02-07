@@ -10,7 +10,7 @@ import pathlib
 
 from . import exceptions
 from .tablerow import TableRow
-from .tabletype import TableType
+from .tabletypes import BaseTableType
 
 
 class Table:
@@ -22,7 +22,32 @@ class Table:
     :class:`tabler.tablerow.TableRow` class.
 
     Different filetypes can be read and written by providing a subclass of
-    :class:`tabler.TableType` which implements the open and write methods.
+    :class:`tabler.tabletypes.BaseTableType` which implements the open and
+    write methods.
+
+    A `filename` can be provided to open an existing file. An apropriate
+    :class:`tabler.tabletypes.BaseTableType` object can be provided to specify
+    how the file will be opened. If this is not specified one will be selected
+    based on the file extension in the `filename` using default parameters.
+
+    Alternatively **header** and **data** can be specified to populate the
+    table directly.
+
+    :param table_type: Table Type to use to open a file referenced
+        by `filetype`.
+    :type table_type: :class:`tabler.tabletypes.BaseTableType`
+
+    :param str filepath: Path to file to be opened.
+
+    :param list header: List of column headers to be used if not loaded
+        from file.
+
+    :param data: Two dimensional list. Each list will form a row of cell
+        data.
+    :type data: list(list(str, int or float))
+
+    :raises ValueError: If filepath is None or both header and data are
+        None.
     """
 
     def __init__(
@@ -30,16 +55,17 @@ class Table:
         """Construct a :class:`tabler.Table`.
 
         A `filename` can be provided to open an existing file. An apropriate
-        :class:`tabler.TableType` object can be provided to specify how the
-        file will be opened. If this is not specified one will be selected
-        based on the file extension in the `filename` using default parameters.
+        :class:`tabler.tabletypes.BaseTableType` object can be provided to
+        specify how the file will be opened. If this is not specified one will
+        be selected based on the file extension in the `filename` using
+        default parameters.
 
-        Alternatively `header` and `data` can be specified to populate the
+        Alternatively **header** and **data** can be specified to populate the
         table directly.
 
         :param table_type: Table Type to use to open a file referenced
             by `filetype`.
-        :type table_type: :class:`tabler.TableType`
+        :type table_type: :class:`tabler.tabletypes.BaseTableType`
 
         :param str filepath: Path to file to be opened.
 
@@ -50,7 +76,7 @@ class Table:
             data.
         :type data: list(list(str, int or float))
 
-        :raises ValueError: if filepath is None or both header and data are
+        :raises ValueError: If filepath is None or both header and data are
             None.
         """
         self.table_type = table_type
@@ -58,7 +84,7 @@ class Table:
             if self.table_type is None:
                 extension = os.path.splitext(filepath)[-1]
                 try:
-                    self.table_type = TableType.get_by_extension(extension)
+                    self.table_type = BaseTableType.get_by_extension(extension)
                 except exceptions.ExtensionNotRecognised:
                     raise ValueError(
                         'Table Type not specified and extension {} '
@@ -133,7 +159,7 @@ class Table:
         """Add new row to table.
 
         :param row: Data for new row.
-        :type row: list or :class:`tabler.TableRow`.
+        :type row: list or :class:`tabler.tablerow.TableRow`.
         """
         if isinstance(row, list):
             self.rows.append(TableRow(row, self.header))
@@ -185,7 +211,7 @@ class Table:
         """Create file from table.
 
         :param table_type: Table Type to use to save the file.
-        :type table_type: :class:`tabler.TableType`
+        :type table_type: :class:`tabler.BaseTableType`
 
         :param str filepath: Path at which the file will be saved.
         """
@@ -195,7 +221,7 @@ class Table:
             if self.table_type is not None:
                 table_type = self.table_type
             else:
-                table_type = TableType.get_by_extension(filepath.suffix)
+                table_type = BaseTableType.get_by_extension(filepath.suffix)
         if filepath.suffix != table_type.extension:
             filepath = pathlib.Path(str(filepath) + table_type.extension)
         table_type.write(self, filepath)
