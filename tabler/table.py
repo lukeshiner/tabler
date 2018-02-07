@@ -77,8 +77,6 @@ class Table:
         """
         self.table_type = table_type
         if filepath is not None:
-            if not isinstance(filepath, pathlib.Path):
-                filepath = pathlib.Path(filepath)
             if self.table_type is None:
                 extension = os.path.splitext(filepath)[-1]
                 try:
@@ -197,12 +195,12 @@ class Table:
         :type data: list(list(str, int or float))
         """
         self.empty()
-        self.header = header
+        self.header = [head for head in header]
         for row in data:
             if isinstance(row, TableRow):
                 self.rows.append(row)
             else:
-                self.rows.append(TableRow(row, header))
+                self.rows.append(TableRow([cell for cell in row], header))
         self.set_table()
 
     def write(self, filepath, table_type=None):
