@@ -39,5 +39,5 @@ class CSVURL(CSV):
             if len(line) > 0:
                 text.append(line.decode(self.encoding))
         csv_file = csv.reader(text)
-        rows = self.parse_csv_file(csv_file)
+        rows = [row for row in csv_file]
         return rows[0], rows[1:]
