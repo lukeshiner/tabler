@@ -1,6 +1,5 @@
 """
 Tabler package.
-===============
 
 The tabler package provides the :class:`tabler.Table` class for simple and
 intutive accessing, manipulation and writing of tablulated data.

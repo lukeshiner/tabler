@@ -1,12 +1,19 @@
-#!/usr/bin/python3
+"""Provides the TableRow class.
 
-# TableRow by Luke Shiner (luke@lukeshiner.com)
+TableRow provides methods for working with rows in :class:`tabler.Table`
+instances.
+"""
 
 
-class TableRow(object):
-    """ Container for a row of data. Used by Table object. """
+class TableRow:
+    """Provide methods for rows in :class:`tabler.Table` instances."""
 
     def __init__(self, row, header):
+        """Instansiate :class:`TableRow`.
+
+        :param list row: Data stored in this row.
+        :param list header: Column headers from table.
+        """
         self.row = row
         self.header = header
         self.headers = {}
@@ -31,33 +38,36 @@ class TableRow(object):
             self.row[self.headers[key]] = str(item)
 
     def __str__(self):
-        new_string = ""
-        for item in self.to_array():
-            new_string = new_string + "'" + item + "', "
-        return new_string[0:-2]
+        return ', '.join([cell for cell in self.row])
 
     def __len__(self):
         return len(self.row)
 
     def get_column(self, column):
-        """ Returns the value held in the specified column.  """
+        """Return the value held in the specified column."""
         return self.row[self.headers[column]]
 
     def update_column(self, column, value):
+        """Change value of column.
+
+        :param str column: Header for column to be updated.
+        :param value: Value to be inserted into column.
+        """
         self.row[self.headers[column]] = str(value)
 
     def remove_column(self, column):
-        """ Removes the specified column.  """
-        if column in self.header:
-            columnIndex = self.header.index(column)
-            self.row.pop(columnIndex)
-            self.header.pop(columnIndex)
-        else:
-            return False
+        """Remove the passed column.
 
-    def to_array(self):
-        """ Returns the data row as a list object.  """
-        return self.row
+        :param str column: Header for column to be removed.
+        :raises: ValueError: If column is not a valid column header.
+        """
+        columnIndex = self.header.index(column)
+        self.row.pop(columnIndex)
+        self.header.pop(columnIndex)
 
     def copy(self):
+        """Return duplicate tabler.tablerow.TableRow object.
+
+        :rtype: :class:`tabler.tablerow.TableRow`.
+        """
         return TableRow(self.row, self.header)

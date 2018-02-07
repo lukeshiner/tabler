@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
+"""Table class.
 
-"""
-Table.Table
-~~~~~~~~~~~~~
-
-This module provides a Table object to read, write and edit tabulated
-data.
+This module provides the :class:`tabler.Table` class to read, write and edit
+tabulated data.
 
 """
 
@@ -18,38 +14,20 @@ from .tabletype import TableType
 
 
 class Table:
-
     """A wrapper object for tabulated data.
 
-    A `filename` can be provided to open an existing file. An apropriate
-    :class:`tabler.TableType` object can be provided to specify how the file
-    will be opened. If this is not specified one will be selected based on
-    the file extension in the `filename` using default parameters.
+    Allows access to and manipulation of tablulated data. This data can be
+    input directly or loaded from a file. Data can also be writen data to a
+    file. Table rows are encapsulated with the
+    :class:`tabler.tablerow.TableRow` class.
 
-    Alternatively `header` and `data` can be specified to populate the table
-    directly.
-
-    :param table_type: Table Type to use to open a file referenced
-        by `filetype`.
-    :type table_type: :class:`tabler.TableType`
-
-    :param str filepath: Path to file to be opened.
-
-    :param list header: List of column headers to be used if not loaded from
-        file.
-
-    :param data: Two dimensional list. Each list will form a row of cell
-        data.
-    :type data: list(list(str, int or float))
-
-    :raises ValueError: If filepath is None or both header and data are
-        None.
-
+    Different filetypes can be read and written by providing a subclass of
+    :class:`tabler.TableType` which implements the open and write methods.
     """
 
     def __init__(
             self, filepath=None, table_type=None, header=None, data=None):
-        """Constructs a :class:`Table`.
+        """Construct a :class:`tabler.Table`.
 
         A `filename` can be provided to open an existing file. An apropriate
         :class:`tabler.TableType` object can be provided to specify how the
@@ -266,6 +244,13 @@ class Table:
         return temp_table
 
     def multi_sort_direction(self, sort_direction):
+        """Convert sort direction into boolean.
+
+        :param sort_direction: Sort direction to convert.
+        :type param: str or bool.
+
+        :rtype: bool. True if ascending, False if decending.
+        """
         if type(sort_direction) == str:
             if sort_direction.upper() not in (
                     'A', 'ASC', 'ASCENDING', 'D', 'DESC', 'DESCENDING'):
@@ -281,6 +266,11 @@ class Table:
                 return False
 
     def multi_sorted(self, *sort_keys):
+        """Return copy of self sorted by multiple keys.
+
+        :param list(tuple) sort_keys: Keys to sort by.
+        :rtype: :class:`tabler.Table`.
+        """
         temp_table = self.copy()
         temp_table.multi_sort(*sort_keys)
         return temp_table
@@ -308,6 +298,13 @@ class Table:
         self.set_columns()
 
     def multi_sort_validate(self, sort_key):
+        """Validate sort key.
+
+        :param sort_key: Sort key to validate.
+        :type sort_key: int or str.
+
+        :rtype: bool.
+        """
         if type(sort_key) not in (int, str):
             raise TypeError('Sort Key must be of type int or str.')
         if sort_key not in self.header:
