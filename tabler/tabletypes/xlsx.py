@@ -9,16 +9,22 @@ class XLSX(BaseTableType):
     """Table Type for Microsft Excel (.xlsx) files.
 
     :param str extension: Extension of file to save. Default .xlsx.
+    :param verbose: If True print status messages. If None use
+        :class:`tabler.tabletype.BaseTableType`.verbose.
+    :type verbose: bool or None.
     """
 
     extensions = ['.xlsx']
 
-    def __init__(self, extension='.xlsx'):
+    def __init__(self, extension='.xlsx', verbose=True):
         """Consturct :class:`tabler.tabletypes.XLSX`.
 
         :param str extension: Extension of file to save. Default .xlsx.
+        :param verbose: If True print status messages. If None use
+            :class:`tabler.tabletype.BaseTableType`.verbose.
+        :type verbose: bool or None.
         """
-        super().__init__(extension)
+        super().__init__(extension, verbose=verbose)
 
     def open(self, path):
         """Return header and rows from file.
@@ -47,4 +53,4 @@ class XLSX(BaseTableType):
         for row in table:
             ws.append(row.row)
         wb.save(path)
-        print('Writen ' + str(len(table.rows)) + ' lines to file ' + str(path))
+        print('Written {} rows to file {}'.format(len(table.rows), path))

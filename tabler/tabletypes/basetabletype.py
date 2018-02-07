@@ -37,12 +37,19 @@ class BaseTableType:
         extensions = ['.csv', '.txt']
     """
 
-    def __init__(self, extension):
+    verbose = True
+
+    def __init__(self, extension, verbose=None):
         """Construct :class:`tabler.tabletypes.BaseTableType`.
 
         :param str extension: File extension.
+        :param verbose: If True print status messages. If None use
+            :class:`tabler.tabletype.BaseTableType`.verbose.
+        :type verbose: bool or None.
         """
         self.extension = extension
+        if verbose is not None:
+            verbose = self.verbose
 
     @classmethod
     def get_by_extension(cls, extension):

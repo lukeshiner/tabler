@@ -12,21 +12,29 @@ class HTML(BaseTableType):
         Default(True)
     :param str encoding: Encoding of file. Default: utf8.
     :param str extension: Extension of file to save. Default .html.
+    :param verbose: If True print status messages. If None use
+        :class:`tabler.tabletype.BaseTableType`.verbose.
+    :type verbose: bool or None.
     """
 
     extensions = ['.html']
 
-    def __init__(self, use_header=True, encoding='utf8', extension='.html'):
+    def __init__(
+            self, use_header=True, encoding='utf8', extension='.html',
+            verbose=True):
         """Consturct :class:`tabler.tabletypes.HTML`.
 
         :param bool use_header: If True file will include column headers.
             Default(True)
         :param str encoding: Encoding of file. Default: utf8.
         :param str extension: Extension of file to save. Default .html.
+        :param verbose: If True print status messages. If None use
+            :class:`tabler.tabletype.BaseTableType`.verbose.
+        :type verbose: bool or None.
         """
         self.encoding = encoding
         self.use_header = use_header
-        super().__init__(extension)
+        super().__init__(extension, verbose=verbose)
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
@@ -40,4 +48,4 @@ class HTML(BaseTableType):
         html_file = open(path, 'w', encoding=self.encoding)
         html_file.write(html)
         html_file.close()
-        print('Writen ' + str(len(table.rows)) + ' lines to file ' + str(path))
+        print('Written {} rows to file {}'.format(len(table.rows), path))

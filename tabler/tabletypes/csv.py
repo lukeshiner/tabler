@@ -13,20 +13,28 @@ class CSV(BaseTableType):
     :param str encoding: Encoding of file. Default: utf8.
     :param str delimiter: Delimiter used by file. Default , (Comma).
     :param str extension: Extension of file to save. Default .csv.
+    :param verbose: If True print status messages. If None use
+        :class:`tabler.tabletype.BaseTableType`.verbose.
+    :type verbose: bool or None.
     """
 
     extensions = ['.csv', '.txt']
 
-    def __init__(self, encoding='utf-8', delimiter=',', extension='.csv'):
+    def __init__(
+            self, encoding='utf-8', delimiter=',', extension='.csv',
+            verbose=None):
         """Consturct :class:`tabler.tabletypes.CSV`.
 
         :param str encoding: Encoding of file. Default: utf8.
         :param str delimiter: Delimiter used by file. Default , (Comma).
         :param str extension: Extension of file to save. Default .csv.
+        :param verbose: If True print status messages. If None use
+            :class:`tabler.tabletype.BaseTableType`.verbose.
+        :type verbose: bool or None.
         """
         self.encoding = encoding
         self.delimiter = delimiter
-        super().__init__(extension)
+        super().__init__(extension, verbose=verbose)
 
     def open(self, path):
         """Return header and rows from file.
@@ -54,7 +62,7 @@ class CSV(BaseTableType):
         for row in table:
             writer.writerow(row.row)
         csv_file.close()
-        print('Writen ' + str(len(table.rows)) + ' lines to file ' + str(path))
+        print('Written {} rows to file {}'.format(len(table.rows), path))
 
 
 class CSVURL(CSV):
