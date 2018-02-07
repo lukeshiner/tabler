@@ -1,112 +1,140 @@
+"""Tests for tabler.Table class."""
+
 import os
 
-from tabler import CSV, HTML, ODS, XLSX, Table, ToHTML
+from tabler import CSV, HTML, ODS, XLSX, Table
 
 import pytest
 
 
-@pytest.fixture
-def table():
-    header = ['Col1', 'Col2', 'Col3']
-    data = [['Red', 'Green', 'Blue'], ['Orange', 'Yellow', 'Magenta']]
-    return Table(header=header, data=data)
+class TestTable:
+    """Tests for tabler.Table class."""
 
+    TEST_CSV_PATH = str(os.path.join(
+        os.path.dirname(__file__), 'testfile.csv'))
+    TEST_ODS_PATH = str(os.path.join(
+        os.path.dirname(__file__), 'testfile.ods'))
+    TEST_XLSX_PATH = str(os.path.join(
+        os.path.dirname(__file__), 'testfile.xlsx'))
 
-@pytest.fixture
-def test_csv_path():
-    return str(os.path.join(os.path.dirname(__file__), 'testfile.csv'))
+    TEST_HEADER = ['Col1', 'Col2', 'Col3']
+    TEST_ROW_1 = ['Red', 'Green', 'Blue']
+    TEST_ROW_2 = ['Orange', 'Yellow', 'Magenta']
+    TEST_DATA = [TEST_ROW_1, TEST_ROW_2]
 
+    def is_valid_table(self, table):
+        """Check tabler.Table object is valid."""
+        assert len(table.header) == 3
+        assert len(table) == 2
+        assert all([len(row) == 3 for row in table])
+        assert table.header == self.TEST_HEADER
+        assert table.rows[0].row == self.TEST_ROW_1
+        assert table.rows[1].row == self.TEST_ROW_2
+        assert table[0]['Col1'] == 'Red'
 
-@pytest.fixture
-def test_ods_path():
-    return str(os.path.join(os.path.dirname(__file__), 'testfile.ods'))
+    def get_basic_table(self):
+        """Create tabler.Table object populated with test data."""
+        header = self.TEST_HEADER
+        data = self.TEST_DATA
+        return Table(header=header, data=data)
 
+    def test_create_table_with_header_and_data(self):
+        """Test tabler.Table with test data is valid."""
+        table = self.get_basic_table()
+        self.is_valid_table(table)
 
-@pytest.fixture
-def test_xlsx_path():
-    return str(os.path.join(os.path.dirname(__file__), 'testfile.xlsx'))
+    def test_create_table_no_args_raises(self):
+        """Test calling tabler.Table without arguments raises VauleError."""
+        with pytest.raises(ValueError):
+            Table()
 
+    def test_access_cell_by_header_column_index(self):
+        """Test row and column indexes can be used to access cells."""
+        table = self.get_basic_table()
+        assert table[0][0] == 'Red'
 
-def test_create_table_with_header_and_data(table):
-    assert len(table.header) == 3
-    assert len(table) == 2
-    assert all([len(row) == 3 for row in table])
+    def test_access_cell_by_header_name_column_index(self):
+        """Test row index and column name can be used to access cells."""
+        table = self.get_basic_table()
+        assert table[0]['Col1'] == 'Red'
 
+    def test_change_cell_value(self):
+        """Test cell data can be updated."""
+        table = self.get_basic_table()
+        assert table[0]['Col1'] == 'Red'
+        table[0]['Col1'] = 'Green'
+        assert table[0]['Col1'] == 'Green'
 
-def test_create_table_no_args_raises_valueerror():
-    with pytest.raises(ValueError):
-        Table()
+    def test_get_table_column(self):
+        """Test tabler.Table.get_column method returns column data."""
+        table = self.get_basic_table()
+        assert table.get_column('Col1') == ['Red', 'Orange']
 
+    def test_open_csv(self):
+        """Test tabler.Table can be created from CSV file."""
+        table = Table(self.TEST_CSV_PATH, table_type=CSV())
+        self.is_valid_table(table)
 
-def test_access_cell_by_header_column_index(table):
-    assert table[0][0] == 'Red'
+    def test_open_ods(self):
+        """Test tabler.Table can be created from .ods file."""
+        table = Table(self.TEST_ODS_PATH, table_type=ODS())
+        self.is_valid_table(table)
 
+    def test_open_xlsx(self):
+        """Test tabler.Table can be created from .xlsx file."""
+        table = Table(self.TEST_XLSX_PATH, table_type=XLSX())
+        self.is_valid_table(table)
 
-def test_access_cell_by_header_name_column_index(table):
-    assert table[0]['Col1'] == 'Red'
+    def test_save_csv_file(self, tmpdir):
+        """Test tabler.Table can create .csv file."""
+        table = self.get_basic_table()
+        filepath = os.path.join(tmpdir, 'testfile.csv')
+        table.write(filepath, table_type=CSV())
 
+    def test_save_ods_file(self, tmpdir):
+        """Test tabler.Table can create .ods file."""
+        table = self.get_basic_table()
+        filepath = os.path.join(tmpdir, 'testfile.ods')
+        table.write(filepath, table_type=ODS())
 
-def test_change_cell_value(table):
-    assert table[0]['Col1'] == 'Red'
-    table[0]['Col1'] = 'Green'
-    assert table[0]['Col1'] == 'Green'
+    def test_save_xlsx_file(self, tmpdir):
+        """Test tabler.Table can create .xlsx file."""
+        table = self.get_basic_table()
+        filepath = os.path.join(tmpdir, 'testfile.xlsx')
+        table.write(filepath, table_type=XLSX())
 
+    def test_save_html_file(self, tmpdir):
+        """Test tabler.Table can create .html file."""
+        table = self.get_basic_table()
+        filepath = os.path.join(tmpdir, 'testfile.html')
+        table.write(filepath, table_type=HTML())
 
-def test_get_table_column(table):
-    assert table.get_column('Col1') == ['Red', 'Orange']
+    def test_open_file_without_table_type(self):
+        """Test valid TableType can be found when writing a file."""
+        self.is_valid_table(Table(self.TEST_CSV_PATH))
 
+    def test_save_file_without_extension(self, tmpdir):
+        """Test valid extension can be found from TableType."""
+        table = self.get_basic_table()
+        filename = 'testfile'
+        path = str(tmpdir.join(filename))
+        table.write(filepath=path, table_type=CSV())
+        assert os.path.exists(path + '.csv')
 
-def open_table(filename, table_type):
-    return Table(filename, table_type=table_type)
+    def test_save_file_without_table_type(self, tmpdir):
+        """Test valid TableType can be found when opening a file."""
+        table = self.get_basic_table()
+        filename = 'testfile.csv'
+        path = str(tmpdir.join(filename))
+        table.write(filepath=path)
+        assert os.path.exists(path)
 
+    def test_open_tab_delimited_csv(self):
+        """Test .csv file can be opened with non default delimiter."""
+        path = str(os.path.join(os.path.dirname(__file__), 'testfile_tab.csv'))
+        self.is_valid_table(Table(path, CSV(delimiter='\t')))
 
-def test_open_csv(test_csv_path):
-    open_table(test_csv_path, CSV())
-
-
-def test_open_ods(test_ods_path):
-    open_table(test_ods_path, ODS())
-
-
-def test_open_xlsx(test_xlsx_path):
-    open_table(test_xlsx_path, XLSX())
-
-
-def save_table(filename, table_type, table, tmpdir):
-    path = str(tmpdir.join(filename))
-    table.write(filepath=path, table_type=table_type)
-    assert os.path.exists(path)
-
-
-def test_save_csv_file(table, tmpdir):
-    save_table('testfile.csv', CSV(), table, tmpdir)
-
-
-def test_save_ods_file(table, tmpdir):
-    save_table('testfile.ods', ODS(), table, tmpdir)
-
-
-def test_save_xlsx_file(table, tmpdir):
-    save_table('testfile.xlsx', XLSX(), table, tmpdir)
-
-
-def test_save_html_file(table, tmpdir):
-    save_table('testfile.html', HTML(), table, tmpdir)
-
-
-def test_open_file_without_table_type(test_csv_path):
-    Table(test_csv_path)
-
-
-def test_save_file_without_extension(table, tmpdir):
-    filename = 'testfile'
-    path = str(tmpdir.join(filename))
-    table.write(filepath=path, table_type=CSV())
-    assert os.path.exists(path + '.csv')
-
-
-def test_save_file_without_table_type(table, tmpdir):
-    filename = 'testfile.csv'
-    path = str(tmpdir.join(filename))
-    table.write(filepath=path)
-    assert os.path.exists(path)
+    def test_open_csv_with_txt_extension(self):
+        """Test .csv file can be opened with non default file extension."""
+        path = str(os.path.join(os.path.dirname(__file__), 'testfile.txt'))
+        self.is_valid_table(Table(path, CSV()))
