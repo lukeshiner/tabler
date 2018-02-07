@@ -10,6 +10,10 @@ Welcome to Tabler's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   table
+   tabletypes
+   exceptions
+
 
 
 Indices and tables
@@ -18,11 +22,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-.. automodule:: tabler
-    :members:
-
-The Table class
-================
-.. autoclass:: tabler.Table
-    :members:
