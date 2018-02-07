@@ -28,3 +28,5 @@ __copyright__ = 'Copyright 2018 Luke Shiner'
 from .table import Table  # NOQA
 from . tabletypes import *  # NOQA
 from . tohtml import ToHTML  # NOQA
+
+Tabler = Table  # Backwards compatibility with v1.*
