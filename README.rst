@@ -10,17 +10,19 @@ Simple interaction with tabulated data
 What is tabler?
 ===============
 
-The tabler package provides the Tabler class which is intended to make the creation and maniplulation of tabulated data intuitive.
+The tabler package provides the Table class which is intended to make the creation and maniplulation of tabulated data intuitive.
 
 It can:
-    + Open .csv files from a relative path, absolute path or url
-    + Update text in cells
-    + Write out .csv files
-    + Read and write .ods files (**Experimental**)
+    + Open various spreadsheet files from a relative path, absolute path or url.
+    + Update text in cells.
+    + Write files in various formats.
 
-Tabler is not, however, a spreadsheet. It is designed for manipulating tables
-of text. Users looking for complex mathematical operations may be better
-served by numpy (http://www.numpy.org/)
+Compatible formats:
+    + .csv
+    + Open Spreadsheet Format .ods
+    + Microsoft Excel .xlsx
+    + HTML (Write only)
+    + Other filetypes can be added by subclassing the BaseTableType class.
 
 Quick Start
 ===========
@@ -28,41 +30,35 @@ Quick Start
 Creating a Table (Basic)
 ________________________
 
-Import the Tabler class from the tabler package and instanciate it::
+Import the Tabler class from the tabler package and instanciate it with a header and data::
 
-    from tabler import Tabler
+    from tabler import Table
 
-    table = Tabler()
+    table = Tabler(
+        header=['SKU', 'Item Title', 'Price'],
+        data=[[009, 'Item 1', 5.00], [010, 'Item 2', 9.99]])
 
-Tabler requires a column names. The column names are a list of strings located at ``Tabler().header``.
-Many of tabler's functions will not work as intended without a header supplied, therefore when creating blank tables
-it is highly reccomended that a header be specified at instanciation by creating the necessary list and passing it to
-the ``header`` keyword argument of it's ``__init__()`` function::
+Or pass the path to a file to open::
 
-    header = ['SKU', 'Item Title', 'Price']
-    table = Tabler(header=header)
+    from tabler import Table
 
-Alternativly ``table.header`` can be set directly after instanciation::
+    Table('path/to/some/file.csv')
 
-    table.header = ['SKU', 'Item Title', 'Price']
+This will recognise filetypes with the following extensions:
+    + .csv (UTF-8 encoded and comma delimited).
+    + .txt (UTF-8 encoded and comma delimited).
+    + .xlsx
+    + .ods
 
+To explicitly open a file of a specifict type a Table Type object must be provided.::
 
-Opening a Table (Basic)
-_______________________
-Table will take a relative or absolute path or a URL it's first positional argument.
+    from tabler import Table
+    from tabler.tabletypes import CSV
 
-If the string begins with 'http://' or 'https://' it will use the ``requests`` module to attempt to open a ``.csv`` file at the indicated resource::
+    Table('path/to/some/file.csv', table_type=CSV(delimiter='\t'))
 
-    Tabler('http://www.example.com/stock.csv')
+These are subclasses of ``BaseTableType`` and allow the method of reading the file to be customised.
 
-
-If the string ends with '.csv' it will atempt to open the file at the specified location as a ``.csv`` file::
-
-    Tabler('Desktop/stock.csv')
-
-If the string ends with '.ods' it will atempt to open the file as an Open Doucument Format spreadsheet (``.ods``)::
-
-    Tabler('Desktop/stock.ods')
 
 Reading a Table (Basic)
 _______________________
@@ -105,41 +101,12 @@ Data can be loaded into an empty Tabler object by passing a ``list`` of rows in 
 Writing a Table to a File (Basic)
 _________________________________
 
-To write a basic ``.csv`` file of the data in a Tabler object call the ``.write`` method and pass a filepath::
+Writing a file is similar to reading a file. ``Table Types`` are used in the same way to manage writing files::
 
-    table.write('Desktop/stock.csv')
+    table.write('path/to/save.csv', table_type=CSV(delimiter='\t')
 
-An ods file can be written with the ``Tabler.write_ods`` method, note, however, that all cells will be written as strings::
+The ``table type`` will be set automatically for reconised file extensions if not explicitly set.
 
-    table.write_ods('Desktop/stock.ods')
-
-General Use
-=================
-
-Creating a Table
-________________
-
-Opening a Table
-_______________
-
-Editing a Table
-_______________
-
-Writing a Table
-_______________
-
-Sorting a Table
-_______________
-
-Working with HTML Tables
-________________________
-
-Working with Open Document Spreadsheet (.ods) Tables
-____________________________________________________
-
-
-Appendix
-========
 
 Contact
 _______
