@@ -2,6 +2,12 @@
 Tabler Readme
 =============
 
+.. image:: https://badge.fury.io/py/tabler.svg
+    :target: https://pypi.org/project/tabler/
+
+.. image:: https://pypip.in/py_versions/tabler/badge.svg
+    :target: https://pypi.org/project/tabler/
+
 .. image:: https://travis-ci.org/axevalley/tabler.svg?branch=master
     :target: https://travis-ci.org/axevalley/tabler
 
