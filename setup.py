@@ -9,10 +9,9 @@ with open("README.rst", "r") as readme:
 
 setuptools.setup(
     name="tabler",
-    version="2.1.1",
+    version="2.1.2",
     description="Simple interface for tabulated data and .csv files",
     long_description=long_description,
-    long_description_content_type="text/x-rst",
     url="https://github.com/axevalley/tabler.git",
     author="Luke Shiner",
     author_email="luke@lukeshiner.com",
