@@ -9,7 +9,7 @@ with open("README.rst", "r") as readme:
 
 setuptools.setup(
     name="tabler",
-    version="2.1.3",
+    version="2.1.4",
     description="Simple interface for tabulated data and .csv files",
     long_description=long_description,
     url="https://github.com/axevalley/tabler.git",
@@ -22,8 +22,11 @@ setuptools.setup(
     include_package_data=True,
     python_requires='>=3.6.0',
     classifiers=[
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Development Status :: 4 - Beta"],
+        "Development Status :: 4 - Beta",
+        "Natural Language :: English",
+        "Topic :: Utilities",
+        "Topic :: Other/Nonlisted Topic"],
     )
