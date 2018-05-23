@@ -1,4 +1,5 @@
-"""Table class.
+"""
+Table class.
 
 This module provides the :class:`tabler.Table` class to read, write and edit
 tabulated data.
@@ -76,7 +77,7 @@ class Table:
             data.
         :type data: list(list(str, int or float))
 
-        :raises ValueError: If filepath is None or both header and data are
+        :raises TypeError: If filepath is None or both header and data are
             None.
         """
         self.table_type = table_type
@@ -90,11 +91,10 @@ class Table:
                         'Table Type not specified and extension {} '
                         'not recognised.'.format(extension))
             self.load(*self.table_type.open(filepath))
-        elif isinstance(header, list) and isinstance(data, list):
-            self.load(header, data)
+        elif header is not None and data is not None:
+            self.load(list(header), list(data))
         else:
-            raise ValueError(
-                'Either filepath or header and data must be specified')
+            raise exceptions.TableInitialisationError()
 
     def __len__(self):
         return len(self.rows)

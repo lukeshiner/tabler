@@ -45,7 +45,7 @@ class TestTable:
 
     def test_create_table_no_args_raises(self):
         """Test calling tabler.Table without arguments raises VauleError."""
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             Table()
 
     def test_access_cell_by_header_column_index(self):
