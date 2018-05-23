@@ -21,6 +21,7 @@ setuptools.setup(
         "requests", "ezodf", "lxml", "openpyxl", "pyexcel_ods3", "jinja2"],
     packages=setuptools.find_packages(),
     include_package_data=True,
+    python_requires='>3.6.0',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
