@@ -1,0 +1,6 @@
+include tabler/tohtml/*.html
+include tabler/tests/*.csv
+include tabler/tests/*.txt
+include tabler/tests/*.xlsx
+include tabler/tests/*.ods
+include tabler/tests/*.html
