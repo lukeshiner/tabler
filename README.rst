@@ -1,6 +1,10 @@
 =============
 Tabler Readme
 =============
+
+.. image:: https://travis-ci.org/axevalley/tabler.svg?branch=master
+    :target: https://travis-ci.org/axevalley/tabler
+
 --------------------------------------
 Simple interaction with tabulated data
 --------------------------------------
@@ -10,7 +14,7 @@ Simple interaction with tabulated data
 What is tabler?
 ===============
 
-The tabler package provides the Table class which is intended to make the creation and maniplulation of tabulated data intuitive.
+The tabler package provides the Table class which makes the creation and maniplulation of tabulated data intuitive.
 
 It can:
     + Open various spreadsheet files from a relative path, absolute path or url.
