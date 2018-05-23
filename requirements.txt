@@ -4,3 +4,4 @@ ezodf
 lxml
 openpyxl
 pyexcel_ods3
+jinja2
