@@ -1,7 +1,7 @@
 """Exceptions for tabler package."""
 
 
-class ExtensionNotRecognised(Exception):
+class ExtensionNotRecognised(ValueError):
     """Error finding TableType subclass by file extension."""
 
     def __init__(self, extension):
