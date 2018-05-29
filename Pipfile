@@ -4,11 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"e1839a8" = {path = ".", editable = true}
+requests = "*"
+ezodf = "*"
+lxml = "*"
+openpyxl = "*"
+odswriter = "*"
+"jinja2" = "*"
 
 [dev-packages]
 pytest = "*"
 sphinx = "*"
+sphinx-rtd-theme = "*"
 
 [requires]
 python_version = "3.6"

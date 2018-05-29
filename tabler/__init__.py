@@ -25,8 +25,10 @@ __author__ = 'Luke Shiner'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2018 Luke Shiner'
 
-from . table import Table  # NOQA
-from . tabletypes import *  # NOQA
-from . tohtml import ToHTML  # NOQA
+from .table import Table  # NOQA
+from .tabletypes import *  # NOQA
+from .tohtml import ToHTML  # NOQA
+
+__version__ = '2.2'
 
 Tabler = Table  # Backwards compatibility with v1.*

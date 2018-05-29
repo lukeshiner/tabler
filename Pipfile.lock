@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e3e30f10485ec1b10301a84ddf9c2ce31c011943009db7f3a20857bfe2c280f6"
+            "sha256": "049d339f72e763efdbc887bc6e73e0e3f72c4b104a3720a14786da495ca67508"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,10 +30,6 @@
             ],
             "version": "==3.0.4"
         },
-        "e1839a8": {
-            "editable": true,
-            "path": "."
-        },
         "et-xmlfile": {
             "hashes": [
                 "sha256:614d9722d572f6246302c4491846d2c393c199cfa4edc9af593437691683335b"
@@ -44,6 +40,7 @@
             "hashes": [
                 "sha256:000da534f689c6d55297a08f9e2ed7eada9810d194d31d164388162fb391122d"
             ],
+            "index": "pypi",
             "version": "==0.3.2"
         },
         "idna": {
@@ -65,6 +62,7 @@
                 "sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd",
                 "sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"
             ],
+            "index": "pypi",
             "version": "==2.10"
         },
         "lxml": {
@@ -98,6 +96,7 @@
                 "sha256:defabb7fbb99f9f7b3e0b24b286a46855caef4776495211b066e9e6592d12b04",
                 "sha256:e2629cdbcad82b83922a3488937632a4983ecc0fed3e5cfbf430d069382eeb9b"
             ],
+            "index": "pypi",
             "version": "==4.2.1"
         },
         "markupsafe": {
@@ -110,12 +109,14 @@
             "hashes": [
                 "sha256:f4c6195dc95cc4a7c2bd98a8e174ddfb9eb98b0329ffe9a740ee825a319d62a0"
             ],
+            "index": "pypi",
             "version": "==0.4.0"
         },
         "openpyxl": {
             "hashes": [
                 "sha256:9239b74faf175dc4276a5fc277655fc53c2f704ded39e680d35e6a39e1913f69"
             ],
+            "index": "pypi",
             "version": "==2.5.4"
         },
         "requests": {
@@ -123,6 +124,7 @@
                 "sha256:63b52e3c866428a224f97cab011de738c36aec0185aa91cfacd418b5d58911d1",
                 "sha256:ec22d826a36ed72a7358ff3fe56cbd4ba69dd7a6718ffd450ff0e9df7a47ce6a"
             ],
+            "index": "pypi",
             "version": "==2.19.1"
         },
         "urllib3": {
@@ -203,6 +205,7 @@
                 "sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd",
                 "sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"
             ],
+            "index": "pypi",
             "version": "==2.10"
         },
         "markupsafe": {
@@ -280,6 +283,7 @@
                 "sha256:63b52e3c866428a224f97cab011de738c36aec0185aa91cfacd418b5d58911d1",
                 "sha256:ec22d826a36ed72a7358ff3fe56cbd4ba69dd7a6718ffd450ff0e9df7a47ce6a"
             ],
+            "index": "pypi",
             "version": "==2.19.1"
         },
         "six": {
@@ -303,6 +307,14 @@
             ],
             "index": "pypi",
             "version": "==1.7.5"
+        },
+        "sphinx-rtd-theme": {
+            "hashes": [
+                "sha256:aa3e190392e963551432de7df24b8a5fbe5b71a2f4fcd9d5b75808b52ad999e5",
+                "sha256:de88d637a60371d4f923e06b79c4ba260490c57d2ab5a8316942ab5d9a6ce1bf"
+            ],
+            "index": "pypi",
+            "version": "==0.4.0"
         },
         "sphinxcontrib-websupport": {
             "hashes": [
