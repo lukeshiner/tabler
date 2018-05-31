@@ -1,9 +1,7 @@
 """This module provides a Table Type for Open Document Format (.ods) files."""
 
-from collections import OrderedDict
-
 import ezodf
-from pyexcel_ods3 import save_data
+import odswriter
 
 from .basetabletype import BaseTableType
 
@@ -58,9 +56,8 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        data = OrderedDict()
-        sheet = [table.header]
-        sheet += table.rows
-        data.update({"Sheet 1": sheet})
-        save_data(str(path), data)
+        with odswriter.writer(open(path, 'wb')) as odsfile:
+            for row in table:
+                odsfile.writerow(table.header)
+                odsfile.writerow(row)
         print('Written {} rows to file {}'.format(len(table.rows), path))

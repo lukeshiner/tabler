@@ -9,7 +9,7 @@ with open("README.rst", "r") as readme:
 
 setuptools.setup(
     name="tabler",
-    version="2.1.4",
+    version="2.2",
     description="Simple interface for tabulated data and .csv files",
     long_description=long_description,
     url="https://github.com/axevalley/tabler.git",
@@ -17,7 +17,7 @@ setuptools.setup(
     author_email="luke@lukeshiner.com",
     keywords=["table", "csv", "simple"],
     install_requires=[
-        "requests", "ezodf", "lxml", "openpyxl", "pyexcel_ods3", "jinja2"],
+        "requests", "ezodf", "lxml", "openpyxl", "odswriter", "jinja2"],
     packages=setuptools.find_packages(),
     include_package_data=True,
     python_requires='>=3.6.0',

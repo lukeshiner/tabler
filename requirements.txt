@@ -1,7 +1,6 @@
-requests
-requests
 ezodf
-lxml
-openpyxl
-pyexcel_ods3
 jinja2
+lxml
+odswriter
+openpyxl
+requests
