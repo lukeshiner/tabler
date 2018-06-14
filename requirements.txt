@@ -1,6 +1,0 @@
-ezodf
-jinja2
-lxml
-odswriter
-openpyxl
-requests
