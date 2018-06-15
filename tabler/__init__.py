@@ -19,16 +19,12 @@ intutive accessing, manipulation and writing of tablulated data.
 
 """
 
-__title__ = 'tabler'
-__version__ = '2.0'
-__author__ = 'Luke Shiner'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2018 Luke Shiner'
+from .__version__ import __title__, __description__, __url__  # NOQA
+from .__version__ import __version__, __author__, __author_email__  # NOQA
+from .__version__ import __copyright__, __license__  # NOQA
 
 from .table import Table  # NOQA
 from .tabletypes import *  # NOQA
 from .tohtml import ToHTML  # NOQA
-
-__version__ = '2.2'
 
 Tabler = Table  # Backwards compatibility with v1.*

@@ -1,21 +1,27 @@
 #!/usr/bin/env python
 """Setup for tabler package."""
 
-import setuptools
+import os
 
-from tabler import __version__  # NOQA
+import setuptools
 
 with open("README.rst", "r") as readme:
     long_description = readme.read()
 
+here = os.path.abspath(os.path.dirname(__file__))
+
+about = {}
+with open(os.path.join(here, 'tabler', '__version__.py'), 'r') as f:
+    exec(f.read(), about)
+
 setuptools.setup(
-    name="tabler",
-    version=__version__,
-    description="Simple interface for tabulated data and .csv files",
+    name=about['__title__'],
+    version=about['__version__'],
+    description=about['__description__'],
     long_description=long_description,
-    url="https://github.com/axevalley/tabler.git",
-    author="Luke Shiner",
-    author_email="luke@lukeshiner.com",
+    url=about['__url__'],
+    author=about['__author__'],
+    author_email=about['__author_email__'],
     keywords=["table", "csv", "simple"],
     install_requires=[
         "requests", "ezodf", "lxml", "openpyxl", "odswriter", "jinja2"
