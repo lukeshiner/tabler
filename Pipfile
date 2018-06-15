@@ -9,7 +9,8 @@ ezodf = "*"
 lxml = "*"
 openpyxl = "*"
 odswriter = "*"
-"jinja2" = "*"
+jinja2 = "*"
+"e1839a8" = {path = ".", editable = true}
 
 [dev-packages]
 pytest = "*"
