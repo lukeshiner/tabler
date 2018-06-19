@@ -15,7 +15,8 @@ def all_subclasses(cls):
     :rtype: list(class)
     """
     return cls.__subclasses__() + [
-        g for s in cls.__subclasses__() for g in all_subclasses(s)]
+        g for s in cls.__subclasses__() for g in all_subclasses(s)
+    ]
 
 
 class BaseTableType:

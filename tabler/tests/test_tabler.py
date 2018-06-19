@@ -2,20 +2,19 @@
 
 import os
 
-from tabler import CSV, HTML, ODS, XLSX, Table
-
 import pytest
+from tabler import CSV, HTML, ODS, XLSX, Table
 
 
 class TestTable:
     """Tests for tabler.Table class."""
 
-    TEST_CSV_PATH = str(os.path.join(
-        os.path.dirname(__file__), 'testfile.csv'))
-    TEST_ODS_PATH = str(os.path.join(
-        os.path.dirname(__file__), 'testfile.ods'))
-    TEST_XLSX_PATH = str(os.path.join(
-        os.path.dirname(__file__), 'testfile.xlsx'))
+    TEST_CSV_PATH = str(
+        os.path.join(os.path.dirname(__file__), 'testfile.csv'))
+    TEST_ODS_PATH = str(
+        os.path.join(os.path.dirname(__file__), 'testfile.ods'))
+    TEST_XLSX_PATH = str(
+        os.path.join(os.path.dirname(__file__), 'testfile.xlsx'))
 
     TEST_HEADER = ['Col1', 'Col2', 'Col3']
     TEST_ROW_1 = ['Red', 'Green', 'Blue']

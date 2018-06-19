@@ -51,8 +51,7 @@ class Table:
         None.
     """
 
-    def __init__(
-            self, filepath=None, table_type=None, header=None, data=None):
+    def __init__(self, filepath=None, table_type=None, header=None, data=None):
         """Construct a :class:`tabler.Table`.
 
         A `filename` can be provided to open an existing file. An apropriate
@@ -111,8 +110,9 @@ class Table:
         rows = str(len(self.rows))
         lines = [
             'Table Object containing {} colomuns and {} rows'.format(
-                columns, rows),
-            'Column Headings: {}'.format(', '.join(self.header))]
+                columns, rows), 'Column Headings: {}'.format(
+                    ', '.join(self.header))
+        ]
         return "\n".join(lines)
 
     def __repr__(self):
@@ -278,8 +278,8 @@ class Table:
         :rtype: bool. True if ascending, False if decending.
         """
         if type(sort_direction) == str:
-            if sort_direction.upper() not in (
-                    'A', 'ASC', 'ASCENDING', 'D', 'DESC', 'DESCENDING'):
+            if sort_direction.upper() not in ('A', 'ASC', 'ASCENDING', 'D',
+                                              'DESC', 'DESCENDING'):
                 raise Exception(
                     "sort_direction must be one of 'A', 'ASC'," +
                     " 'ASCENDING', 'D', 'DESC', 'DESCENDING'")

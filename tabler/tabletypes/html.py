@@ -20,7 +20,10 @@ class HTML(BaseTableType):
     extensions = ['.html']
 
     def __init__(
-            self, use_header=True, encoding='utf8', extension='.html',
+            self,
+            use_header=True,
+            encoding='utf8',
+            extension='.html',
             verbose=True):
         """Consturct :class:`tabler.tabletypes.HTML`.
 
