@@ -45,7 +45,7 @@ _______
 Contact
 _______
 
-Send all comments and queries to Luke Shiner at luke@lukeshiner.com
+All comments and queries can be sent to Luke Shiner at luke@lukeshiner.com
 
 _______
 License

@@ -25,16 +25,16 @@ This will recognise file types with the following extensions:
     + .xlsx
     + .ods
 
-To explicitly open a file of a specific type you must provide a **Table Type**
-object.::
+To explicitly open a file of a specific type a Table Type object must
+be provided.::
 
     from tabler import Table
     from tabler.tabletypes import CSV
 
     Table('path/to/some/file.csv', table_type=CSV(delimiter='\t'))
 
-**Table Types** subclass ``BaseTableType``. They tell tabler how to open and
-write files.
+These are subclasses of ``BaseTableType`` and allow the method of reading the
+file to be customised.
 
 
 Reading a Table
@@ -54,7 +54,7 @@ This means that you can specify a column by index number or title::
 Editing a Table
 _______________
 
-Edit cells using the equals ``=`` operator::
+A cell can be edited using the equals ``=`` operator::
 
     table[2]["Item Title"] = 'USB Hub'
 
@@ -63,10 +63,10 @@ Cell content can be ``string``, ``int`` or ``float``.
 Loading Data into a Table
 _________________________
 
-You can load data into an empty Tabler object by passing a ``list`` of rows in
+Data can be loaded into an empty Tabler object by passing a ``list`` of rows in
 the form of ``lists`` of cell data using the
-``Tabler().load_from_array(data, header)`` method. Pass A ``list`` of column
-headers as the second argument::
+``Tabler().load_from_array(data, header)`` method. A ``list`` of column headers
+must be passed as the second argument::
 
     header = ["SKU", "Item Title", "Price"]
 
@@ -82,10 +82,10 @@ headers as the second argument::
 Writing a Table to a File
 _________________________
 
-Writing a file is similar to reading a file. Use ``Table Types`` in the same way
-to manage writing files::
+Writing a file is similar to reading a file. ``Table Types`` are used in the
+same way to manage writing files::
 
     table.write('path/to/save.csv', table_type=CSV(delimiter='\t')
 
-Tabler will the ``table type`` automatically for recognised file extensions if
+The ``table type`` will be set automatically for recognised file extensions if
 not explicitly set.
