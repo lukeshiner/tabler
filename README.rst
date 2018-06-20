@@ -24,7 +24,8 @@ Simple interaction with tabulated data
 What is tabler?
 ===============
 
-The tabler package provides the Table class which makes the creation and maniplulation of tabulated data intuitive.
+The tabler package provides the Table class which makes the creation and
+manipulation of tabulated data intuitive.
 
 It can:
     + Access spreadsheet files.
@@ -36,16 +37,18 @@ Compatible formats:
     + Open Spreadsheet Format .ods
     + Microsoft Excel .xlsx
     + HTML (Write only)
-    + Add by subclassing BaseTableType.
+    + Add by sub-classing BaseTableType.
 
-For more information see the Documentation_.
+For more information please read the Documentation_ or view the project on
+GitHub_.
 
 .. _Documentation: https://tabler.readthedocs.io/en/latest/
+.. _GitHub: https://github.com/axevalley/tabler.git
 
 Contact
 _______
 
-All comments and queries can be sent to Luke Shiner at luke@lukeshiner.com
+Please send all comments and queries to Luke Shiner at luke@lukeshiner.com
 
 License
 _______
