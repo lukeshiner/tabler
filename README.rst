@@ -1,6 +1,6 @@
-=============
-Tabler Readme
-=============
+===============================================
+Tabler - Simple interaction with tabulated data
+===============================================
 
 .. image:: https://travis-ci.org/axevalley/tabler.svg?branch=master
     :target: https://travis-ci.org/axevalley/tabler
@@ -15,17 +15,14 @@ Tabler Readme
 .. image:: https://pypip.in/py_versions/tabler/badge.svg
     :target: https://pypi.org/project/tabler/
 
---------------------------------------
-Simple interaction with tabulated data
---------------------------------------
-
-.. contents:: Contents
 
 What is tabler?
 ===============
 
-The tabler package provides the Table class which makes the creation and
-manipulation of tabulated data intuitive.
+Tabler allows you to quickly and easily open, edit, create and update common
+files that hold data in a tabulated format, such as CSV or XLSX files. It's
+simple API keeps your source code clean and allows easy use of an interactive
+session.
 
 It can:
     + Access spreadsheet files.
@@ -37,18 +34,23 @@ Compatible formats:
     + Open Spreadsheet Format .ods
     + Microsoft Excel .xlsx
     + HTML (Write only)
-    + Add by sub-classing BaseTableType.
 
-For more information please read the Documentation_ or view the project on
-GitHub_.
+If you need another format, see the documentation_ for how
+to add your own.
 
-.. _Documentation: https://tabler.readthedocs.io/en/latest/
+The full documentation is available on `Read the Docs
+<https://tabler.readthedocs.io/en/latest/>`_.
+
+Tabler lives on GitHub_.
+
+.. _documentation: https://tabler.readthedocs.io/en/latest/
 .. _GitHub: https://github.com/axevalley/tabler.git
 
 Contact
 _______
 
 Please send all comments and queries to Luke Shiner at luke@lukeshiner.com
+Issues can be reported on GitHub_
 
 License
 _______
