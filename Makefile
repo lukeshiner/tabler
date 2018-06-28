@@ -4,11 +4,12 @@ init:
 	pip install pipenv --upgrade
 	pipenv install --dev --skip-lock
 
+reinit:
+	pipenv --rm
+	make init
+
 test:
 	pipenv run pytest
-
-flake8:
-	pipenv run flake8 --ignore=E501,F401,E128,E402,E731,F821 tabler
 
 publish:
 	pipenv run pip install 'twine>=1.5.0'
