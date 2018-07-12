@@ -2,8 +2,8 @@
 Tabler - Simple interaction with tabulated data
 ===============================================
 
-.. image:: https://travis-ci.org/axevalley/tabler.svg?branch=master
-    :target: https://travis-ci.org/axevalley/tabler
+.. image:: https://travis-ci.org/lukeshiner/tabler.svg?branch=master
+    :target: https://travis-ci.org/lukeshiner/tabler
 
 .. image:: https://readthedocs.org/projects/tabler/badge/?version=latest
     :target: https://tabler.readthedocs.io/en/latest/?badge=latest
@@ -44,7 +44,7 @@ The full documentation is available on `Read the Docs
 Tabler lives on GitHub_.
 
 .. _documentation: https://tabler.readthedocs.io/en/latest/
-.. _GitHub: https://github.com/axevalley/tabler.git
+.. _GitHub: https://github.com/lukeshiner/tabler.git
 
 Contact
 _______

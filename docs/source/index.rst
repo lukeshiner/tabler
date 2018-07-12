@@ -1,7 +1,7 @@
 Welcome to Tabler's documentation!
 ==================================
-.. image:: https://travis-ci.org/axevalley/tabler.svg?branch=master
-    :target: https://travis-ci.org/axevalley/tabler
+.. image:: https://travis-ci.org/lukeshiner/tabler.svg?branch=master
+    :target: https://travis-ci.org/lukeshiner/tabler
 
 .. image:: https://readthedocs.org/projects/tabler/badge/?version=latest
     :target: https://tabler.readthedocs.io/en/latest/?badge=latest
