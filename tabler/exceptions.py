@@ -20,4 +20,5 @@ class TableInitialisationError(TypeError):
         """Initialise TableInitialisationError exception."""
         super().__init__(
             "Table cannot be initialised. "
-            "Either filepath or header and data must be specified.")
+            "Either filepath or header and data must be specified."
+        )

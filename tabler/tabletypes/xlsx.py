@@ -14,9 +14,9 @@ class XLSX(BaseTableType):
     :type verbose: bool or None.
     """
 
-    extensions = ['.xlsx']
+    extensions = [".xlsx"]
 
-    def __init__(self, extension='.xlsx', verbose=True):
+    def __init__(self, extension=".xlsx", verbose=True):
         """Consturct :class:`tabler.tabletypes.XLSX`.
 
         :param str extension: Extension of file to save. Default .xlsx.
@@ -53,4 +53,4 @@ class XLSX(BaseTableType):
         for row in table:
             ws.append(row.row)
         wb.save(path)
-        print('Written {} rows to file {}'.format(len(table.rows), path))
+        print("Written {} rows to file {}".format(len(table.rows), path))

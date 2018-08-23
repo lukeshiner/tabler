@@ -18,11 +18,9 @@ class CSV(BaseTableType):
     :type verbose: bool or None.
     """
 
-    extensions = ['.csv', '.txt']
+    extensions = [".csv", ".txt"]
 
-    def __init__(
-            self, encoding='utf-8', delimiter=',', extension='.csv',
-            verbose=None):
+    def __init__(self, encoding="utf-8", delimiter=",", extension=".csv", verbose=None):
         """Consturct :class:`tabler.tabletypes.CSV`.
 
         :param str encoding: Encoding of file. Default: utf8.
@@ -42,7 +40,7 @@ class CSV(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        open_file = open(path, 'rU', encoding=self.encoding)
+        open_file = open(path, "rU", encoding=self.encoding)
         csv_file = csv.reader(open_file, delimiter=self.delimiter)
         rows = [row for row in csv_file]
         return rows[0], rows[1:]
@@ -55,14 +53,14 @@ class CSV(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        csv_file = open(path, 'w', newline='', encoding=self.encoding)
+        csv_file = open(path, "w", newline="", encoding=self.encoding)
         writer = csv.writer(csv_file, delimiter=self.delimiter)
         if table.header:
             writer.writerow(table.header)
         for row in table:
             writer.writerow(row.row)
         csv_file.close()
-        print('Written {} rows to file {}'.format(len(table.rows), path))
+        print("Written {} rows to file {}".format(len(table.rows), path))
 
 
 class CSVURL(CSV):

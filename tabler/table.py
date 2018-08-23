@@ -87,8 +87,9 @@ class Table:
                     self.table_type = BaseTableType.get_by_extension(extension)
                 except exceptions.ExtensionNotRecognised:
                     raise ValueError(
-                        'Table Type not specified and extension {} '
-                        'not recognised.'.format(extension))
+                        "Table Type not specified and extension {} "
+                        "not recognised.".format(extension)
+                    )
             self.load(*self.table_type.open(filepath))
         elif header is not None and data is not None:
             self.load(list(header), list(data))
@@ -109,9 +110,8 @@ class Table:
         columns = str(len(self.columns))
         rows = str(len(self.rows))
         lines = [
-            'Table Object containing {} colomuns and {} rows'.format(
-                columns, rows), 'Column Headings: {}'.format(
-                    ', '.join(self.header))
+            "Table Object containing {} colomuns and {} rows".format(columns, rows),
+            "Column Headings: {}".format(", ".join(self.header)),
         ]
         return "\n".join(lines)
 
@@ -233,8 +233,7 @@ class Table:
 
     def copy(self):
         """Return duplicate Table object."""
-        return self.__class__(
-            header=self.header, data=[row.row for row in self.rows])
+        return self.__class__(header=self.header, data=[row.row for row in self.rows])
 
     def sort(self, sort_key, asc=True):
         """Sort table by column.
@@ -278,17 +277,24 @@ class Table:
         :rtype: bool. True if ascending, False if decending.
         """
         if type(sort_direction) == str:
-            if sort_direction.upper() not in ('A', 'ASC', 'ASCENDING', 'D',
-                                              'DESC', 'DESCENDING'):
+            if sort_direction.upper() not in (
+                "A",
+                "ASC",
+                "ASCENDING",
+                "D",
+                "DESC",
+                "DESCENDING",
+            ):
                 raise Exception(
-                    "sort_direction must be one of 'A', 'ASC'," +
-                    " 'ASCENDING', 'D', 'DESC', 'DESCENDING'")
+                    "sort_direction must be one of 'A', 'ASC',"
+                    + " 'ASCENDING', 'D', 'DESC', 'DESCENDING'"
+                )
         elif type(sort_direction) != bool:
-            raise TypeError('sort_direction must be str or bool')
+            raise TypeError("sort_direction must be str or bool")
         if type(sort_direction) == str:
-            if sort_direction in ('A', 'ASC', 'ASCENDING'):
+            if sort_direction in ("A", "ASC", "ASCENDING"):
                 return True
-            elif sort_direction in ('D', 'DESC', 'DESCENDING'):
+            elif sort_direction in ("D", "DESC", "DESCENDING"):
                 return False
 
     def multi_sorted(self, *sort_keys):
@@ -314,7 +320,7 @@ class Table:
         for i in range(0, len(self.rows), row_count):
             new_table = Table()
             new_table.header = self.header
-            new_table.rows = self.rows[i:i + row_count]
+            new_table.rows = self.rows[i : i + row_count]
             split_tables.append(new_table)
         return split_tables
 
@@ -332,7 +338,7 @@ class Table:
         :rtype: bool.
         """
         if type(sort_key) not in (int, str):
-            raise TypeError('Sort Key must be of type int or str.')
+            raise TypeError("Sort Key must be of type int or str.")
         if sort_key not in self.header:
-            raise KeyError('String Sort Key must be in header.')
+            raise KeyError("String Sort Key must be in header.")
         return True

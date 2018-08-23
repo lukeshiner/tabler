@@ -15,9 +15,9 @@ class ODS(BaseTableType):
     :type verbose: bool or None.
     """
 
-    extensions = ['.ods']
+    extensions = [".ods"]
 
-    def __init__(self, sheet=0, extension='.ods', verbose=True):
+    def __init__(self, sheet=0, extension=".ods", verbose=True):
         """Consturct :class:`tabler.tabletypes.ODS`.
 
         :param str extension: Extension of file to save. Default .ods.
@@ -43,7 +43,7 @@ class ODS(BaseTableType):
                 if cell.value is not None:
                     new_row.append(cell.value)
                 else:
-                    new_row.append('')
+                    new_row.append("")
             if len(row) > 0:
                 rows.append(new_row)
         return rows[0], rows[1:]
@@ -56,8 +56,8 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        with odswriter.writer(open(path, 'wb')) as odsfile:
+        with odswriter.writer(open(path, "wb")) as odsfile:
             for row in table:
                 odsfile.writerow(table.header)
                 odsfile.writerow(row)
-        print('Written {} rows to file {}'.format(len(table.rows), path))
+        print("Written {} rows to file {}".format(len(table.rows), path))

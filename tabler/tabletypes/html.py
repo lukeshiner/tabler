@@ -17,14 +17,11 @@ class HTML(BaseTableType):
     :type verbose: bool or None.
     """
 
-    extensions = ['.html']
+    extensions = [".html"]
 
     def __init__(
-            self,
-            use_header=True,
-            encoding='utf8',
-            extension='.html',
-            verbose=True):
+        self, use_header=True, encoding="utf8", extension=".html", verbose=True
+    ):
         """Consturct :class:`tabler.tabletypes.HTML`.
 
         :param bool use_header: If True file will include column headers.
@@ -48,7 +45,7 @@ class HTML(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         html = ToHTML(table, self.use_header).render()
-        html_file = open(path, 'w', encoding=self.encoding)
+        html_file = open(path, "w", encoding=self.encoding)
         html_file.write(html)
         html_file.close()
-        print('Written {} rows to file {}'.format(len(table.rows), path))
+        print("Written {} rows to file {}".format(len(table.rows), path))

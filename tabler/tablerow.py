@@ -38,7 +38,7 @@ class TableRow:
             self.row[self.headers[key]] = str(item)
 
     def __str__(self):
-        return ', '.join([cell for cell in self.row])
+        return ", ".join([cell for cell in self.row])
 
     def __len__(self):
         return len(self.row)
