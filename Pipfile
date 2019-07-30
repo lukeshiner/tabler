@@ -5,12 +5,12 @@ name = "pypi"
 
 [packages]
 requests = "*"
-ezodf = "*"
-lxml = "*"
 openpyxl = "*"
 odswriter = "*"
-jinja2 = "*"
-"e1839a8" = {path = ".", editable = true}
+Jinja2 = ">=2.10.1"
+e1839a8 = {path = ".",editable = true}
+pyexcel-ods = "*"
+urllib3 = ">=1.24.2"
 
 [dev-packages]
 pytest = "*"
@@ -18,6 +18,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 "flake8" = "*"
 twine = "*"
+tox = "*"
 
 [requires]
 python_version = "3.7"
