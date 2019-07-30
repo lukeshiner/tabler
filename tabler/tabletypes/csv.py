@@ -34,15 +34,15 @@ class CSV(BaseTableType):
         self.delimiter = delimiter
         super().__init__(extension, verbose=verbose)
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        open_file = open(path, "rU", encoding=self.encoding)
-        csv_file = csv.reader(open_file, delimiter=self.delimiter)
-        rows = [row for row in csv_file]
+        with open(str(path), "r", encoding=self.encoding) as f:
+            csv_file = csv.reader(f, delimiter=self.delimiter)
+            rows = [row for row in csv_file]
         return rows[0], rows[1:]
 
     def write(self, table, path):
@@ -53,20 +53,19 @@ class CSV(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        csv_file = open(path, "w", newline="", encoding=self.encoding)
-        writer = csv.writer(csv_file, delimiter=self.delimiter)
-        if table.header:
-            writer.writerow(table.header)
-        for row in table:
-            writer.writerow(row.row)
-        csv_file.close()
+        with open(str(path), "w", newline="", encoding=self.encoding) as f:
+            writer = csv.writer(f, delimiter=self.delimiter)
+            if table.header:
+                writer.writerow(table.header)
+            for row in table:
+                writer.writerow(row.row)
         print("Written {} rows to file {}".format(len(table.rows), path))
 
 
 class CSVURL(CSV):
     """Table type for opening .csv files over HTTP."""
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param str path: URL of file to be opened.

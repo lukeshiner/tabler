@@ -28,13 +28,13 @@ class ODS(BaseTableType):
         self.sheet = sheet
         super().__init__(extension, verbose=verbose)
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        data = pyexcel_ods.get_data(path)
+        data = pyexcel_ods.get_data(str(path))
         sheet = data[list(data.keys())[0]]
         return sheet[0], sheet[1:]
 
@@ -46,7 +46,7 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        with odswriter.writer(open(path, "wb")) as odsfile:
+        with odswriter.writer(open(str(path), "wb")) as odsfile:
             for row in table:
                 odsfile.writerow(table.header)
                 odsfile.writerow(row)

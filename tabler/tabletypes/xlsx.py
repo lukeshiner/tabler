@@ -26,7 +26,7 @@ class XLSX(BaseTableType):
         """
         super().__init__(extension, verbose=verbose)
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
@@ -52,5 +52,5 @@ class XLSX(BaseTableType):
         ws.append(table.header)
         for row in table:
             ws.append(row.row)
-        wb.save(path)
+        wb.save(str(path))
         print("Written {} rows to file {}".format(len(table.rows), path))
