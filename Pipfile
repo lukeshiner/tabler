@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 requests = "*"
 ezodf = "*"
-lxml = "*"
 openpyxl = "*"
 odswriter = "*"
 jinja2 = "*"
