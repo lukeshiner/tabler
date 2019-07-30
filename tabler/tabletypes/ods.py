@@ -46,8 +46,9 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        with odswriter.writer(open(str(path), "wb")) as odsfile:
-            for row in table:
-                odsfile.writerow(table.header)
-                odsfile.writerow(row)
+        with open(str(path), "wb") as f:
+            with odswriter.writer(f) as odsfile:
+                for row in table:
+                    odsfile.writerow(table.header)
+                    odsfile.writerow(row)
         print("Written {} rows to file {}".format(len(table.rows), path))
