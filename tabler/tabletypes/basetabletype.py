@@ -69,7 +69,7 @@ class BaseTableType:
                 return table_type()
         raise exceptions.ExtensionNotRecognised(extension)
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param path: Path to file to be opened.

@@ -45,7 +45,7 @@ class HTML(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         html = ToHTML(table, self.use_header).render()
-        html_file = open(path, "w", encoding=self.encoding)
+        html_file = open(str(path), "w", encoding=self.encoding)
         html_file.write(html)
         html_file.close()
         print("Written {} rows to file {}".format(len(table.rows), path))

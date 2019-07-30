@@ -26,8 +26,9 @@ setuptools.setup(
     install_requires=["requests", "pyexcel_ods", "openpyxl", "odswriter", "jinja2"],
     packages=setuptools.find_packages(),
     include_package_data=True,
-    python_requires=">=3.6.0",
+    python_requires=">=3.5.0",
     classifiers=[
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",

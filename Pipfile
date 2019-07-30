@@ -17,6 +17,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 "flake8" = "*"
 twine = "*"
+tox = "*"
 
 [requires]
 python_version = "3.7"
