@@ -1,5 +1,7 @@
 """This module provides a Table Type for Open Document Format (.ods) files."""
 
+import sys
+
 import odswriter
 import pyexcel_ods
 
@@ -51,4 +53,6 @@ class ODS(BaseTableType):
                 for row in table:
                     odsfile.writerow(table.header)
                     odsfile.writerow(row)
-        print("Written {} rows to file {}".format(len(table.rows), path))
+        print(
+            "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
+        )

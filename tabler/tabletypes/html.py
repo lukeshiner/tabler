@@ -1,4 +1,5 @@
 """This module a Table Type for writing tables as HTML."""
+import sys
 
 from tabler.tohtml import ToHTML
 
@@ -48,4 +49,6 @@ class HTML(BaseTableType):
         html_file = open(str(path), "w", encoding=self.encoding)
         html_file.write(html)
         html_file.close()
-        print("Written {} rows to file {}".format(len(table.rows), path))
+        print(
+            "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
+        )

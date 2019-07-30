@@ -1,6 +1,7 @@
 """This module provides Table Types for .csv files."""
 
 import csv
+import sys
 
 import requests
 
@@ -59,7 +60,9 @@ class CSV(BaseTableType):
                 writer.writerow(table.header)
             for row in table:
                 writer.writerow(row.row)
-        print("Written {} rows to file {}".format(len(table.rows), path))
+        print(
+            "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
+        )
 
 
 class CSVURL(CSV):

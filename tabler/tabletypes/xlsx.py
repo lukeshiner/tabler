@@ -1,5 +1,7 @@
 """This module provides a Table Type for Microsft Excel (.xlsx) files."""
 
+import sys
+
 from openpyxl import Workbook, load_workbook
 
 from .basetabletype import BaseTableType
@@ -53,4 +55,6 @@ class XLSX(BaseTableType):
         for row in table:
             ws.append(row.row)
         wb.save(str(path))
-        print("Written {} rows to file {}".format(len(table.rows), path))
+        print(
+            "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
+        )

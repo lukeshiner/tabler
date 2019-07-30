@@ -8,6 +8,7 @@ tabulated data.
 
 import os
 import pathlib
+import sys
 
 from . import exceptions
 from .tablerow import TableRow
@@ -229,7 +230,7 @@ class Table:
     def print_r(self):
         """Print table data in a readable format."""
         for row in self.rows:
-            print(row.row)
+            print(row.row, file=sys.stderr)
 
     def copy(self):
         """Return duplicate Table object."""
