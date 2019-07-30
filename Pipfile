@@ -7,9 +7,10 @@ name = "pypi"
 requests = "*"
 openpyxl = "*"
 odswriter = "*"
-jinja2 = "*"
+Jinja2 = ">=2.10.1"
 e1839a8 = {path = ".",editable = true}
 pyexcel-ods = "*"
+urllib3 = ">=1.24.2"
 
 [dev-packages]
 pytest = "*"
