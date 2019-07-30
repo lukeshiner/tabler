@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b5c597619b130ddf4a22af022f22174625957e64b3f6eaf9941750fe916a5b00"
+            "sha256": "8c073c50b6ec5f051651ee18ff1d89b1968de577046dbed254d53125152335f6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,13 @@
             ],
             "version": "==3.0.4"
         },
+        "defusedxml": {
+            "hashes": [
+                "sha256:6687150770438374ab581bb7a1b327a847dd9c5749e396102de3fad4e8a3ef93",
+                "sha256:f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5"
+            ],
+            "version": "==0.6.0"
+        },
         "e1839a8": {
             "editable": true,
             "path": "."
@@ -39,13 +46,6 @@
                 "sha256:614d9722d572f6246302c4491846d2c393c199cfa4edc9af593437691683335b"
             ],
             "version": "==1.0.1"
-        },
-        "ezodf": {
-            "hashes": [
-                "sha256:000da534f689c6d55297a08f9e2ed7eada9810d194d31d164388162fb391122d"
-            ],
-            "index": "pypi",
-            "version": "==0.3.2"
         },
         "idna": {
             "hashes": [
@@ -68,6 +68,13 @@
             ],
             "index": "pypi",
             "version": "==2.10.1"
+        },
+        "lml": {
+            "hashes": [
+                "sha256:b1bef669dc077a1075fa64b99229b6341085b3b3a98d29c66df1853cc14e6c1a",
+                "sha256:ea5ba817b4adc9e9f5c21725cd2475f912933b7e2dfdf0792aed80077154f63f"
+            ],
+            "version": "==0.0.9"
         },
         "markupsafe": {
             "hashes": [
@@ -102,6 +109,12 @@
             ],
             "version": "==1.1.1"
         },
+        "odfpy": {
+            "hashes": [
+                "sha256:596021f0519623ca8717331951c95e3b8d7b21e86edc7efe8cb650a0d0f59a2b"
+            ],
+            "version": "==1.4.0"
+        },
         "odswriter": {
             "hashes": [
                 "sha256:f4c6195dc95cc4a7c2bd98a8e174ddfb9eb98b0329ffe9a740ee825a319d62a0"
@@ -115,6 +128,21 @@
             ],
             "index": "pypi",
             "version": "==2.6.2"
+        },
+        "pyexcel-io": {
+            "hashes": [
+                "sha256:08dfe39553b996359b143de3d9ec43e196f1138d47cabb73af04a16821b84d79",
+                "sha256:2cba956814e72b66072d97b00ede4a084ad881ce72129088eb0dc3c7f3d670cd"
+            ],
+            "version": "==0.5.20"
+        },
+        "pyexcel-ods": {
+            "hashes": [
+                "sha256:3be52fd8aaddbd8bc9286f7eb148f4553d4c97252d695c3a9ec7b95e6666a223",
+                "sha256:e8d1137da99599e6053c056c21ca601d90f8e000b4db9db679302bbf55d15c0f"
+            ],
+            "index": "pypi",
+            "version": "==0.5.6"
         },
         "requests": {
             "hashes": [

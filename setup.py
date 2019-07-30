@@ -23,7 +23,7 @@ setuptools.setup(
     author=about["__author__"],
     author_email=about["__author_email__"],
     keywords=["table", "csv", "simple"],
-    install_requires=["requests", "ezodf", "openpyxl", "odswriter", "jinja2"],
+    install_requires=["requests", "pyexcel_ods", "openpyxl", "odswriter", "jinja2"],
     packages=setuptools.find_packages(),
     include_package_data=True,
     python_requires=">=3.6.0",

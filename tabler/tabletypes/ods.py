@@ -1,7 +1,7 @@
 """This module provides a Table Type for Open Document Format (.ods) files."""
 
-import ezodf
 import odswriter
+import pyexcel_ods
 
 from .basetabletype import BaseTableType
 
@@ -34,19 +34,9 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        doc = ezodf.opendoc(path)
-        sheet = doc.sheets[self.sheet]
-        rows = []
-        for row in sheet:
-            new_row = []
-            for cell in row:
-                if cell.value is not None:
-                    new_row.append(cell.value)
-                else:
-                    new_row.append("")
-            if len(row) > 0:
-                rows.append(new_row)
-        return rows[0], rows[1:]
+        data = pyexcel_ods.get_data(path)
+        sheet = data[list(data.keys())[0]]
+        return sheet[0], sheet[1:]
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
