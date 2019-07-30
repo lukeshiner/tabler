@@ -8,6 +8,7 @@ tabulated data.
 
 import os
 import pathlib
+import sys
 
 from . import exceptions
 from .tablerow import TableRow
@@ -90,7 +91,7 @@ class Table:
                         "Table Type not specified and extension {} "
                         "not recognised.".format(extension)
                     )
-            self.load(*self.table_type.open(filepath))
+            self.load(*self.table_type.open_path(filepath))
         elif header is not None and data is not None:
             self.load(list(header), list(data))
         else:
@@ -229,7 +230,7 @@ class Table:
     def print_r(self):
         """Print table data in a readable format."""
         for row in self.rows:
-            print(row.row)
+            print(row.row, file=sys.stderr)
 
     def copy(self):
         """Return duplicate Table object."""

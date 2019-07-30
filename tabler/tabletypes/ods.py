@@ -1,7 +1,9 @@
 """This module provides a Table Type for Open Document Format (.ods) files."""
 
-import ezodf
+import sys
+
 import odswriter
+import pyexcel_ods
 
 from .basetabletype import BaseTableType
 
@@ -28,25 +30,15 @@ class ODS(BaseTableType):
         self.sheet = sheet
         super().__init__(extension, verbose=verbose)
 
-    def open(self, path):
+    def open_path(self, path):
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        doc = ezodf.opendoc(path)
-        sheet = doc.sheets[self.sheet]
-        rows = []
-        for row in sheet:
-            new_row = []
-            for cell in row:
-                if cell.value is not None:
-                    new_row.append(cell.value)
-                else:
-                    new_row.append("")
-            if len(row) > 0:
-                rows.append(new_row)
-        return rows[0], rows[1:]
+        data = pyexcel_ods.get_data(str(path))
+        sheet = data[list(data.keys())[0]]
+        return sheet[0], sheet[1:]
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
@@ -56,8 +48,11 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        with odswriter.writer(open(path, "wb")) as odsfile:
-            for row in table:
-                odsfile.writerow(table.header)
-                odsfile.writerow(row)
-        print("Written {} rows to file {}".format(len(table.rows), path))
+        with open(str(path), "wb") as f:
+            with odswriter.writer(f) as odsfile:
+                for row in table:
+                    odsfile.writerow(table.header)
+                    odsfile.writerow(row)
+        print(
+            "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
+        )

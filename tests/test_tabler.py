@@ -1,6 +1,7 @@
 """Tests for tabler.Table class."""
 
 import os
+from pathlib import Path
 
 import pytest
 
@@ -85,25 +86,25 @@ class TestTable:
     def test_save_csv_file(self, tmpdir):
         """Test tabler.Table can create .csv file."""
         table = self.get_basic_table()
-        filepath = os.path.join(tmpdir, "testfile.csv")
+        filepath = Path(str(tmpdir)) / "testfile.csv"
         table.write(filepath, table_type=CSV())
 
     def test_save_ods_file(self, tmpdir):
         """Test tabler.Table can create .ods file."""
         table = self.get_basic_table()
-        filepath = os.path.join(tmpdir, "testfile.ods")
+        filepath = Path(str(tmpdir)) / "testfile.ods"
         table.write(filepath, table_type=ODS())
 
     def test_save_xlsx_file(self, tmpdir):
         """Test tabler.Table can create .xlsx file."""
         table = self.get_basic_table()
-        filepath = os.path.join(tmpdir, "testfile.xlsx")
+        filepath = Path(str(tmpdir)) / "testfile.xlsx"
         table.write(filepath, table_type=XLSX())
 
     def test_save_html_file(self, tmpdir):
         """Test tabler.Table can create .html file."""
         table = self.get_basic_table()
-        filepath = os.path.join(tmpdir, "testfile.html")
+        filepath = Path(str(tmpdir)) / "testfile.html"
         table.write(filepath, table_type=HTML())
 
     def test_open_file_without_table_type(self):
@@ -116,22 +117,22 @@ class TestTable:
         filename = "testfile"
         path = str(tmpdir.join(filename))
         table.write(filepath=path, table_type=CSV())
-        assert os.path.exists(path + ".csv")
+        assert Path(path + ".csv").exists()
 
     def test_save_file_without_table_type(self, tmpdir):
         """Test valid TableType can be found when opening a file."""
         table = self.get_basic_table()
         filename = "testfile.csv"
-        path = str(tmpdir.join(filename))
-        table.write(filepath=path)
-        assert os.path.exists(path)
+        path = Path(str(tmpdir)) / filename
+        table.write(filepath=str(path))
+        assert path.exists()
 
     def test_open_tab_delimited_csv(self):
         """Test .csv file can be opened with non default delimiter."""
-        path = str(os.path.join(os.path.dirname(__file__), "testfile_tab.csv"))
+        path = Path(__file__).parent / "testfile_tab.csv"
         self.is_valid_table(Table(path, CSV(delimiter="\t")))
 
     def test_open_csv_with_txt_extension(self):
         """Test .csv file can be opened with non default file extension."""
-        path = str(os.path.join(os.path.dirname(__file__), "testfile.txt"))
+        path = Path(__file__).parent / "testfile.txt"
         self.is_valid_table(Table(path, CSV()))
