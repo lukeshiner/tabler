@@ -19,6 +19,7 @@ sphinx-rtd-theme = "*"
 "flake8" = "*"
 twine = "*"
 tox = "*"
+changelog-cli = "*"
 
 [requires]
 python_version = "3.7"
