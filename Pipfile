@@ -20,6 +20,7 @@ sphinx-rtd-theme = "*"
 twine = "*"
 tox = "*"
 changelog-cli = "*"
+bump2version = "*"
 
 [requires]
 python_version = "3.7"
