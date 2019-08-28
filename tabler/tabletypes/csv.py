@@ -43,9 +43,12 @@ class CSV(BaseTableType):
         else:
             return str(value)
 
-    def parse_row(self, row):
+    def parse_row(self, file_row, length):
         """Return a row of parsed values."""
-        return [self.parse_value(value) for value in row]
+        row = [self.parse_value(value) for value in file_row]
+        while len(row) < length:
+            row.append(None)
+        return row
 
     def open_path(self, path):
         """Return header and rows from file.
@@ -54,9 +57,11 @@ class CSV(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         with open(str(path), "r", encoding=self.encoding) as f:
-            rows = list(csv.reader(f, delimiter=self.delimiter))
-            header = rows[0]
-            data = [self.parse_row(row) for row in rows[1:]]
+            file_rows = list(csv.reader(f, delimiter=self.delimiter))
+        row_length = max((len(row) for row in file_rows))
+        rows = [self.parse_row(row, row_length) for row in file_rows]
+        header = rows[0]
+        data = rows[1:]
         return header, data
 
     def write(self, table, path):

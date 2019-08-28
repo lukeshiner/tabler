@@ -141,7 +141,7 @@ class TestTable:
         """Test .csv files use None for empty values."""
         path = Path(__file__).parent / "testfile_empties.csv"
         table = Table(path, CSV())
-        assert table[0]["Col2"] is None
+        assert list(table[0]) == ["Red", None, "Blue"]
 
     def test_write_CSV_with_empty_value(self, tmpdir):
         """Test .csv files write empty strings for None values."""
@@ -154,3 +154,16 @@ class TestTable:
         table.write(filepath=str(path))
         with open(str(path), "r") as f:
             assert f.read() == expected
+
+    def test_open_csv_with_incomplete_rows(self):
+        """Test CSV file with rows shorter than the header."""
+        path = Path(__file__).parent / "testfile_incomplete_rows.csv"
+        table = Table(path, CSV())
+        assert list(table[0]) == ["Red", "Green", None]
+
+    def test_open_csv_with_long_rows(self):
+        """Test CSV file with rows longer than the header."""
+        path = Path(__file__).parent / "testfile_long_rows.csv"
+        table = Table(path, CSV())
+        assert table.header == ["Col1", "Col2", "Col3", None]
+        assert list(table[0]) == ["Red", "Green", "Blue", "Purple"]
