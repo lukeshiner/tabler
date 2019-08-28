@@ -19,6 +19,7 @@ class HTML(BaseTableType):
     """
 
     extensions = [".html"]
+    empty_value = ""
 
     def __init__(
         self, use_header=True, encoding="utf8", extension=".html", verbose=True

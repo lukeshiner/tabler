@@ -18,6 +18,7 @@ class ODS(BaseTableType):
     """
 
     extensions = [".ods"]
+    empty_value = ""
 
     def __init__(self, sheet=0, extension=".ods", verbose=True):
         """Consturct :class:`tabler.tabletypes.ODS`.
@@ -38,7 +39,7 @@ class ODS(BaseTableType):
         """
         data = pyexcel_ods.get_data(str(path))
         sheet = data[list(data.keys())[0]]
-        return sheet[0], sheet[1:]
+        return self.parse_row_data(sheet)
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
@@ -48,10 +49,10 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
+        rows = self.prepare_rows(table.header, [list(_) for _ in table.rows])
         with open(str(path), "wb") as f:
             with odswriter.writer(f) as odsfile:
-                for row in table:
-                    odsfile.writerow(table.header)
+                for row in rows:
                     odsfile.writerow(row)
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
