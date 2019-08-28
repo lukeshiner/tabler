@@ -35,6 +35,21 @@ class CSV(BaseTableType):
         self.delimiter = delimiter
         super().__init__(extension, verbose=verbose)
 
+    @staticmethod
+    def parse_value(value):
+        """Return None if the value is empty, otherwise return str(value)."""
+        if value == "":
+            return None
+        else:
+            return str(value)
+
+    def parse_row(self, file_row, length):
+        """Return a row of parsed values."""
+        row = [self.parse_value(value) for value in file_row]
+        while len(row) < length:
+            row.append(None)
+        return row
+
     def open_path(self, path):
         """Return header and rows from file.
 
@@ -42,9 +57,12 @@ class CSV(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         with open(str(path), "r", encoding=self.encoding) as f:
-            csv_file = csv.reader(f, delimiter=self.delimiter)
-            rows = [row for row in csv_file]
-        return rows[0], rows[1:]
+            file_rows = list(csv.reader(f, delimiter=self.delimiter))
+        row_length = max((len(row) for row in file_rows))
+        rows = [self.parse_row(row, row_length) for row in file_rows]
+        header = rows[0]
+        data = rows[1:]
+        return header, data
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
