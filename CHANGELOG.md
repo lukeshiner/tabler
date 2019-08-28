@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixes
 
 ### Breaks
+* Empty values in CSV files are now represented as `None`. Empty strings are still written to CSV files. Ensure all checks for `''` are changed to checks for `None`.
 
 
 ## 2.3.0 - (2019-07-30)

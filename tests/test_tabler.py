@@ -136,3 +136,21 @@ class TestTable:
         """Test .csv file can be opened with non default file extension."""
         path = Path(__file__).parent / "testfile.txt"
         self.is_valid_table(Table(path, CSV()))
+
+    def test_CSV_with_empty_value(self):
+        """Test .csv files use None for empty values."""
+        path = Path(__file__).parent / "testfile_empties.csv"
+        table = Table(path, CSV())
+        assert table[0]["Col2"] is None
+
+    def test_write_CSV_with_empty_value(self, tmpdir):
+        """Test .csv files write empty strings for None values."""
+        table = Table(
+            header=["Col1", "Col2", "Col3"],
+            data=[["Red", None, "Blue"], ["Orange", "Yellow", "Magenta"]],
+        )
+        path = Path(str(tmpdir.join("empty_test.csv")))
+        expected = "Col1,Col2,Col3\nRed,,Blue\nOrange,Yellow,Magenta\n"
+        table.write(filepath=str(path))
+        with open(str(path), "r") as f:
+            assert f.read() == expected
