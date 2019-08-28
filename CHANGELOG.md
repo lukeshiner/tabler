@@ -8,10 +8,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### New
-* Open CSV files with rows of varying length.
+* Consistent handling of files with varying row length.
 
 ### Changes
-* Empty values in CSV files are now represented as `None`. Empty strings are still written to CSV files. Ensure all checks for `''` are changed to checks for `None`.
 
 ### Fixes
 
