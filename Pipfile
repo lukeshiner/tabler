@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 requests = "*"
 openpyxl = "*"
-odswriter = "*"
 Jinja2 = ">=2.10.1"
 e1839a8 = {path = ".",editable = true}
 pyexcel-ods = "*"

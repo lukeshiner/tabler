@@ -86,3 +86,38 @@ class BaseTableType:
         :type path: str, pathlib.Path or compatible.
         """
         raise NotImplementedError
+
+    def parse_row_data(self, row_data):
+        """Return header and rows."""
+        row_length = max((len(row) for row in row_data))
+        rows = [self.parse_row(row, row_length) for row in row_data]
+        header = rows[0]
+        data = rows[1:]
+        return header, data
+
+    def parse_value(self, value):
+        """Process values."""
+        return value
+
+    def parse_row(self, file_row, length):
+        """Return a row of parsed values."""
+        row = [self.parse_value(value) for value in file_row]
+        while len(row) < length:
+            row.append(self.empty_value)
+        return row
+
+    def prepare_value(self, value):
+        """Prepare a value for writing."""
+        return value
+
+    def prepare_row(self, row):
+        """Remove excess empty values."""
+        while row[-1] == self.empty_value:
+            row = row[:-1]
+        return row
+
+    def prepare_rows(self, header, rows):
+        """Prepare rows for writing."""
+        data = [header]
+        data.extend(rows)
+        return data

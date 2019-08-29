@@ -132,19 +132,6 @@ class Table:
         for column in self.header:
             self.headers[column] = self.header.index(column)
 
-    def set_columns(self):
-        """Create lookup to allow accessing table data by column."""
-        self.columns = []
-        column_number = 0
-        for column in self.header:
-            this_column = []
-            row_number = 0
-            for row in self.rows:
-                this_column.append(self.rows[row_number].row[column_number])
-                row_number += 1
-            self.columns.append(this_column)
-            column_number += 1
-
     def is_empty(self):
         """Return True if the table conatins no data, otherwise return False.
 
@@ -175,7 +162,7 @@ class Table:
         :type column: str or int.
         :rtype: list
         """
-        return self.columns[self.headers[column]]
+        return [row[column] for row in self.rows]
 
     def remove_column(self, column):
         """
@@ -187,7 +174,6 @@ class Table:
         for row in self.rows:
             row.remove_column(column)
         self.set_headers()
-        self.set_columns()
 
     def load(self, header, data):
         """
@@ -328,7 +314,6 @@ class Table:
     def set_table(self):
         """Set header and column lookups."""
         self.set_headers()
-        self.set_columns()
 
     def multi_sort_validate(self, sort_key):
         """Validate sort key.

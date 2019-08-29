@@ -20,6 +20,7 @@ class CSV(BaseTableType):
     """
 
     extensions = [".csv", ".txt"]
+    empty_value = ""
 
     def __init__(self, encoding="utf-8", delimiter=",", extension=".csv", verbose=None):
         """Consturct :class:`tabler.tabletypes.CSV`.
@@ -42,9 +43,8 @@ class CSV(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         with open(str(path), "r", encoding=self.encoding) as f:
-            csv_file = csv.reader(f, delimiter=self.delimiter)
-            rows = [row for row in csv_file]
-        return rows[0], rows[1:]
+            data = list(csv.reader(f, delimiter=self.delimiter))
+        return self.parse_row_data(data)
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.
@@ -63,6 +63,13 @@ class CSV(BaseTableType):
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )
+
+    def parse_value(self, value):
+        """Return None if the value is empty, otherwise return str(value)."""
+        if value == "":
+            return self.empty_value
+        else:
+            return str(value)
 
 
 class CSVURL(CSV):

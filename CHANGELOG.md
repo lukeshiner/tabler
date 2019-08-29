@@ -8,13 +8,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### New
+* Consistent handling of files with varying row length.
 
 ### Changes
 
 ### Fixes
+* Tabler can now open `ODS` files that were created with tabler.
 
 ### Breaks
-
 
 ## 2.3.0 - (2019-07-30)
 ---

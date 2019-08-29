@@ -8,10 +8,11 @@ repos:
     sha: v1.1.1
     hooks:
     -   id: flake8
--   repo: git://github.com/chewse/pre-commit-mirrors-pydocstyle
+-   repo: https://github.com/pycqa/pydocstyle
     rev: master
     hooks:
     -   id: pydocstyle
+        exclude: test_*
 -   repo: https://github.com/asottile/seed-isort-config
     rev: v1.2.0
     hooks:

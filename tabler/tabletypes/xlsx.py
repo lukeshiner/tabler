@@ -17,6 +17,7 @@ class XLSX(BaseTableType):
     """
 
     extensions = [".xlsx"]
+    empty_value = None
 
     def __init__(self, extension=".xlsx", verbose=True):
         """Consturct :class:`tabler.tabletypes.XLSX`.
@@ -39,6 +40,7 @@ class XLSX(BaseTableType):
         data = []
         for row in ws:
             data.append([cell.value for cell in row])
+        return self.parse_row_data(data)
         return data[0], data[1:]
 
     def write(self, table, path):
