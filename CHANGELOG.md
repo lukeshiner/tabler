@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changes
 
 ### Fixes
+* Tabler can now open `ODS` files that were created with tabler.
 
 ### Breaks
 

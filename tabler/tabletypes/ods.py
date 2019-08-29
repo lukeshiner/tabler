@@ -2,7 +2,6 @@
 
 import sys
 
-import odswriter
 import pyexcel_ods
 
 from .basetabletype import BaseTableType
@@ -38,7 +37,7 @@ class ODS(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         data = pyexcel_ods.get_data(str(path))
-        sheet = data[list(data.keys())[0]]
+        sheet = data[list(data.keys())[self.sheet]]
         return self.parse_row_data(sheet)
 
     def write(self, table, path):
@@ -50,10 +49,8 @@ class ODS(BaseTableType):
         :type path: str, pathlib.Path or compatible.
         """
         rows = self.prepare_rows(table.header, [list(_) for _ in table.rows])
-        with open(str(path), "wb") as f:
-            with odswriter.writer(f) as odsfile:
-                for row in rows:
-                    odsfile.writerow(row)
+        sheets = {"Sheet {}".format(self.sheet): rows}
+        pyexcel_ods.save_data(str(path), sheets)
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )
