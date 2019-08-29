@@ -113,7 +113,7 @@ class TestTable(TableTest):
         table_type = CSV()
         table = Table(header=header, data=data, table_type=table_type)
         assert table.table_type == table_type
-        path = Path(tmpdir) / "testfile"
+        path = Path(str(tmpdir)) / "testfile"
         table.write(path)
 
     def test_table_is_empty_method(self):
