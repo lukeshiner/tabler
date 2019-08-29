@@ -151,7 +151,7 @@ class Table:
         """
         if isinstance(row, list):
             self.rows.append(TableRow(row, self.header))
-            self.set_table()
+            self.set_headers()
         elif isinstance(row, TableRow):
             self.rows.append(row)
 
@@ -192,7 +192,7 @@ class Table:
                 self.rows.append(row)
             else:
                 self.rows.append(TableRow([cell for cell in row], header))
-        self.set_table()
+        self.set_headers()
 
     def write(self, filepath, table_type=None):
         """Create file from table.
