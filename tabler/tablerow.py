@@ -43,18 +43,6 @@ class TableRow:
     def __len__(self):
         return len(self.row)
 
-    def get_column(self, column):
-        """Return the value held in the specified column."""
-        return self.row[self.headers[column]]
-
-    def update_column(self, column, value):
-        """Change value of column.
-
-        :param str column: Header for column to be updated.
-        :param value: Value to be inserted into column.
-        """
-        self.row[self.headers[column]] = str(value)
-
     def remove_column(self, column):
         """Remove the passed column.
 
