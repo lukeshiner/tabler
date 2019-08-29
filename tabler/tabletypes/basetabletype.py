@@ -38,6 +38,7 @@ class BaseTableType:
         extensions = ['.csv', '.txt']
     """
 
+    empty_value = None
     verbose = True
 
     def __init__(self, extension, verbose=None):
@@ -87,37 +88,38 @@ class BaseTableType:
         """
         raise NotImplementedError
 
-    def parse_row_data(self, row_data):
+    def parse_row_data(self, rows):
         """Return header and rows."""
-        row_length = max((len(row) for row in row_data))
-        rows = [self.parse_row(row, row_length) for row in row_data]
         header = rows[0]
-        data = rows[1:]
+        data = [self.parse_row(row) for row in rows[1:]]
         return header, data
 
     def parse_value(self, value):
-        """Process values."""
-        return value
+        """Return None if the value is empty, otherwise return str(value)."""
+        if not value:
+            return self.empty_value
+        else:
+            return value
 
-    def parse_row(self, file_row, length):
+    def parse_row(self, row):
         """Return a row of parsed values."""
-        row = [self.parse_value(value) for value in file_row]
-        while len(row) < length:
-            row.append(self.empty_value)
-        return row
+        return [self.parse_value(value) for value in row]
 
     def prepare_value(self, value):
         """Prepare a value for writing."""
-        return value
+        if not value:
+            return self.empty_value
+        else:
+            return value
 
     def prepare_row(self, row):
         """Remove excess empty values."""
         while row[-1] == self.empty_value:
             row = row[:-1]
-        return row
+        return [self.prepare_value(value) for value in row]
 
     def prepare_rows(self, header, rows):
         """Prepare rows for writing."""
         data = [header]
-        data.extend(rows)
+        data.extend([self.prepare_row(row) for row in rows])
         return data

@@ -7,7 +7,7 @@ from tabler import Table
 
 class TableTest:
 
-    TEST_HEADER = ["Col1", "Col2", "Col3"]
+    TEST_HEADER = ("Col1", "Col2", "Col3")
     TEST_ROW_1 = ["Red", "Green", "Blue"]
     TEST_ROW_2 = ["Orange", "Yellow", "Magenta"]
     TEST_DATA = [TEST_ROW_1, TEST_ROW_2]
@@ -17,8 +17,8 @@ class TableTest:
         assert len(table) == 2
         assert all([len(row) == 3 for row in table])
         assert table.header == self.TEST_HEADER
-        assert table.rows[0].row == self.TEST_ROW_1
-        assert table.rows[1].row == self.TEST_ROW_2
+        assert list(table.rows[0]) == self.TEST_ROW_1
+        assert list(table.rows[1]) == self.TEST_ROW_2
         assert table[0]["Col1"] == "Red"
 
     def get_basic_table(self):

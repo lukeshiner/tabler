@@ -27,7 +27,7 @@ class ToHTML:
         return {
             "use_header": use_header,
             "header": table.header,
-            "data": [r.row for r in table],
+            "data": [list(row) for row in table],
         }
 
     def get_template(self, template):
