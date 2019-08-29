@@ -255,45 +255,6 @@ class Table:
         temp_table.sort(sort_key, asc)
         return temp_table
 
-    def multi_sort_direction(self, sort_direction):
-        """Convert sort direction into boolean.
-
-        :param sort_direction: Sort direction to convert.
-        :type param: str or bool.
-
-        :rtype: bool. True if ascending, False if decending.
-        """
-        if type(sort_direction) == str:
-            if sort_direction.upper() not in (
-                "A",
-                "ASC",
-                "ASCENDING",
-                "D",
-                "DESC",
-                "DESCENDING",
-            ):
-                raise Exception(
-                    "sort_direction must be one of 'A', 'ASC',"
-                    + " 'ASCENDING', 'D', 'DESC', 'DESCENDING'"
-                )
-        elif type(sort_direction) != bool:
-            raise TypeError("sort_direction must be str or bool")
-        if type(sort_direction) == str:
-            if sort_direction in ("A", "ASC", "ASCENDING"):
-                return True
-            elif sort_direction in ("D", "DESC", "DESCENDING"):
-                return False
-
-    def multi_sorted(self, *sort_keys):
-        """Return copy of self sorted by multiple keys.
-
-        :param list(tuple) sort_keys: Keys to sort by.
-        :rtype: :class:`tabler.Table`.
-        """
-        temp_table = self.copy()
-        temp_table.multi_sort(*sort_keys)
-        return temp_table
-
     def split_by_row_count(self, row_count):
         """Split table by row count.
 
@@ -310,21 +271,3 @@ class Table:
             new_table.rows = self.rows[i : i + row_count]
             split_tables.append(new_table)
         return split_tables
-
-    def set_table(self):
-        """Set header and column lookups."""
-        self.set_headers()
-
-    def multi_sort_validate(self, sort_key):
-        """Validate sort key.
-
-        :param sort_key: Sort key to validate.
-        :type sort_key: int or str.
-
-        :rtype: bool.
-        """
-        if type(sort_key) not in (int, str):
-            raise TypeError("Sort Key must be of type int or str.")
-        if sort_key not in self.header:
-            raise KeyError("String Sort Key must be in header.")
-        return True
