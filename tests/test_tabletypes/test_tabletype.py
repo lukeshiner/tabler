@@ -25,7 +25,7 @@ class TableTypeTest(TableTest):
         assert [list(_) for _ in in_table] == [list(_) for _ in out_table]
 
     def test_read_null_values(self):
-        table = Table(str(self.WITH_NULLS_PATH), self.tabletype)
+        table = Table(str(self.WITH_NULLS_PATH), table_type=self.tabletype)
         assert list(table[0]) == ["Red", self.tabletype.empty_value, "Blue"]
 
     def test_write_null_values(self, tmpdir):
@@ -53,7 +53,7 @@ class TableTypeTest(TableTest):
 
     def test_read_long_rows(self):
         table = Table(str(self.WITH_LONG_ROW), self.tabletype)
-        assert table.header == ["Col1", "Col2", "Col3", self.tabletype.empty_value]
+        assert table.header == ("Col1", "Col2", "Col3", table._EMPTY_HEADER.format(1))
         assert list(table[0]) == ["Red", "Green", "Blue", "Purple"]
 
     def test_write_long_rows(self, tmpdir):

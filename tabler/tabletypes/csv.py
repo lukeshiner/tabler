@@ -59,17 +59,15 @@ class CSV(BaseTableType):
             if table.header:
                 writer.writerow(table.header)
             for row in table:
-                writer.writerow(row.row)
+                writer.writerow(list(row))
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )
 
     def parse_value(self, value):
         """Return None if the value is empty, otherwise return str(value)."""
-        if value == "":
-            return self.empty_value
-        else:
-            return str(value)
+        value = super().parse_value(value)
+        return str(value)
 
 
 class CSVURL(CSV):

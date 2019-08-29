@@ -55,7 +55,7 @@ class XLSX(BaseTableType):
         ws = wb.active
         ws.append(table.header)
         for row in table:
-            ws.append(row.row)
+            ws.append(list(row))
         wb.save(str(path))
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr

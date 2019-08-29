@@ -52,6 +52,8 @@ class Table:
         None.
     """
 
+    _EMPTY_HEADER = "Unlabeled Column {}"
+
     def __init__(self, filepath=None, table_type=None, header=None, data=None):
         """Construct a :class:`tabler.Table`.
 
@@ -108,7 +110,7 @@ class Table:
         return self.rows[index]
 
     def __str__(self):
-        columns = str(len(self.columns))
+        columns = str(len(self.header))
         rows = str(len(self.rows))
         lines = [
             "Table Object containing {} colomuns and {} rows".format(columns, rows),
@@ -118,62 +120,6 @@ class Table:
 
     def __repr__(self):
         return self.__str__()
-
-    def empty(self):
-        """Clear all data."""
-        self.rows = []
-        self.header = []
-        self.columns = []
-        self.headers = {}
-
-    def set_headers(self):
-        """Create a lookup for header indexes."""
-        self.headers = {}
-        for column in self.header:
-            self.headers[column] = self.header.index(column)
-
-    def is_empty(self):
-        """Return True if the table conatins no data, otherwise return False.
-
-        :rtype: bool
-        """
-        if self.rows == []:
-            if self.header == []:
-                if self.columns == []:
-                    return True
-        return False
-
-    def append(self, row):
-        """Add new row to table.
-
-        :param row: Data for new row.
-        :type row: list or :class:`tabler.tablerow.TableRow`.
-        """
-        if isinstance(row, list):
-            self.rows.append(TableRow(row, self.header))
-            self.set_headers()
-        elif isinstance(row, TableRow):
-            self.rows.append(row)
-
-    def get_column(self, column):
-        """Return all values in a column.
-
-        :param column: Name or index of to be returned.
-        :type column: str or int.
-        :rtype: list
-        """
-        return [row[column] for row in self.rows]
-
-    def remove_column(self, column):
-        """
-        Remove a specified column from the Table.
-
-        :param column: Name or index of to be removed.
-        :type column: str or int.
-        """
-        for row in self.rows:
-            row.remove_column(column)
-        self.set_headers()
 
     def load(self, header, data):
         """
@@ -186,13 +132,9 @@ class Table:
         :type data: list(list(str, int or float))
         """
         self.empty()
-        self.header = [head for head in header]
-        for row in data:
-            if isinstance(row, TableRow):
-                self.rows.append(row)
-            else:
-                self.rows.append(TableRow([cell for cell in row], header))
-        self.set_headers()
+        self.row_length = max([len(header)] + [len(_) for _ in data])
+        self.header = self._prepare_header(header)
+        self.rows = [TableRow(row, self.header) for row in self._prepare_data(data)]
 
     def write(self, filepath, table_type=None):
         """Create file from table.
@@ -213,10 +155,57 @@ class Table:
             filepath = pathlib.Path(str(filepath) + table_type.extension)
         table_type.write(self, filepath)
 
+    def empty(self):
+        """Clear all data."""
+        self.rows = []
+        self.header = []
+        self.headers = {}
+
+    def is_empty(self):
+        """Return True if the table conatins no data, otherwise return False.
+
+        :rtype: bool
+        """
+        if self.rows == []:
+            if self.header == []:
+                if self.columns == []:
+                    return True
+        return False
+
+    def append(self, row):
+        """Add new row to table.
+
+        :param row: Data for new row.
+        :type row: list or :class:`tabler.tablerow.TableRow`.
+        """
+        if isinstance(row, TableRow):
+            self.rows.append(row)
+        else:
+            self.rows.append(TableRow(row, self.header))
+
+    def get_column(self, column):
+        """Return all values in a column.
+
+        :param column: Name or index of to be returned.
+        :type column: str or int.
+        :rtype: list
+        """
+        return [row[column] for row in self.rows]
+
+    def remove_column(self, column):
+        """
+        Remove a specified column from the Table.
+
+        :param column: Name or index of to be removed.
+        :type column: str or int.
+        """
+        for row in self.rows:
+            row.remove_column(column)
+
     def print_r(self):
         """Print table data in a readable format."""
         for row in self.rows:
-            print(row.row, file=sys.stderr)
+            print(list(row), file=sys.stderr)
 
     def copy(self):
         """Return duplicate Table object."""
@@ -271,3 +260,33 @@ class Table:
             new_table.rows = self.rows[i : i + row_count]
             split_tables.append(new_table)
         return split_tables
+
+    def _prepare_header(self, header_row):
+        unlabled = 0
+        header = []
+        for item in header_row:
+            if not item:
+                unlabled += 1
+                header.append(self._EMPTY_HEADER.format(unlabled))
+            else:
+                header.append(item)
+        while len(header) < self.row_length:
+            unlabled += 1
+            header.append(self._EMPTY_HEADER.format(unlabled))
+        return tuple(header)
+
+    def _prepare_data(self, data, empty_value=None):
+        return [self._prepare_row(row, empty_value=empty_value) for row in data]
+
+    def _prepare_row(self, row, empty_value=None):
+        if empty_value is None and self.table_type is not None:
+            empty_value = self.table_type.empty_value
+        prepared_row = []
+        for value in row:
+            if value is None or value == "":
+                prepared_row.append(empty_value)
+            else:
+                prepared_row.append(value)
+        while len(prepared_row) < self.row_length:
+            prepared_row.append(empty_value)
+        return prepared_row
