@@ -211,7 +211,9 @@ class Table:
 
     def copy(self):
         """Return duplicate Table object."""
-        return self.__class__(header=self.header, data=[row.row for row in self.rows])
+        return self.__class__(
+            header=self.header, data=[row.copy() for row in self.rows]
+        )
 
     def sort(self, sort_key, asc=True):
         """Sort table by column.
