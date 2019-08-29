@@ -22,6 +22,7 @@ changelog-cli = "*"
 bump2version = "*"
 pytest-cov = "*"
 coveralls = "*"
+requests-mock = "*"
 
 [requires]
 python_version = "3.7"

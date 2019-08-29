@@ -166,10 +166,9 @@ class Table:
 
         :rtype: bool
         """
-        if self.rows == []:
-            if self.header == []:
-                if self.columns == []:
-                    return True
+        if len(self.rows) == 0:
+            if len(self.header) == 0:
+                return True
         return False
 
     def append(self, row):
@@ -212,7 +211,9 @@ class Table:
 
     def copy(self):
         """Return duplicate Table object."""
-        return self.__class__(header=self.header, data=[row.row for row in self.rows])
+        return self.__class__(
+            header=self.header, data=[row.copy() for row in self.rows]
+        )
 
     def sort(self, sort_key, asc=True):
         """Sort table by column.
@@ -228,9 +229,9 @@ class Table:
         else:
             column = sort_key
         try:
-            self.rows.sort(key=lambda x: float(x.row[column]), reverse=not asc)
+            self.rows.sort(key=lambda x: float(list(x)[column]), reverse=not asc)
         except ValueError:
-            self.rows.sort(key=lambda x: x.row[column], reverse=not asc)
+            self.rows.sort(key=lambda x: list(x)[column], reverse=not asc)
 
     def sorted(self, sort_key, asc=True):
         """Return a sorted duplicate of the Table.
@@ -258,9 +259,7 @@ class Table:
         """
         split_tables = []
         for i in range(0, len(self.rows), row_count):
-            new_table = Table()
-            new_table.header = self.header
-            new_table.rows = self.rows[i : i + row_count]
+            new_table = Table(header=self.header, data=self.rows[i : i + row_count])
             split_tables.append(new_table)
         return split_tables
 

@@ -86,3 +86,13 @@ class CSVURL(CSV):
         csv_file = csv.reader(text)
         rows = [row for row in csv_file]
         return rows[0], rows[1:]
+
+    def write(self, table, path):
+        """Save data from :class:`tabler.Table` to file.
+
+        :param table: Table to save.
+        :type table: :class:`tabler.Table`
+        :param path: Path to file to be opened.
+        :type path: str, pathlib.Path or compatible.
+        """
+        raise NotImplementedError

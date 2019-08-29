@@ -33,27 +33,15 @@ class TableRow:
 
     def __setitem__(self, key, item):
         if type(key) == int:
-            self.row[key] = str(item)
+            self.row[key] = item
         elif type(key) == str:
-            self.row[self.headers[key]] = str(item)
+            self.row[self.headers[key]] = item
 
     def __str__(self):
         return ", ".join([cell for cell in self.row])
 
     def __len__(self):
         return len(self.row)
-
-    def get_column(self, column):
-        """Return the value held in the specified column."""
-        return self.row[self.headers[column]]
-
-    def update_column(self, column, value):
-        """Change value of column.
-
-        :param str column: Header for column to be updated.
-        :param value: Value to be inserted into column.
-        """
-        self.row[self.headers[column]] = str(value)
 
     def remove_column(self, column):
         """Remove the passed column.

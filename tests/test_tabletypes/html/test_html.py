@@ -16,8 +16,12 @@ class TestHTML(TableTypeTest):
 
     def test_write(self, tmpdir):
         table = self.get_basic_table()
-        filepath = Path(str(tmpdir)) / "testfile.html"
+        filepath = str(Path(str(tmpdir)) / "testfile.html")
         table.write(filepath, table_type=HTML())
+        with open(str(Path(__file__).parent / "expected.html"), "r") as f:
+            expected = f.read()
+        with open(filepath, "r") as f:
+            assert f.read() == expected
 
     def test_read_null_values(self):
         pass
