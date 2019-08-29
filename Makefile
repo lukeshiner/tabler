@@ -28,3 +28,6 @@ docs:
 
 lock:
 	pipenv lock -dr > requirements.txt
+
+coverage:
+	pipenv run pytest --cov=tabler tests/ --cov-report=html

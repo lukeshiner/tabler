@@ -12,3 +12,8 @@ install:
 # command to run tests
 script:
   - make test
+  - make coverage
+  - coveralls
+notifications:
+  email:
+    - luke@lukeshiner.co.uk
