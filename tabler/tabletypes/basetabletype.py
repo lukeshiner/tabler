@@ -118,4 +118,6 @@ class BaseTableType:
 
     def prepare_rows(self, header, rows):
         """Prepare rows for writing."""
-        return header + rows
+        data = [header]
+        data.extend(rows)
+        return data
