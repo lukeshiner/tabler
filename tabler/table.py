@@ -166,10 +166,9 @@ class Table:
 
         :rtype: bool
         """
-        if self.rows == []:
-            if self.header == []:
-                if self.columns == []:
-                    return True
+        if len(self.rows) == 0:
+            if len(self.header) == 0:
+                return True
         return False
 
     def append(self, row):
