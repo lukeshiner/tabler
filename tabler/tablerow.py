@@ -33,9 +33,9 @@ class TableRow:
 
     def __setitem__(self, key, item):
         if type(key) == int:
-            self.row[key] = str(item)
+            self.row[key] = item
         elif type(key) == str:
-            self.row[self.headers[key]] = str(item)
+            self.row[self.headers[key]] = item
 
     def __str__(self):
         return ", ".join([cell for cell in self.row])
