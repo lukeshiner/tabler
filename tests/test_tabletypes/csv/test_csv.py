@@ -1,6 +1,9 @@
 from pathlib import Path
 
-from tabler import CSV, Table
+import pytest
+import requests_mock
+
+from tabler import CSV, CSVURL, Table
 
 from ..test_tabletype import TableTypeTest
 
@@ -48,3 +51,37 @@ class TestCSV(TableTypeTest):
     def test_open_csv_with_txt_extension(self):
         path = Path(__file__).parent / "testfile.txt"
         self.is_valid_table(Table(path, CSV()))
+
+
+class TestCSVURL(TableTypeTest):
+    tabletype = CSVURL()
+
+    def test_open(self):
+        with requests_mock.Mocker() as m:
+            with open(str(Path(__file__).parent / "testfile.csv"), "rb") as f:
+                m.get("http://test.com/testfile.csv", content=f.read())
+            table = Table("http://test.com/testfile.csv", table_type=CSVURL())
+        self.is_valid_table(table)
+
+    def test_write(self, tmpdir):
+        table = self.get_basic_table()
+        with pytest.raises(NotImplementedError):
+            table.write("path", table_type=self.tabletype)
+
+    def test_read_null_values(self):
+        pass
+
+    def test_write_null_values(self, tmpdir):
+        pass
+
+    def test_read_incomplete_rows(self):
+        pass
+
+    def test_write_incomplete_rows(self, tmpdir):
+        pass
+
+    def test_read_long_rows(self):
+        pass
+
+    def test_write_long_rows(self, tmpdir):
+        pass
