@@ -53,3 +53,10 @@ class TestTable(TableTest):
     def test_get_table_column(self):
         table = self.get_basic_table()
         assert table.get_column("Col1") == ["Red", "Orange"]
+
+    def test_remove_column(self):
+        table = self.get_basic_table()
+        table.remove_column("Col2")
+        assert table.header == ("Col1", "Col3")
+        assert list(table.rows[0]) == ["Red", "Blue"]
+        assert list(table.rows[1]) == ["Orange", "Magenta"]

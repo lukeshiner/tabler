@@ -61,9 +61,11 @@ class TableRow:
         :param str column: Header for column to be removed.
         :raises: ValueError: If column is not a valid column header.
         """
-        columnIndex = self.header.index(column)
-        self.row.pop(columnIndex)
-        self.header.pop(columnIndex)
+        column_index = self.header.index(column)
+        self.row.pop(column_index)
+        header = list(self.header)
+        header.pop(header.index(column))
+        self.header = tuple(header)
 
     def copy(self):
         """Return duplicate tabler.tablerow.TableRow object.
