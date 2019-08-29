@@ -199,6 +199,9 @@ class Table:
         :param column: Name or index of to be removed.
         :type column: str or int.
         """
+        header = list(self.header)
+        header.pop(header.index(column))
+        self.header = tuple(header)
         for row in self.rows:
             row.remove_column(column)
 
