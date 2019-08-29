@@ -53,6 +53,30 @@ class TestTable(TableTest):
         table[0]["Col1"] = "Green"
         assert table[0]["Col1"] == "Green"
 
+    def test_change_cell_value_by_integer_index(self):
+        table = self.get_basic_table()
+        assert table[0][0] == "Red"
+        table[0][0] = "Green"
+        assert table[0][0] == "Green"
+
+    def test_change_cell_to_float(self):
+        table = self.get_basic_table()
+        assert table[0]["Col1"] == "Red"
+        table[0]["Col1"] = 0.975
+        assert table[0]["Col1"] == 0.975
+
+    def test_change_cell_to_int(self):
+        table = self.get_basic_table()
+        assert table[0]["Col1"] == "Red"
+        table[0]["Col1"] = 567
+        assert table[0]["Col1"] == 567
+
+    def test_change_cell_to_None(self):
+        table = self.get_basic_table()
+        assert table[0]["Col1"] == "Red"
+        table[0]["Col1"] = None
+        assert table[0]["Col1"] is None
+
     def test_get_table_column(self):
         table = self.get_basic_table()
         assert table.get_column("Col1") == ["Red", "Orange"]
@@ -107,6 +131,7 @@ class TestTable(TableTest):
         t1 = self.get_basic_table()
         t2 = t1.copy()
         assert t1 is not t2
+        assert t1[0] is not t2[0]
 
     def test_table_sort_method_with_string_key(self):
         table = Table(header=("A", "B", "C"), data=((8, 5, 6), (9, 3, 4), (6, 4, 7)))
@@ -212,3 +237,9 @@ class TestTable(TableTest):
         new_row = TableRow(data, self.TEST_HEADER)
         table.append(new_row)
         assert tuple(table[2]) == data
+
+    def test_table_row__str__method(self):
+        table = self.get_basic_table()
+        row = table.rows[0]
+        expected = "Red, Green, Blue"
+        assert str(row) == expected
