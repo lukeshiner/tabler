@@ -43,8 +43,10 @@ Alternate Usage::
     table = Table('path/to/open.csv', table_type=csv)
     table.save('path/to/save.csv', table_type=csv)
 """
-from .basetabletype import BaseTableType  # NOQA
-from .csv import CSV, CSVURL  # NOQA
-from .ods import ODS  # NOQA
-from .html import HTML  # NOQA
-from .xlsx import XLSX  # NOQA
+from .basetabletype import BaseTableType
+from .csv import CSV, CSVURL
+from .html import HTML
+from .ods import ODS
+from .xlsx import XLSX
+
+__all__ = ["BaseTableType", "CSV", "CSVURL", "ODS", "HTML", "XLSX"]
