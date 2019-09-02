@@ -19,12 +19,32 @@ intutive accessing, manipulation and writing of tablulated data.
 
 """
 
-from .__version__ import __title__, __description__, __url__  # NOQA
-from .__version__ import __version__, __author__, __author_email__  # NOQA
-from .__version__ import __copyright__, __license__  # NOQA
+from .__version__ import (
+    __author__,
+    __author_email__,
+    __copyright__,
+    __description__,
+    __license__,
+    __title__,
+    __url__,
+    __version__,
+)
+from .table import Table
+from .tabletypes import CSV, CSVURL, HTML, ODS, XLSX
 
-from .table import Table  # NOQA
-from .tabletypes import *  # NOQA
-from .tohtml import ToHTML  # NOQA
-
-Tabler = Table  # Backwards compatibility with v1.*
+__all__ = [
+    "Table",
+    "CSV",
+    "CSVURL",
+    "HTML",
+    "ODS",
+    "XLSX",
+    "__author_email__",
+    "__author__",
+    "__copyright__",
+    "__description__",
+    "__license__",
+    "__title__",
+    "__url__",
+    "__version__",
+]
