@@ -31,3 +31,6 @@ class TestHTML(TableTypeTest):
 
     def test_read_long_rows(self):
         pass
+
+    def test_formatting(self):
+        pass

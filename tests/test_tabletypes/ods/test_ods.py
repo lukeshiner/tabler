@@ -12,3 +12,4 @@ class TestODS(TableTypeTest):
     WITH_NULLS_PATH = Path(__file__).parent / "testfile_empties.ods"
     WITH_INCOMPLETE_ROW = Path(__file__).parent / "testfile_incomplete_rows.ods"
     WITH_LONG_ROW = Path(__file__).parent / "testfile_long_rows.ods"
+    TEST_FORMATTING = Path(__file__).parent / "test_format.ods"
