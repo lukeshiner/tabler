@@ -177,10 +177,7 @@ class Table:
         :param row: Data for new row.
         :type row: list or :class:`tabler.tablerow.TableRow`.
         """
-        if isinstance(row, TableRow):
-            self.rows.append(row)
-        else:
-            self.rows.append(TableRow(row, self.header))
+        self.rows.append(TableRow(list(row), self.header))
 
     def get_column(self, column):
         """Return all values in a column.
