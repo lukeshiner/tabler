@@ -14,6 +14,7 @@ class TableTypeTest(TableTest):
     WITH_NULLS_PATH = None
     WITH_INCOMPLETE_ROW = None
     WITH_LONG_ROW = None
+    expected_formatting = [0, 0, "None", 893275023572039]
 
     def test_open(self):
         path = str(self.BASIC_FILE_PATH)
@@ -30,6 +31,10 @@ class TableTypeTest(TableTest):
     def test_read_null_values(self):
         table = Table(str(self.WITH_NULLS_PATH), table_type=self.tabletype)
         assert list(table[0]) == ["Red", self.tabletype.empty_value, "Blue"]
+
+    def test_formatting(self):
+        table = Table(str(self.TEST_FORMATTING), table_type=self.tabletype)
+        assert list(table.get_column("Values")) == self.expected_formatting
 
     def test_write_null_values(self, tmpdir):
         table = Table(

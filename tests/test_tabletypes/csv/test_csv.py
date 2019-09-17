@@ -15,6 +15,8 @@ class TestCSV(TableTypeTest):
     WITH_NULLS_PATH = Path(__file__).parent / "testfile_empties.csv"
     WITH_INCOMPLETE_ROW = Path(__file__).parent / "testfile_incomplete_rows.csv"
     WITH_LONG_ROW = Path(__file__).parent / "testfile_long_rows.csv"
+    TEST_FORMATTING = Path(__file__).parent / "test_format.csv"
+    expected_formatting = ["0", "0", "None", "893275023572039"]
 
     def test_write_null_values(self, tmpdir):
         table = Table(
@@ -69,6 +71,9 @@ class TestCSVURL(TableTypeTest):
             table.write("path", table_type=self.tabletype)
 
     def test_read_null_values(self):
+        pass
+
+    def test_formatting(self):
         pass
 
     def test_write_null_values(self, tmpdir):

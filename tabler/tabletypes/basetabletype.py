@@ -40,6 +40,7 @@ class BaseTableType:
 
     empty_value = None
     verbose = True
+    null_values = ("", None)
 
     def __init__(self, extension, verbose=None):
         """Construct :class:`tabler.tabletypes.BaseTableType`.
@@ -96,7 +97,7 @@ class BaseTableType:
 
     def parse_value(self, value):
         """Return None if the value is empty, otherwise return str(value)."""
-        if not value:
+        if value in self.null_values:
             return self.empty_value
         else:
             return value
@@ -107,7 +108,7 @@ class BaseTableType:
 
     def prepare_value(self, value):
         """Prepare a value for writing."""
-        if not value:
+        if value in self.null_values:
             return self.empty_value
         else:
             return value
