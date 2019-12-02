@@ -1,4 +1,4 @@
--i https://pypi.org/simple/
+-i https://pypi.org/simple
 alabaster==0.7.12
 attrs==19.3.0
 babel==2.7.0
