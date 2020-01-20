@@ -35,14 +35,14 @@ pyflakes==2.1.1
 pygments==2.5.2
 pyparsing==2.4.6
 pytest-cov==2.8.1
-pytest==5.3.2
+pytest==5.3.3
 pytz==2019.3
 readme-renderer==24.0
 requests-mock==1.7.0
 requests-toolbelt==0.9.1
 requests==2.22.0
 secretstorage==3.1.2 ; sys_platform == 'linux'
-six==1.13.0
+six==1.14.0
 snowballstemmer==2.0.0
 sphinx-rtd-theme==0.4.3
 sphinx==2.3.1
