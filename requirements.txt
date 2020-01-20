@@ -3,7 +3,7 @@ alabaster==0.7.12
 attrs==19.3.0
 babel==2.8.0
 bleach==3.1.0
-bump2version==0.5.11
+bump2version==1.0.0
 certifi==2019.11.28
 cffi==1.13.2
 changelog-cli==0.6.2
@@ -42,7 +42,7 @@ requests-mock==1.7.0
 requests-toolbelt==0.9.1
 requests==2.22.0
 secretstorage==3.1.2 ; sys_platform == 'linux'
-six==1.13.0
+six==1.14.0
 snowballstemmer==2.0.0
 sphinx-rtd-theme==0.4.3
 sphinx==2.3.1
