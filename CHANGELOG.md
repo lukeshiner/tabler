@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 * Consistent handling of files with varying row length.
 
 ### Changes
+* Use Poetry for packaging.
 * The `get_column()` and `update_column()` methods of TableRow have been removed as they are unnecessary. Use `row[index]` and `row[index] = value` instead.
 
 ### Fixes
