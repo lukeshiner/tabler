@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
+
 ## Unreleased
+---
+
+### New
+
+### Changes
+
+### Fixes
+
+### Breaks
+
+
+## 2.4.0 - (2020-01-29)
 ---
 
 ### New
@@ -17,7 +30,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixes
 * Tabler can now open `ODS` files that were created with tabler.
 
-### Breaks
 
 ## 2.3.0 - (2019-07-30)
 ---
