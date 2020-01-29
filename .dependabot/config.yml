@@ -7,3 +7,4 @@ update_configs:
     default_assignees:
       - "lukeshiner"
     version_requirement_updates: "auto"
+    target_branch: "development"
