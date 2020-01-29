@@ -3,14 +3,14 @@ Check list for new releases
 
 ## Add Changes to CHANGELOG.md
 - Add any missing changes to the "UNRELEASED" section of `CHANGELOG.md`
-  - `pipenv run changelog (new|change|fix|breaks) "<message>"`
+  - `poetry run changelog (new|change|fix|breaks) "<message>"`
 - Check the current project version in `CHANGELOG.md` and `python`, making sure they match
-  - `pipenv run changelog current`
-  - `pipenv run python -c "import tabler; print(tabler.__version__)"`
+  - `poetry run changelog current`
+  - `poetry run python -c "import tabler; print(tabler.__version__)"`
 - Check suggested version bump type
-  - `pipenv run changelog suggest`
+  - `poetry run changelog suggest`
 - Add the new version to `CHANGELOG.md`
- - `pipenv run changelog release (--patch|--minor|--major)`
+ - `poetry run changelog release (--patch|--minor|--major)`
 
 ## Update Documentation
 - Update the documentation files
@@ -19,21 +19,20 @@ Check list for new releases
 ## Check Dependencies
 
 - Refresh development environment
-  - `pipenv rm`
-  - `make init`
-- Update `Pipfile.lock` and `requirements.txt`
- - `make lock`
-- Install development dependencies
-  - `pipenv sync -d`
+  - `poetry env remove python`
+  - `poetry install`
+- Update `poetry.lock` and `requirements.txt`
+ - `poetry lock`
+ - `poetry run pip freeze > requirements.txt`
 - Run tests
-  - `make test`
+  - `poetry run pytest`
 
 ## Create Release Commit
 - Create a release branch
   - `git checkout master`
   - `git checkout -b <new version number>`
 - Create release commit
-  - `pipenv run bumpversion (patch|minor|major)`
+  - `poetry run bumpversion (patch|minor|major)`
 - Update the `stable` branch to the new commit
 - Merge the new branch into `master`
 
@@ -42,6 +41,7 @@ Check list for new releases
   - https://travis-ci.org/lukeshiner/tabler
 - Check documentation
 - Check version number is correct in:
+ - `pyproject.toml`
  - `tabler/__version__.py`
  - `docs/source/conf.py`
  - `.bumpversion.cfg`
