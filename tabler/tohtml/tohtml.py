@@ -15,11 +15,8 @@ class ToHTML:
         self.table = table
         self.escape = escape
         self.use_header = use_header
-        self.template = self.get_template(template)
+        self.template = self.get_template()
         self.context = self.get_context(table, self.use_header)
-
-    def __str__(self):
-        return self.render()
 
     @staticmethod
     def get_context(table, use_header):
@@ -30,16 +27,10 @@ class ToHTML:
             "data": [list(row) for row in table],
         }
 
-    def get_template(self, template):
+    def get_template(self):
         """Return HTML template."""
-        if template is None:
-            with open(self.default_template, "r") as template_file:
-                return Template(template_file.read())
-        else:
-            if isinstance(template, Template):
-                return template
-            else:
-                return Template(template)
+        with open(self.default_template, "r") as template_file:
+            return Template(template_file.read())
 
     def render(self):
         """Return rendered HTML."""

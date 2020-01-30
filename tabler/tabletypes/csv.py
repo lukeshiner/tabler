@@ -81,11 +81,9 @@ class CSVURL(CSV):
         request = requests.get(path)
         text = []
         for line in request.iter_lines():
-            if len(line) > 0:
-                text.append(line.decode(self.encoding))
-        csv_file = csv.reader(text)
-        rows = [row for row in csv_file]
-        return rows[0], rows[1:]
+            text.append(line.decode(self.encoding))
+        data = list(csv.reader(text))
+        return self.parse_row_data(data)
 
     def write(self, table, path):
         """Save data from :class:`tabler.Table` to file.

@@ -26,16 +26,20 @@ class TableRow:
             yield item
 
     def __getitem__(self, index):
-        if type(index) == int:
+        if isinstance(index, int):
             return self.row[index]
-        elif type(index) == str:
+        elif isinstance(index, str):
             return self.row[self.headers[index]]
+        else:
+            raise ValueError(f"Index must be int or str, not {type(index)}.")
 
-    def __setitem__(self, key, item):
-        if type(key) == int:
-            self.row[key] = item
-        elif type(key) == str:
-            self.row[self.headers[key]] = item
+    def __setitem__(self, index, item):
+        if isinstance(index, int):
+            self.row[index] = item
+        elif isinstance(index, str):
+            self.row[self.headers[index]] = item
+        else:
+            raise ValueError(f"Index is must be int or str, not {type(index)}.")
 
     def __str__(self):
         return ", ".join((str(cell) for cell in self.row))

@@ -166,9 +166,8 @@ class Table:
 
         :rtype: bool
         """
-        if len(self.rows) == 0:
-            if len(self.header) == 0:
-                return True
+        if len(self.rows) == 0 and len(self.header) == 0:
+            return True
         return False
 
     def append(self, row):

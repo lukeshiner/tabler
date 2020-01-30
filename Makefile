@@ -15,7 +15,7 @@ publish:
 	poetry publish --build
 
 publish-test:
-	poetry publish --build -r https://test.pypi.org/
+	poetry publish --build -r test-pypi
 
 docs:
 	cd docs && poetry run make html
