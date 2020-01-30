@@ -54,6 +54,16 @@ class TestCSV(TableTypeTest):
         path = Path(__file__).parent / "testfile.txt"
         self.is_valid_table(Table(path, CSV()))
 
+    def test_write_csv_with_no_header(self, tmpdir):
+        table = self.get_basic_table()
+        path = Path(str(tmpdir.join("table_with_no_header.csv")))
+        table.header = {}
+        table.write(filepath=path, table_type=CSV())
+        with open(path) as f:
+            file_text = f.read()
+        expected = "Red,Green,Blue\nOrange,Yellow,Magenta\n"
+        assert file_text == expected
+
 
 class TestCSVURL(TableTypeTest):
     tabletype = CSVURL()
@@ -64,6 +74,12 @@ class TestCSVURL(TableTypeTest):
                 m.get("http://test.com/testfile.csv", content=f.read())
             table = Table("http://test.com/testfile.csv", table_type=CSVURL())
         self.is_valid_table(table)
+
+    def test_empty_content(self):
+        with requests_mock.Mocker() as m:
+            m.get("http://test.com/testfile.csv", content=b"")
+            with pytest.raises(ValueError):
+                Table("http://test.com/testfile.csv", table_type=CSVURL())
 
     def test_write(self, tmpdir):
         table = self.get_basic_table()

@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
+* Opening empty files raises ValueError.
 * Using an invalid index type to select a cell now raises a ValueError.
 
 ### Fixes

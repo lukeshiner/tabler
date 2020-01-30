@@ -91,8 +91,11 @@ class BaseTableType:
 
     def parse_row_data(self, rows):
         """Return header and rows."""
-        header = rows[0]
-        data = [self.parse_row(row) for row in rows[1:]]
+        try:
+            header = rows[0]
+            data = [self.parse_row(row) for row in rows[1:]]
+        except IndexError:
+            raise ValueError("Input has no header or data.")
         return header, data
 
     def parse_value(self, value):
