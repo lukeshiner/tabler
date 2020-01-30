@@ -8,96 +8,76 @@ import pytest
 from tabler import CSV, Table
 from tabler.tablerow import TableRow
 
-
-class TableTest:
-
-    TEST_HEADER = ("Col1", "Col2", "Col3")
-    TEST_ROW_1 = ["Red", "Green", "Blue"]
-    TEST_ROW_2 = ["Orange", "Yellow", "Magenta"]
-    TEST_DATA = [TEST_ROW_1, TEST_ROW_2]
-
-    def is_valid_table(self, table):
-        assert len(table.header) == 3
-        assert len(table) == 2
-        assert all([len(row) == 3 for row in table])
-        assert table.header == self.TEST_HEADER
-        assert list(table.rows[0]) == self.TEST_ROW_1
-        assert list(table.rows[1]) == self.TEST_ROW_2
-        assert table[0]["Col1"] == "Red"
-
-    def get_basic_table(self):
-        header = self.TEST_HEADER
-        data = self.TEST_DATA
-        return Table(header=header, data=data)
+from .test_tools import TablerTestTools
 
 
-class TestTable(TableTest):
+class TestTable:
     def test_create_table_with_header_and_data(self):
-        table = self.get_basic_table()
-        self.is_valid_table(table)
+        table = TablerTestTools.basic_table()
+        TablerTestTools.table_valid(table)
 
     def test_create_table_no_args_raises(self):
         with pytest.raises(TypeError):
             Table()
 
     def test_access_cell_by_header_column_index(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0][0] == "Red"
 
     def test_access_cell_by_header_name_column_index(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0]["Col1"] == "Red"
 
     def test_access_cell_with_invalid_key(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         with pytest.raises(ValueError) as e:
             table[0][5.9]
         assert "Index" in str(e)
         assert "float" in str(e)
 
     def test_change_cell_value(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0]["Col1"] == "Red"
         table[0]["Col1"] = "Green"
         assert table[0]["Col1"] == "Green"
 
     def test_change_cell_value_by_integer_index(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0][0] == "Red"
         table[0][0] = "Green"
         assert table[0][0] == "Green"
 
     def test_change_cell_to_float(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0]["Col1"] == "Red"
         table[0]["Col1"] = 0.975
         assert table[0]["Col1"] == 0.975
 
     def test_change_cell_to_int(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0]["Col1"] == "Red"
         table[0]["Col1"] = 567
         assert table[0]["Col1"] == 567
 
     def test_change_cell_to_None(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table[0]["Col1"] == "Red"
         table[0]["Col1"] = None
         assert table[0]["Col1"] is None
 
     def test_change_cell_with_invalid_index(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         with pytest.raises(ValueError) as e:
             table[0][5.9] = 4
         assert "Index" in str(e)
         assert "float" in str(e)
 
     def test_get_table_column(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         assert table.get_column("Col1") == ["Red", "Orange"]
 
     def test_remove_column(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         table.remove_column("Col2")
         assert table.header == ("Col1", "Col3")
         assert list(table.rows[0]) == ["Red", "Blue"]
@@ -108,13 +88,13 @@ class TestTable(TableTest):
             Table("testfile.unk")
 
     def test_write_unknown_filetype_without_tabletype_raises(self, tmpdir):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         filepath = Path(str(tmpdir)) / "testfile.unk"
         with pytest.raises(ValueError):
             table.write(filepath)
 
     def test_table__str___and__repr__methods(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         expected = (
             "Table Object containing 3 colomuns and 2 rows\n"
             "Column Headings: Col1, Col2, Col3"
@@ -123,8 +103,8 @@ class TestTable(TableTest):
         assert repr(table) == expected
 
     def test_set_table_type(self, tmpdir):
-        header = self.TEST_HEADER
-        data = self.TEST_DATA
+        header = TablerTestTools.TEST_HEADER
+        data = TablerTestTools.TEST_DATA
         table_type = CSV()
         table = Table(header=header, data=data, table_type=table_type)
         assert table.table_type == table_type
@@ -134,16 +114,16 @@ class TestTable(TableTest):
     def test_table_is_empty_method(self):
         t = Table(header=[], data=[])
         assert t.is_empty() is True
-        t = self.get_basic_table()
+        t = TablerTestTools.basic_table()
         assert t.is_empty() is False
 
     def test_table_empty_method(self):
-        t = self.get_basic_table()
+        t = TablerTestTools.basic_table()
         t.empty()
         assert t.is_empty() is True
 
     def test_table_copy_method(self):
-        t1 = self.get_basic_table()
+        t1 = TablerTestTools.basic_table()
         t2 = t1.copy()
         assert t1 is not t2
         assert t1[0] is not t2[0]
@@ -241,26 +221,26 @@ class TestTable(TableTest):
         assert tuple(split_tables[3][0]) == (18, 19, 20)
 
     def test_table_append_method_with_iterable(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         new_row = ("Pink", "Purple", "Brown")
         table.append(new_row)
         assert tuple(table[2]) == new_row
 
     def test_table_append_method_with_TableRow(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         data = ("Pink", "Purple", "Brown")
-        new_row = TableRow(data, self.TEST_HEADER)
+        new_row = TableRow(data, TablerTestTools.TEST_HEADER)
         table.append(new_row)
         assert tuple(table[2]) == data
 
     def test_table_row__str__method(self):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         row = table.rows[0]
         expected = "Red, Green, Blue"
         assert str(row) == expected
 
     def test_print_r_method(self, capsys):
-        table = self.get_basic_table()
+        table = TablerTestTools.basic_table()
         table.print_r()
         captured = capsys.readouterr()
         assert (
