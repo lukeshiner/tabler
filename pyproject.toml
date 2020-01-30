@@ -22,6 +22,10 @@ classifiers = [
     "Topic :: Other/Nonlisted Topic",
 ]
 
+[tool.coverage.run]
+branch = true
+omit = ["tests/*",]
+
 [tool.poetry.dependencies]
 python = "^3.6"
 requests = "^2.22.0"
@@ -43,11 +47,9 @@ changelog-cli = "^0.6.2"
 bump2version = "^1.0.0"
 coveralls = "^1.10.0"
 requests-mock = "^1.7.0"
+doc8 = "^0.8.0"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=0.12",]
 build-backend = "poetry.masonry.api"
 
-[tool.coverage.run]
-branch = true
-omit = ["tests/*"]

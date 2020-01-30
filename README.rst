@@ -5,6 +5,9 @@ Tabler - Simple interaction with tabulated data
 .. image:: https://travis-ci.org/lukeshiner/tabler.svg?branch=master
     :target: https://travis-ci.org/lukeshiner/tabler
 
+.. image:: https://coveralls.io/repos/github/lukeshiner/tabler/badge.svg?branch=master
+    :target: https://coveralls.io/github/lukeshiner/tabler?branch=master
+
 .. image:: https://readthedocs.org/projects/tabler/badge/?version=latest
     :target: https://tabler.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
@@ -35,22 +38,21 @@ Compatible formats:
     + Microsoft Excel .xlsx
     + HTML (Write only)
 
-If you need another format, see the documentation_ for how
-to add your own.
+It can be extended to open other file types.
 
 The full documentation is available on `Read the Docs
 <https://tabler.readthedocs.io/en/latest/>`_.
 
 Tabler lives on GitHub_.
 
-.. _documentation: https://tabler.readthedocs.io/en/latest/
 .. _GitHub: https://github.com/lukeshiner/tabler.git
 
 Contact
 _______
 
-Please send all comments and queries to Luke Shiner at luke@lukeshiner.com
-Issues can be reported on GitHub_
+Please send all comments and queries to Luke Shiner at luke@lukeshiner.com.
+
+Issues can be reported on GitHub_.
 
 License
 _______

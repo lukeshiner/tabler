@@ -31,15 +31,7 @@ class TestODS:
         )
 
     def test_write_null_values(self, tmpdir):
-        table = Table(
-            header=["Col1", "Col2", "Col3"],
-            data=[["Red", "", "Blue"], ["Orange", "Yellow", "Magenta"]],
-        )
-        path = Path(str(tmpdir.join("empty_test.csv")))
-        expected = "Col1,Col2,Col3\nRed,,Blue\nOrange,Yellow,Magenta\n"
-        table.write(filepath=str(path))
-        with open(str(path), "r") as f:
-            assert f.read() == expected
+        TableTypeTestTools.write_null_values_with_table_type(ODS(), tmpdir)
 
     def test_read_incomplete_rows(self):
         TableTypeTestTools.read_incomplete_rows_with_table_type(
