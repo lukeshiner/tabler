@@ -1,5 +1,6 @@
 """Tests for tabler.Table class."""
 
+
 from pathlib import Path
 
 import pytest
@@ -47,6 +48,13 @@ class TestTable(TableTest):
         table = self.get_basic_table()
         assert table[0]["Col1"] == "Red"
 
+    def test_access_cell_with_invalid_key(self):
+        table = self.get_basic_table()
+        with pytest.raises(ValueError) as e:
+            table[0][5.9]
+        assert "Index" in str(e)
+        assert "float" in str(e)
+
     def test_change_cell_value(self):
         table = self.get_basic_table()
         assert table[0]["Col1"] == "Red"
@@ -76,6 +84,13 @@ class TestTable(TableTest):
         assert table[0]["Col1"] == "Red"
         table[0]["Col1"] = None
         assert table[0]["Col1"] is None
+
+    def test_change_cell_with_invalid_index(self):
+        table = self.get_basic_table()
+        with pytest.raises(ValueError) as e:
+            table[0][5.9] = 4
+        assert "Index" in str(e)
+        assert "float" in str(e)
 
     def test_get_table_column(self):
         table = self.get_basic_table()
@@ -243,3 +258,12 @@ class TestTable(TableTest):
         row = table.rows[0]
         expected = "Red, Green, Blue"
         assert str(row) == expected
+
+    def test_print_r_method(self, capsys):
+        table = self.get_basic_table()
+        table.print_r()
+        captured = capsys.readouterr()
+        assert (
+            captured.err
+            == "['Red', 'Green', 'Blue']\n['Orange', 'Yellow', 'Magenta']\n"
+        )
