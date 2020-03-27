@@ -45,7 +45,7 @@ sphinx-rtd-theme = "^0.4.3"
 tox = "^3.14.6"
 changelog-cli = "^0.6.2"
 bump2version = "^1.0.0"
-coveralls = "^1.10.0"
+coveralls = "^1.11.1"
 requests-mock = "^1.7.0"
 doc8 = "^0.8.0"
 
