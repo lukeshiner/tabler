@@ -6,5 +6,5 @@ update_configs:
     update_schedule: "live"
     default_assignees:
       - "lukeshiner"
-    version_requirement_updates: "auto"
+    version_requirement_updates: "off"
     target_branch: "development"
