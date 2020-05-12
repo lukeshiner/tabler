@@ -11,6 +11,9 @@ install:
   - poetry install
 # command to run tests
 script:
+  - flake8 .
+  - isort --recursive -c
+  - black --check .
   - poetry run pytest
   - coveralls
 notifications:

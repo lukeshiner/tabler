@@ -48,6 +48,7 @@ bump2version = "^1.0.0"
 coveralls = "^1.10.0"
 requests-mock = "^1.7.0"
 doc8 = "^0.8.0"
+isort = "^4.3.21"
 
 [build-system]
 requires = ["poetry>=0.12",]
