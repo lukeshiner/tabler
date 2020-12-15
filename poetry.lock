@@ -764,7 +764,7 @@ python-versions = "*"
 
 [[package]]
 name = "urllib3"
-version = "1.25.11"
+version = "1.26.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "main"
 optional = false
@@ -1198,8 +1198,8 @@ typed-ast = [
     {file = "typed_ast-1.4.1.tar.gz", hash = "sha256:8c8aaad94455178e3187ab22c8b01a3837f8ee50e09cf31f1ba129eb293ec30b"},
 ]
 urllib3 = [
-    {file = "urllib3-1.25.11-py2.py3-none-any.whl", hash = "sha256:f5321fbe4bf3fefa0efd0bfe7fb14e90909eb62a48ccda331726b4319897dd5e"},
-    {file = "urllib3-1.25.11.tar.gz", hash = "sha256:8d7eaa5a82a1cac232164990f04874c594c9453ec55eef02eab885aa02fc17a2"},
+    {file = "urllib3-1.26.2-py2.py3-none-any.whl", hash = "sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473"},
+    {file = "urllib3-1.26.2.tar.gz", hash = "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08"},
 ]
 virtualenv = [
     {file = "virtualenv-20.0.15-py2.py3-none-any.whl", hash = "sha256:4e399f48c6b71228bf79f5febd27e3bbb753d9d5905776a86667bc61ab628a25"},
