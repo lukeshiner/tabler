@@ -22,10 +22,6 @@ classifiers = [
     "Topic :: Other/Nonlisted Topic",
 ]
 
-[tool.coverage.run]
-branch = true
-omit = ["tests/*",]
-
 [tool.poetry.dependencies]
 python = "^3.6"
 requests = "^2.22.0"
@@ -33,6 +29,7 @@ openpyxl = "^3.0.3"
 jinja2 = "^2.11.0"
 pyexcel-ods = "^0.5.6"
 urllib3 = "^1.25.8"
+isort = "^5.6.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.4"
@@ -48,7 +45,7 @@ bump2version = "^1.0.0"
 coveralls = "^1.10.0"
 requests-mock = "^1.7.0"
 doc8 = "^0.8.0"
-isort = "^4.3.21"
+isort = "^5.0.0"
 
 [build-system]
 requires = ["poetry>=0.12",]
