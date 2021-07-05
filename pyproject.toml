@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tabler"
-version = "2.4.0"
+version = "2.4.1"
 description = "Simple interface for tabulated data and .csv files"
 authors = ["Luke Shiner <luke@lukeshiner.com>"]
 license = "MIT"
