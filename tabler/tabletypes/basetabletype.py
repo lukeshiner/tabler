@@ -5,10 +5,17 @@ This can be subclassed to provide Table Types for :class:`tabler.Table`.
 They provide methods for opening and saving tables in different formats.
 """
 
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Type, Union
+
 from tabler import exceptions
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-def all_subclasses(cls):
+    from tabler import Table
+
+
+def all_subclasses(cls: Type) -> List[Type]:
     """Return all subclasses of class recursivley.
 
     :param class cls: Class for which subclasses will be returned.
@@ -38,11 +45,11 @@ class BaseTableType:
         extensions = ['.csv', '.txt']
     """
 
-    empty_value = None
-    verbose = True
-    null_values = ("", None)
+    empty_value: Union[str, int, float, None] = None
+    verbose: bool = True
+    null_values: Tuple[Union[str, int, float, None], ...] = ("", None)
 
-    def __init__(self, extension, verbose=None):
+    def __init__(self, extension: str, verbose: Optional[bool] = None) -> None:
         """Construct :class:`tabler.tabletypes.BaseTableType`.
 
         :param str extension: File extension.
@@ -55,7 +62,7 @@ class BaseTableType:
             verbose = self.verbose
 
     @classmethod
-    def get_by_extension(cls, extension):
+    def get_by_extension(cls, extension: str) -> Any:
         """Get apropriate subclass of **BaseTableType** for file extension.
 
         Uses :func:`tabler.tabletypes.basetabletype.all_subclasses` to check
@@ -71,7 +78,7 @@ class BaseTableType:
                 return table_type()
         raise exceptions.ExtensionNotRecognised(extension)
 
-    def open_path(self, path):
+    def open_path(self, path: str) -> Tuple[List[str], List[List[Any]]]:
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
@@ -79,51 +86,59 @@ class BaseTableType:
         """
         raise NotImplementedError
 
-    def write(self, table, path):
+    def write(self, table: "Table", path: Union[str, "Path"]) -> None:
         """Save data from :class:`tabler.Table` to file.
 
-        :param table: Table to save.
+        :param table:"Table" to save.
         :type table: :class:`tabler.Table`
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
         raise NotImplementedError
 
-    def parse_row_data(self, rows):
+    def parse_row_data(
+        self, rows: List[List[Any]]
+    ) -> Tuple[List[str], List[List[Any]]]:
         """Return header and rows."""
         try:
-            header = rows[0]
+            header = [_ for _ in rows[0]]
             data = [self.parse_row(row) for row in rows[1:]]
         except IndexError:
             raise ValueError("Input has no header or data.")
         return header, data
 
-    def parse_value(self, value):
+    def parse_value(self, value: Any) -> Any:
         """Return None if the value is empty, otherwise return str(value)."""
         if value in self.null_values:
             return self.empty_value
         else:
             return value
 
-    def parse_row(self, row):
+    def parse_row(self, row: List[Any]) -> List[Any]:
         """Return a row of parsed values."""
         return [self.parse_value(value) for value in row]
 
-    def prepare_value(self, value):
+    def prepare_value(self, value: Any) -> Any:
         """Prepare a value for writing."""
         if value in self.null_values:
             return self.empty_value
         else:
             return value
 
-    def prepare_row(self, row):
+    def prepare_row(
+        self, row: List[Union[str, int, float, None]]
+    ) -> List[Union[str, int, float, None]]:
         """Remove excess empty values."""
         while row[-1] == self.empty_value:
             row = row[:-1]
         return [self.prepare_value(value) for value in row]
 
-    def prepare_rows(self, header, rows):
+    def prepare_rows(
+        self,
+        header: List[Any],
+        rows: List[List[Any]],
+    ) -> List[List[Any]]:
         """Prepare rows for writing."""
-        data = [header]
+        data: List[List[Any]] = [header]
         data.extend([self.prepare_row(row) for row in rows])
         return data

@@ -4,7 +4,7 @@
 class ExtensionNotRecognised(ValueError):
     """Error finding TableType subclass by file extension."""
 
-    def __init__(self, extension):
+    def __init__(self, extension: str) -> None:
         """
         Initialise ExtensionNotRecognised exception.
 
@@ -16,7 +16,7 @@ class ExtensionNotRecognised(ValueError):
 class TableInitialisationError(TypeError):
     """Error initialising table due to incorrect arguments."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialise TableInitialisationError exception."""
         super().__init__(
             "Table cannot be initialised. "
