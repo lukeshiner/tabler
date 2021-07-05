@@ -2,7 +2,7 @@
 
 import sys
 
-import pyexcel_ods
+import pyexcel_ods3
 
 from .basetabletype import BaseTableType
 
@@ -36,7 +36,7 @@ class ODS(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        data = pyexcel_ods.get_data(str(path))
+        data = pyexcel_ods3.get_data(str(path))
         sheet = data[list(data.keys())[self.sheet]]
         return self.parse_row_data(sheet)
 
@@ -50,7 +50,7 @@ class ODS(BaseTableType):
         """
         rows = self.prepare_rows(table.header, [list(_) for _ in table.rows])
         sheets = {"Sheet {}".format(self.sheet): rows}
-        pyexcel_ods.save_data(str(path), sheets)
+        pyexcel_ods3.save_data(str(path), sheets)
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )
