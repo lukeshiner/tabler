@@ -2,8 +2,8 @@
 Tabler - Simple interaction with tabulated data
 ===============================================
 
-.. image:: https://travis-ci.org/lukeshiner/tabler.svg?branch=master
-    :target: https://travis-ci.org/lukeshiner/tabler
+.. image:: https://github.com/lukeshiner/tabler/workflows/CI/badge.svg
+    :target: https://github.com/lukeshiner/tabler/actions?query=workflow%3ACI
 
 .. image:: https://coveralls.io/repos/github/lukeshiner/tabler/badge.svg?branch=master
     :target: https://coveralls.io/github/lukeshiner/tabler?branch=master

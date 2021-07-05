@@ -1,7 +1,9 @@
 # RELEASING
+
 Check list for new releases
 
 ## Add Changes to CHANGELOG.md
+
 - Add any missing changes to the "UNRELEASED" section of `CHANGELOG.md`
   - `poetry run changelog (new|change|fix|breaks) "<message>"`
 - Check the current project version in `CHANGELOG.md` and `python`, making sure they match
@@ -10,9 +12,10 @@ Check list for new releases
 - Check suggested version bump type
   - `poetry run changelog suggest`
 - Add the new version to `CHANGELOG.md`
- - `poetry run changelog release (--patch|--minor|--major)`
+  - `poetry run changelog release (--patch|--minor|--major)`
 
 ## Update Documentation
+
 - Update the documentation files
   - `make docs`
 
@@ -22,12 +25,13 @@ Check list for new releases
   - `poetry env remove python`
   - `poetry install`
 - Update `poetry.lock` and `requirements.txt`
- - `poetry lock`
- - `poetry run pip freeze > requirements.txt`
+  - `poetry lock`
+  - `poetry run pip freeze > requirements.txt`
 - Run tests
   - `poetry run pytest`
 
 ## Create Release Commit
+
 - Create a release branch
   - `git checkout master`
   - `git checkout -b <new version number>`
@@ -37,20 +41,22 @@ Check list for new releases
 - Merge the new branch into `master`
 
 ## Checks
+
 - Check CI has passed
-  - https://travis-ci.org/lukeshiner/tabler
+  - <https://travis-ci.org/lukeshiner/tabler>
 - Check documentation
 - Check version number is correct in:
- - `pyproject.toml`
- - `tabler/__version__.py`
- - `docs/source/conf.py`
- - `.bumpversion.cfg`
+  - `pyproject.toml`
+  - `tabler/__version__.py`
+  - `docs/source/conf.py`
+  - `.bumpversion.cfg`
 
 ## Create Release
+
 - Test PyPi release
   - `make publish-test`
 - Create release on github.
-  - https://github.com/lukeshiner/tabler/releases
+  - <https://github.com/lukeshiner/tabler/releases>
   - Use change list from `CHANGELOG.md`
 - Create PyPi release
   - `make publish`

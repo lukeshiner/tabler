@@ -11,13 +11,22 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
-* Dropped support for Python 3.5.
-* Opening empty files raises ValueError.
-* Using an invalid index type to select a cell now raises a ValueError.
 
 ### Fixes
 
 ### Breaks
+
+
+## 2.4.1 - (2021-07-05)
+---
+
+### Changes
+* Raise ValueError when passing an unrecognised key to TableRow.__getitem__ or TableRow.__setitem__.
+* Allow a template to be passed when creating an HTML table.
+* Opening an empty file raises ValueError.
+* Dropped support for Python 3.5.
+* Opening empty files raises ValueError.
+* Using an invalid index type to select a cell now raises a ValueError.
 
 
 ## 2.4.0 - (2020-01-29)
