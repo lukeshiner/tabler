@@ -1,10 +1,16 @@
 """This module provides a Table Type for Microsft Excel (.xlsx) files."""
 
 import sys
+from typing import TYPE_CHECKING, Any, List, Tuple, Union
 
 from openpyxl import Workbook, load_workbook
 
 from .basetabletype import BaseTableType
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from tabler.table import Table
 
 
 class XLSX(BaseTableType):
@@ -16,10 +22,10 @@ class XLSX(BaseTableType):
     :type verbose: bool or None.
     """
 
-    extensions = [".xlsx"]
-    empty_value = None
+    extensions: List[str] = [".xlsx"]
+    empty_value: Any = None
 
-    def __init__(self, extension=".xlsx", verbose=True):
+    def __init__(self, extension: str = ".xlsx", verbose: bool = True):
         """Consturct :class:`tabler.tabletypes.XLSX`.
 
         :param str extension: Extension of file to save. Default .xlsx.
@@ -29,7 +35,7 @@ class XLSX(BaseTableType):
         """
         super().__init__(extension, verbose=verbose)
 
-    def open_path(self, path):
+    def open_path(self, path: Union[str, "Path"]) -> Tuple[List[str], List[List[Any]]]:
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
@@ -42,10 +48,10 @@ class XLSX(BaseTableType):
             data.append([cell.value for cell in row])
         return self.parse_row_data(data)
 
-    def write(self, table, path):
+    def write(self, table: "Table", path: Union[str, "Path"]) -> None:
         """Save data from :class:`tabler.Table` to file.
 
-        :param table: Table to save.
+        :param table:"Table" to save.
         :type table: :class:`tabler.Table`
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
