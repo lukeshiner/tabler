@@ -4,3 +4,8 @@ relative_files = True
 omit =
   tests/*
   .tox/*
+
+[report]
+exclude_lines = 
+    pragma: no cover
+    if TYPE_CHECKING:
