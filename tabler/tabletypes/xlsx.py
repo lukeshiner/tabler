@@ -41,11 +41,10 @@ class XLSX(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        wb = load_workbook(filename=str(path))
-        ws = wb.active
-        data = []
-        for row in ws:
-            data.append([cell.value for cell in row])
+        workbook = load_workbook(filename=str(path), read_only=True)
+        worksheet = workbook.active
+        data = [[cell.value for cell in row] for row in worksheet]
+        workbook.close()
         return self.parse_row_data(data)
 
     def write(self, table: "Table", path: Union[str, "Path"]) -> None:
@@ -56,12 +55,12 @@ class XLSX(BaseTableType):
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
         """
-        wb = Workbook()
-        ws = wb.active
-        ws.append(table.header)
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.append(table.header)
         for row in table:
-            ws.append(list(row))
-        wb.save(str(path))
+            worksheet.append(list(row))
+        workbook.save(str(path))
         print(
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )

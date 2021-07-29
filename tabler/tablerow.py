@@ -4,19 +4,19 @@ TableRow provides methods for working with rows in :class:`tabler.Table`
 instances.
 """
 
-from typing import Any, Iterable, Iterator, Union
+from typing import Any, Iterable, Iterator, List, Union
 
 
 class TableRow:
     """Provide methods for rows in :class:`tabler.Table` instances."""
 
-    def __init__(self, row: Iterable[Any], header: Iterable[str]):
+    def __init__(self, row: List[List[Any]], header: Iterable[str]):
         """Instansiate :class:`TableRow`.
 
         :param list row: Data stored in this row.
         :param list header: Column headers from table.
         """
-        self.row = list(row)
+        self.row = row
         self.header = tuple(header)
         self.headers = {}
 
