@@ -9,6 +9,8 @@ tabulated data.
 import os
 import pathlib
 import sys
+from pathlib import Path
+from typing import Any, Collection, Iterable, Iterator, List, Optional, Tuple, Union
 
 from . import exceptions
 from .tablerow import TableRow
@@ -54,7 +56,13 @@ class Table:
 
     _EMPTY_HEADER = "Unlabeled Column {}"
 
-    def __init__(self, filepath=None, table_type=None, header=None, data=None):
+    def __init__(
+        self,
+        filepath: Optional[str] = None,
+        table_type: Optional[BaseTableType] = None,
+        header: Optional[Collection[str]] = None,
+        data: Optional[Iterable] = None,
+    ) -> None:
         """Construct a :class:`tabler.Table`.
 
         A `filename` can be provided to open an existing file. An apropriate
@@ -95,21 +103,21 @@ class Table:
                     )
             self.load(*self.table_type.open_path(filepath))
         elif header is not None and data is not None:
-            self.load(list(header), list(data))
+            self.load(header, data)
         else:
             raise exceptions.TableInitialisationError()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.rows)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[TableRow]:
         for row in self.rows:
             yield row
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> TableRow:
         return self.rows[index]
 
-    def __str__(self):
+    def __str__(self) -> str:
         columns = str(len(self.header))
         rows = str(len(self.rows))
         lines = [
@@ -118,10 +126,12 @@ class Table:
         ]
         return "\n".join(lines)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
-    def load(self, header, data):
+    def load(
+        self, header: Collection, data: Iterable[Union[Iterable, TableRow]]
+    ) -> None:
         """
         Populate table with header and data.
 
@@ -132,11 +142,15 @@ class Table:
         :type data: list(list(str, int or float))
         """
         self.empty()
-        self.row_length = max([len(header)] + [len(_) for _ in data])
-        self.header = self._prepare_header(header)
-        self.rows = [TableRow(row, self.header) for row in self._prepare_data(data)]
+        self.row_length: int = max([len(header)] + [len(_) for _ in data])
+        self.header: tuple = self._prepare_header(header)
+        self.rows: List[TableRow] = [
+            TableRow(row, self.header) for row in self._prepare_data(data)
+        ]
 
-    def write(self, filepath, table_type=None):
+    def write(
+        self, filepath: Union[str, Path], table_type: Optional[BaseTableType] = None
+    ) -> None:
         """Create file from table.
 
         :param table_type: Table Type to use to save the file.
@@ -144,24 +158,22 @@ class Table:
 
         :param str filepath: Path at which the file will be saved.
         """
-        if not isinstance(filepath, pathlib.Path):
-            filepath = pathlib.Path(filepath)
+        path = pathlib.Path(filepath)
         if table_type is None:
             if self.table_type is not None:
                 table_type = self.table_type
             else:
-                table_type = BaseTableType.get_by_extension(filepath.suffix)
-        if filepath.suffix != table_type.extension:
-            filepath = pathlib.Path(str(filepath) + table_type.extension)
-        table_type.write(self, filepath)
+                table_type = BaseTableType.get_by_extension(path.suffix)
+        if path.suffix != table_type.extension:
+            path = path.with_suffix(table_type.extension)
+        table_type.write(self, path)
 
-    def empty(self):
+    def empty(self) -> None:
         """Clear all data."""
         self.rows = []
-        self.header = []
-        self.headers = {}
+        self.header = ()
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Return True if the table conatins no data, otherwise return False.
 
         :rtype: bool
@@ -170,7 +182,7 @@ class Table:
             return True
         return False
 
-    def append(self, row):
+    def append(self, row: Union[Iterable, TableRow]) -> None:
         """Add new row to table.
 
         :param row: Data for new row.
@@ -178,7 +190,7 @@ class Table:
         """
         self.rows.append(TableRow(list(row), self.header))
 
-    def get_column(self, column):
+    def get_column(self, column: Union[int, str]) -> List:
         """Return all values in a column.
 
         :param column: Name or index of to be returned.
@@ -187,7 +199,7 @@ class Table:
         """
         return [row[column] for row in self.rows]
 
-    def remove_column(self, column):
+    def remove_column(self, column: str) -> None:
         """
         Remove a specified column from the Table.
 
@@ -200,18 +212,18 @@ class Table:
         for row in self.rows:
             row.remove_column(column)
 
-    def print_r(self):
+    def print_r(self) -> None:
         """Print table data in a readable format."""
         for row in self.rows:
             print(list(row), file=sys.stderr)
 
-    def copy(self):
+    def copy(self) -> "Table":
         """Return duplicate Table object."""
         return self.__class__(
             header=self.header, data=[row.copy() for row in self.rows]
         )
 
-    def sort(self, sort_key, asc=True):
+    def sort(self, sort_key: str, asc: bool = True) -> None:
         """Sort table by column.
 
         :param sort_key: Column header or index of column to sort by.
@@ -227,9 +239,10 @@ class Table:
         try:
             self.rows.sort(key=lambda x: float(list(x)[column]), reverse=not asc)
         except ValueError:
-            self.rows.sort(key=lambda x: list(x)[column], reverse=not asc)
+            # https://github.com/python/mypy/issues/9656
+            self.rows.sort(key=lambda x: list(x)[column], reverse=not asc)  # type: ignore
 
-    def sorted(self, sort_key, asc=True):
+    def sorted(self, sort_key: str, asc: bool = True) -> "Table":
         """Return a sorted duplicate of the Table.
 
         :param sort_key: Column header or index of column to sort by.
@@ -244,7 +257,7 @@ class Table:
         temp_table.sort(sort_key, asc)
         return temp_table
 
-    def split_by_row_count(self, row_count):
+    def split_by_row_count(self, row_count: int) -> List["Table"]:
         """Split table by row count.
 
         Create multiple :class:`tabler.Table` instances each with a subset of
@@ -259,7 +272,7 @@ class Table:
             split_tables.append(new_table)
         return split_tables
 
-    def _prepare_header(self, header_row):
+    def _prepare_header(self, header_row: Iterable[str]) -> Tuple[str, ...]:
         unlabled = 0
         header = []
         for item in header_row:
@@ -273,10 +286,14 @@ class Table:
             header.append(self._EMPTY_HEADER.format(unlabled))
         return tuple(header)
 
-    def _prepare_data(self, data, empty_value=None):
+    def _prepare_data(
+        self, data: Iterable, empty_value: Optional[Any] = None
+    ) -> List[List[Any]]:
         return [self._prepare_row(row, empty_value=empty_value) for row in data]
 
-    def _prepare_row(self, row, empty_value=None):
+    def _prepare_row(
+        self, row: Iterable, empty_value: Optional[Any] = None
+    ) -> List[Union[str, int, float, None]]:
         if empty_value is None and self.table_type is not None:
             empty_value = self.table_type.empty_value
         prepared_row = []

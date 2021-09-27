@@ -2,10 +2,16 @@
 
 import csv
 import sys
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
 
 import requests
 
 from .basetabletype import BaseTableType
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from tabler.table import Table
 
 
 class CSV(BaseTableType):
@@ -22,7 +28,13 @@ class CSV(BaseTableType):
     extensions = [".csv", ".txt"]
     empty_value = ""
 
-    def __init__(self, encoding="utf-8", delimiter=",", extension=".csv", verbose=None):
+    def __init__(
+        self,
+        encoding: str = "utf-8",
+        delimiter: str = ",",
+        extension: str = ".csv",
+        verbose: Optional[bool] = None,
+    ):
         """Consturct :class:`tabler.tabletypes.CSV`.
 
         :param str encoding: Encoding of file. Default: utf8.
@@ -36,7 +48,7 @@ class CSV(BaseTableType):
         self.delimiter = delimiter
         super().__init__(extension, verbose=verbose)
 
-    def open_path(self, path):
+    def open_path(self, path: str) -> Tuple[List[str], List[List[Any]]]:
         """Return header and rows from file.
 
         :param path: Path to file to be opened.
@@ -46,10 +58,10 @@ class CSV(BaseTableType):
             data = list(csv.reader(f, delimiter=self.delimiter))
         return self.parse_row_data(data)
 
-    def write(self, table, path):
+    def write(self, table: "Table", path: Union[str, "Path"]) -> None:
         """Save data from :class:`tabler.Table` to file.
 
-        :param table: Table to save.
+        :param table:"Table" to save.
         :type table: :class:`tabler.Table`
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
@@ -64,7 +76,7 @@ class CSV(BaseTableType):
             "Written {} rows to file {}".format(len(table.rows), path), file=sys.stderr
         )
 
-    def parse_value(self, value):
+    def parse_value(self, value: Any) -> Any:
         """Return None if the value is empty, otherwise return str(value)."""
         value = super().parse_value(value)
         return str(value)
@@ -73,7 +85,7 @@ class CSV(BaseTableType):
 class CSVURL(CSV):
     """Table type for opening .csv files over HTTP."""
 
-    def open_path(self, path):
+    def open_path(self, path: str) -> Tuple[List[str], List[List[Any]]]:
         """Return header and rows from file.
 
         :param str path: URL of file to be opened.
@@ -85,10 +97,10 @@ class CSVURL(CSV):
         data = list(csv.reader(text))
         return self.parse_row_data(data)
 
-    def write(self, table, path):
+    def write(self, table: "Table", path: Union[str, "Path"]) -> None:
         """Save data from :class:`tabler.Table` to file.
 
-        :param table: Table to save.
+        :param table:"Table" to save.
         :type table: :class:`tabler.Table`
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.

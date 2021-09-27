@@ -1,9 +1,15 @@
 """This module a Table Type for writing tables as HTML."""
 import sys
+from typing import TYPE_CHECKING, Union
 
 from tabler.tohtml import ToHTML
 
 from .basetabletype import BaseTableType
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from tabler.table import Table
 
 
 class HTML(BaseTableType):
@@ -22,7 +28,11 @@ class HTML(BaseTableType):
     empty_value = ""
 
     def __init__(
-        self, use_header=True, encoding="utf8", extension=".html", verbose=True
+        self,
+        use_header: bool = True,
+        encoding: str = "utf8",
+        extension: str = ".html",
+        verbose: bool = True,
     ):
         """Consturct :class:`tabler.tabletypes.HTML`.
 
@@ -38,10 +48,10 @@ class HTML(BaseTableType):
         self.use_header = use_header
         super().__init__(extension, verbose=verbose)
 
-    def write(self, table, path):
+    def write(self, table: "Table", path: Union[str, "Path"]) -> None:
         """Save data from :class:`tabler.Table` to file.
 
-        :param table: Table to save.
+        :param table:"Table" to save.
         :type table: :class:`tabler.Table`
         :param path: Path to file to be opened.
         :type path: str, pathlib.Path or compatible.
