@@ -397,7 +397,7 @@ python-versions = "*"
 
 [[package]]
 name = "openpyxl"
-version = "3.0.8"
+version = "3.0.9"
 description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
 category = "main"
 optional = false
@@ -1254,8 +1254,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 openpyxl = [
-    {file = "openpyxl-3.0.8-py2.py3-none-any.whl", hash = "sha256:52150a09b660fe444af7abe2592b156c14e324526b1968a57705525547317a7f"},
-    {file = "openpyxl-3.0.8.tar.gz", hash = "sha256:4f2770348c029ce9433316ced8f91ed37d2a605e654f8bfdc93a3524561a8ce2"},
+    {file = "openpyxl-3.0.9-py2.py3-none-any.whl", hash = "sha256:8f3b11bd896a95468a4ab162fc4fcd260d46157155d1f8bfaabb99d88cfcf79f"},
+    {file = "openpyxl-3.0.9.tar.gz", hash = "sha256:40f568b9829bf9e446acfffce30250ac1fa39035124d55fc024025c41481c90f"},
 ]
 openpyxl-stubs = [
     {file = "openpyxl-stubs-0.1.19.tar.gz", hash = "sha256:6e803d07660b7e989cb165d9ba37c8e6062a22ce22b849a9325ef5e7e2a23b3c"},
