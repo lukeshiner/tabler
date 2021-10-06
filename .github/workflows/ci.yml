@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9, 3.10-dev]
+        python-version: [3.6, 3.7, 3.8, 3.9, 3.10.0]
 
     steps:
       - name: Install Libraries
@@ -43,6 +43,7 @@ jobs:
         run: |
           pytest -sv
       - name: Push to Coveralls
+        continue-on-error: true
         uses: AndreMiras/coveralls-python-action@master
         with:
           github-token: ${{ github.token }}
