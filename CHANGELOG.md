@@ -11,11 +11,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
-* Remove support for Python 3.6
 
 ### Fixes
 
 ### Breaks
+
+
+## 2.4.2 - (2021-12-09)
+---
+
+### Changes
+* Remove support for Python 3.6
 
 
 ## 2.4.1 - (2021-07-05)
