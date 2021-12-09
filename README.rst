@@ -15,7 +15,8 @@ Tabler - Simple interaction with tabulated data
 .. image:: https://badge.fury.io/py/tabler.svg
     :target: https://pypi.org/project/tabler/
 
-.. image:: https://pypip.in/py_versions/tabler/badge.svg
+.. image:: https://img.shields.io/pypi/pyversions/tabler
+    :alt: PyPI - Python Version
     :target: https://pypi.org/project/tabler/
 
 
