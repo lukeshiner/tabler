@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
+* Remove support for Python 3.6
 
 ### Fixes
 
