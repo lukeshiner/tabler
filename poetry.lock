@@ -513,11 +513,11 @@ xlsx = ["pyexcel-xlsx (>=0.6.0)"]
 
 [[package]]
 name = "pyexcel-ods3"
-version = "0.6.0"
+version = "0.6.1"
 description = "A wrapper library to read, manipulate and write data in ods format"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [package.dependencies]
 lxml = "*"
@@ -1298,8 +1298,8 @@ pyexcel-io = [
     {file = "pyexcel_io-0.6.5-py2.py3-none-any.whl", hash = "sha256:134e27826e44d303b921ab9cdb02a71023e3d61cbe88a37d80f928c2a6910bf5"},
 ]
 pyexcel-ods3 = [
-    {file = "pyexcel-ods3-0.6.0.tar.gz", hash = "sha256:eda986eedcb90386907dd65ea2e9f5ff7387a8848cd6c16d9d6762523c560346"},
-    {file = "pyexcel_ods3-0.6.0-py3-none-any.whl", hash = "sha256:d043da2a42e3daf737bf8c42378a5fe47a056ff7b348d819eded416854dc4346"},
+    {file = "pyexcel-ods3-0.6.1.tar.gz", hash = "sha256:53740fc9bc6e91e43cdc0ee4f557bb3b252d8493d34f2c11d26a93c53cfebc2e"},
+    {file = "pyexcel_ods3-0.6.1-py3-none-any.whl", hash = "sha256:ca61d139879349a5d4b0a241add6504474c59fa280d1804b76f56ee4ba30eb8b"},
 ]
 pyflakes = [
     {file = "pyflakes-2.4.0-py2.py3-none-any.whl", hash = "sha256:3bb3a3f256f4b7968c9c788781e4ff07dce46bdf12339dcda61053375426ee2e"},
