@@ -343,7 +343,7 @@ et-xmlfile = "*"
 
 [[package]]
 name = "openpyxl-stubs"
-version = "0.1.22"
+version = "0.1.24"
 description = "Type stubs for openpyxl"
 category = "dev"
 optional = false
@@ -1164,8 +1164,8 @@ openpyxl = [
     {file = "openpyxl-3.0.10.tar.gz", hash = "sha256:e47805627aebcf860edb4edf7987b1309c1b3632f3750538ed962bbcc3bd7449"},
 ]
 openpyxl-stubs = [
-    {file = "openpyxl-stubs-0.1.22.tar.gz", hash = "sha256:c8f779f487f1fc9ae640d41d876833752cd4e0c6bbf3639e028c086bfc9e1087"},
-    {file = "openpyxl_stubs-0.1.22-py3-none-any.whl", hash = "sha256:ea64a5cb74f96fdb9565a4ab933bfa1da987416e17869dc80e6ebe2b58b7b4a5"},
+    {file = "openpyxl-stubs-0.1.24.tar.gz", hash = "sha256:762099c41d5da359c86ddc08095ca1363e42233239b57f4113bd860c4718b4ca"},
+    {file = "openpyxl_stubs-0.1.24-py3-none-any.whl", hash = "sha256:356420facb59ef97cc193086fdefcd8ab627ae957b0feb630aa7d5c8d9ed6d37"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
