@@ -772,7 +772,7 @@ python-versions = ">=3.7"
 name = "typed-ast"
 version = "1.5.4"
 description = "a fork of Python 2 and 3 ast modules with type comment support"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -850,7 +850,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0"
-content-hash = "649b999ebea8afba0689992f028f5859644a2b2471d731d86a52d0503a096d4d"
+content-hash = "f9cfa6e7f11f89773c0976120a565d6d1a612e01a88507192145a5a02a897f3d"
 
 [metadata.files]
 alabaster = [
