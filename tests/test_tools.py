@@ -4,7 +4,6 @@ from tabler import Table
 
 
 class TablerTestTools:
-
     TEST_HEADER = ("Col1", "Col2", "Col3")
     TEST_ROW_1 = ["Red", "Green", "Blue"]
     TEST_ROW_2 = ["Orange", "Yellow", "Magenta"]
