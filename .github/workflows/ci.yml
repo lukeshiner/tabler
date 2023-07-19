@@ -43,6 +43,6 @@ jobs:
           pytest -sv
       - name: Push to Coveralls
         continue-on-error: true
-        uses: AndreMiras/coveralls-python-action@master
+        uses: AndreMiras/coveralls-python-action@develop
         with:
           github-token: ${{ github.token }}
