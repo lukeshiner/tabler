@@ -11,12 +11,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
-* Add support for Python 3.12
-* Drop support for Python 3.7
 
 ### Fixes
 
 ### Breaks
+
+
+## 2.5.0 - (2023-10-17)
+---
+
+### Changes
+* Add support for Python 3.12
+* Drop support for Python 3.7
 
 
 ## 2.4.2 - (2021-12-09)

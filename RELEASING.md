@@ -33,12 +33,12 @@ Check list for new releases
 ## Create Release Commit
 
 - Create a release branch
-  - `git checkout master`
+  - `git checkout main`
   - `git checkout -b <new version number>`
 - Create release commit
   - `poetry run bumpversion (patch|minor|major)`
 - Update the `stable` branch to the new commit
-- Merge the new branch into `master`
+- Merge the new branch into `main`
 
 ## Checks
 

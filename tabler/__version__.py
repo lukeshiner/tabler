@@ -3,7 +3,7 @@
 __title__ = "tabler"
 __description__ = "Simple interface for tabulated data and .csv files"
 __url__ = "http://github.com/lukeshiner/tabler.git"
-__version__ = "2.4.2"
+__version__ = "2.5.0"
 __author__ = "Luke Shiner"
 __author_email__ = "luke@lukeshiner.com"
 __license__ = "MIT"
