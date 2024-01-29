@@ -1,21 +1,21 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.9.1
+    rev: 24.1.1
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
-    rev: "6.1.0"
+    rev: "7.0.0"
     hooks:
       - id: flake8
         additional_dependencies: [flake8-docstrings]
         exclude: ^docs/
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
         name: isort
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.6.0"
+    rev: "v1.8.0"
     hooks:
       - id: mypy
         additional_dependencies: [types-Jinja2, types-requests, openpyxl-stubs]

@@ -1,4 +1,5 @@
 """This module a Table Type for writing tables as HTML."""
+
 import sys
 from typing import TYPE_CHECKING, Union
 

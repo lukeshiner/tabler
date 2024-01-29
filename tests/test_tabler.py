@@ -1,6 +1,5 @@
 """Tests for tabler.Table class."""
 
-
 from pathlib import Path
 
 import pytest
