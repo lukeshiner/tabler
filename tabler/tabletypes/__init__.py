@@ -43,6 +43,7 @@ Alternate Usage::
     table = Table('path/to/open.csv', table_type=csv)
     table.save('path/to/save.csv', table_type=csv)
 """
+
 from .basetabletype import BaseTableType
 from .csv import CSV, CSVURL
 from .html import HTML
