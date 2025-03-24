@@ -1,10 +1,13 @@
 [flake8]
-ignore = E203, E266, E501, W503 D105
-max-line-length = 80
+ignore = E203, E266, E501, W503, D105
+max-line-length = 88
 max-complexity = 18
-select = B,C,E,F,W,T4,B9,D,Y
+select = B,C,E,F,W,T4,B9,D
+extend-select = B950
+extend-ignore = E203,E501,E701
 docstring-convention = pep257
 per-file-ignores = 
     tests/*: D
 exclude = 
     docs
+    .tox

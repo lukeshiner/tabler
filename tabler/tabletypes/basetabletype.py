@@ -104,7 +104,7 @@ class BaseTableType:
             header = [_ for _ in rows[0]]
             data = [self.parse_row(row) for row in rows[1:]]
         except IndexError:
-            raise ValueError("Input has no header or data.")
+            raise ValueError("Input has no header or data.") from None
         return header, data
 
     def parse_value(self, value: Any) -> Any:

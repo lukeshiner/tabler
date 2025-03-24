@@ -100,7 +100,7 @@ class Table:
                     raise ValueError(
                         "Table Type not specified and extension {} "
                         "not recognised.".format(extension)
-                    )
+                    ) from None
             self.load(*self.table_type.open_path(filepath))
         elif header is not None and data is not None:
             self.load(header, data)
