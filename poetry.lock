@@ -1165,14 +1165,14 @@ docutils = ">=0.11,<1.0"
 
 [[package]]
 name = "setuptools"
-version = "78.1.0"
+version = "79.0.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.9"
 groups = ["main", "dev"]
 files = [
-    {file = "setuptools-78.1.0-py3-none-any.whl", hash = "sha256:3e386e96793c8702ae83d17b853fb93d3e09ef82ec62722e61da5cd22376dcd8"},
-    {file = "setuptools-78.1.0.tar.gz", hash = "sha256:18fd474d4a82a5f83dac888df697af65afa82dec7323d09c3e37d1f14288da54"},
+    {file = "setuptools-79.0.0-py3-none-any.whl", hash = "sha256:b9ab3a104bedb292323f53797b00864e10e434a3ab3906813a7169e4745b912a"},
+    {file = "setuptools-79.0.0.tar.gz", hash = "sha256:9828422e7541213b0aacb6e10bbf9dd8febeaa45a48570e09b6d100e063fc9f9"},
 ]
 
 [package.extras]
@@ -1521,4 +1521,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<4.0"
-content-hash = "8abafc4bbc4eccbce0acd61a5dc92f542399e741de977613843c261ebe9ad00b"
+content-hash = "9a7ff7939e2bb3d3917f75c31349b9da0ed815fee5a3db4dbf1459f6cc75b1e3"
