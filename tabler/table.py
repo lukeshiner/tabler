@@ -10,7 +10,7 @@ import os
 import pathlib
 import sys
 from pathlib import Path
-from typing import Any, Collection, Iterable, Iterator, List, Optional, Tuple, Union
+from typing import Any, Iterator, List, Optional, Sequence, Tuple, Union
 
 from . import exceptions
 from .tablerow import TableRow
@@ -60,8 +60,8 @@ class Table:
         self,
         filepath: Optional[str] = None,
         table_type: Optional[BaseTableType] = None,
-        header: Optional[Collection[str]] = None,
-        data: Optional[Iterable] = None,
+        header: Optional[Sequence[str]] = None,
+        data: Optional[Sequence] = None,
     ) -> None:
         """Construct a :class:`tabler.Table`.
 
@@ -129,9 +129,7 @@ class Table:
     def __repr__(self) -> str:
         return self.__str__()
 
-    def load(
-        self, header: Collection, data: Iterable[Union[Iterable, TableRow]]
-    ) -> None:
+    def load(self, header: Sequence, data: Sequence[Union[Sequence, TableRow]]) -> None:
         """
         Populate table with header and data.
 
@@ -182,7 +180,7 @@ class Table:
             return True
         return False
 
-    def append(self, row: Union[Iterable, TableRow]) -> None:
+    def append(self, row: Union[Sequence, TableRow]) -> None:
         """Add new row to table.
 
         :param row: Data for new row.
@@ -272,7 +270,7 @@ class Table:
             split_tables.append(new_table)
         return split_tables
 
-    def _prepare_header(self, header_row: Iterable[str]) -> Tuple[str, ...]:
+    def _prepare_header(self, header_row: Sequence[str]) -> Tuple[str, ...]:
         unlabled = 0
         header = []
         for item in header_row:
@@ -287,12 +285,12 @@ class Table:
         return tuple(header)
 
     def _prepare_data(
-        self, data: Iterable, empty_value: Optional[Any] = None
+        self, data: Sequence, empty_value: Optional[Any] = None
     ) -> List[List[Any]]:
         return [self._prepare_row(row, empty_value=empty_value) for row in data]
 
     def _prepare_row(
-        self, row: Iterable, empty_value: Optional[Any] = None
+        self, row: Sequence, empty_value: Optional[Any] = None
     ) -> List[Union[str, int, float, None]]:
         if empty_value is None and self.table_type is not None:
             empty_value = self.table_type.empty_value
